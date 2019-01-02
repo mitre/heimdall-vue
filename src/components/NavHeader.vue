@@ -4,8 +4,12 @@
         <div>
           <a class="navbar-brand" style="font-size:250%; float: left">Heimdall-lite</a>
         </div>
-        <div>
-            <file-upload :url='url' :thumb-url='thumbUrl' :headers="headers" @change="onFileChange"></file-upload>
+        <div id="app">
+        <label class="text-reader">
+          <textarea rows="10" v-model="text"></textarea>
+          <br>
+          <text-reader @load="text = $event"></text-reader>
+        </label>
         </div>
     </div>
 
@@ -15,31 +19,14 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import FileUpload from 'v-file-upload'
-Vue.use(FileUpload)
-
+import TextReader from "./FileReader";
 export default {
-    name: 'NavHeader',
-    props: {
-    },
-    data () {
-    return {
-      url: 'http://localhost:8080',
-      headers: {'access-token': '<your-token>'},
-      filesUploaded: []
-    }
-  },
-  methods: {
-    thumbUrl (file) {
-      return file.myThumbUrlProperty
-    },
-    onFileChange (file) {
-      // Handle files like:
-      this.fileUploaded = file
-    }
+  name: "app",
+  data: () => ({ text: "" }),
+  components: {
+    TextReader
   }
-}
+};
 
 </script>
 
