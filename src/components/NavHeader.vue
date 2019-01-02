@@ -4,25 +4,10 @@
         <div>
           <a class="navbar-brand" style="font-size:250%; float: left">Heimdall-lite</a>
         </div>
+        <div>
+            <file-upload :url='url' :thumb-url='thumbUrl' :headers="headers" @change="onFileChange"></file-upload>
+        </div>
     </div>
-
-    <ul class="nav navbar-top-links navbar-left">
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-          <i class="fa fa-sitemap fa-fw"></i> Load Json
-          <span class="fa arrow"></span>
-        </a>
-        <ul class="dropdown-menu">
-            <li>
-              <a href="#">
-                <label class="btn btn-primary btn-file">
-                    Browse<input id="file" type="file" accept=".json" name="file" style="width: 100%; height: 100%; display: none;" onchange="upload()">
-                </label>
-              </a>
-            </li>
-        </ul>
-      </li>
-    </ul>
 
    <button id="export-caat" type="button" class="btn btn-primary floating2" style="display:none;">Compliance Assessment/Audit Tracking (CAAT) Spreadsheet Download</button>
 
@@ -30,11 +15,32 @@
 </template>
 
 <script>
+import Vue from 'vue'
+import FileUpload from 'v-file-upload'
+Vue.use(FileUpload)
+
 export default {
-  name: 'NavHeader',
-  props: {
+    name: 'NavHeader',
+    props: {
+    },
+    data () {
+    return {
+      url: 'http://localhost:8080',
+      headers: {'access-token': '<your-token>'},
+      filesUploaded: []
+    }
+  },
+  methods: {
+    thumbUrl (file) {
+      return file.myThumbUrlProperty
+    },
+    onFileChange (file) {
+      // Handle files like:
+      this.fileUploaded = file
+    }
   }
 }
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
