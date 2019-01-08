@@ -3,6 +3,7 @@
     <div class="navbar-header">
         <div>
           <a class="navbar-brand" style="font-size:250%; float: left">Heimdall-lite</a>
+          <router-link to="/result">Result</router-link>
         </div>
         <div id="app">
         <label class="text-reader">
