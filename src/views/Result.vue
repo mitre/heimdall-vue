@@ -1,6 +1,6 @@
 <template>
   <div class="row" id="results_charts_row" style='display:block;'>
-    <div class="col-lg-4" id='control_status_id'>
+    <div class="col-lg-4">
       <ControlStatus/>
     </div>
   </div>
@@ -8,6 +8,7 @@
 
 <script>
 import ControlStatus from '@/components/ControlStatus.vue'
+import { store } from "../store.js";
 
 export default {
   name: '',
