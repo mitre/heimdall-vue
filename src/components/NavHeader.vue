@@ -1,22 +1,18 @@
 <template>
-  <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-    <div class="navbar-header">
-        <div>
-          <a class="navbar-brand" style="font-size:250%; float: left">Heimdall-lite</a>
-          <router-link to="/result">Result</router-link>
-        </div>
-        <div id="app">
-        <label class="text-reader">
-          <textarea rows="10" v-model="text"></textarea>
-          <br>
-          <text-reader @load="text = $event"></text-reader>
-        </label>
-        </div>
-    </div>
-
-   <button id="export-caat" type="button" class="btn btn-primary floating2" style="display:none;">Compliance Assessment/Audit Tracking (CAAT) Spreadsheet Download</button>
-
-  </nav>
+  <b-navbar toggleable="md" type="dark" variant="info">
+    <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
+    <b-navbar-brand href="#">Heimdall-lite</b-navbar-brand>
+    <b-nav-form>
+      <label class="text-reader">
+        <text-reader @load="text = $event"></text-reader>
+      </label>
+    </b-nav-form>
+    <b-navbar-nav class="ml-auto">
+      <b-nav-form>
+        <b-button id="export-caat" size="sm" class="my-2 my-sm-0" type="button">CAAT</b-button>
+      </b-nav-form>
+    </b-navbar-nav>
+  </b-navbar>
 </template>
 
 <script>
@@ -34,15 +30,15 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 .floating {
-    position: fixed;
-    top: 95px;
-    right: 20px;
-    visibility: hidden;
+  position: fixed;
+  top: 95px;
+  right: 20px;
+  visibility: hidden;
 }
 .floating2 {
-    position: fixed;
-    top: 8px;
-    right: 20px;
+  position: fixed;
+  top: 8px;
+  right: 20px;
 }
 .navbar-top-links {
   margin-right: 0;

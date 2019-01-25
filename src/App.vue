@@ -1,10 +1,8 @@
 <template>
-  <div id="wrapper" class='container-fluid container-border'>
+  <b-container fluid>
     <NavHeader/>
-    <!--router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link-->
     <router-view/>
-  </div>
+  </b-container>
 </template>
 
 <script>
@@ -19,7 +17,15 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+.container-fluid {
+    width: 100%;
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
 #nist_treemap_profile rect {
   stroke: black;
   stroke-width: 0.25;

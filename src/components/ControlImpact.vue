@@ -1,7 +1,7 @@
 <template>
   <b-card no-body class="mb-3">
     <b-card-header>
-      <font-awesome-icon icon="chart-pie"/> Control Status
+      <font-awesome-icon icon="chart-pie"/> Control Impact
       <div v-bind:title="testBind"></div>
     </b-card-header>
     <b-card-body>
@@ -33,8 +33,8 @@
         console.log(this.handler);
         return store.getStatusFilter() + store.getImpactFilter();
       },
-      activeStatus: function () {
-        return store.getStatus();
+      activeImpact: function () {
+        return store.getImpact();
       }
     },
 
@@ -42,7 +42,7 @@
       console.log("updated");
       var reload_data = {
         unload: true,
-        columns: store.getStatus()
+        columns: store.getImpact()
       };
       this.handler.$emit('dispatch', (chart) => chart.load(reload_data));
     },
@@ -51,21 +51,26 @@
       // to init the graph call:
       const options = {
         data: {
-          columns: this.activeStatus,
+          columns: this.activeImpact,
           type : 'donut',
           onclick: function (d, i) {
             console.log("Clicked " + d.id);
-            store.setStatusFilter(d.id);
+            store.setImpactFilter(d.id);
           }
         },
         color: {
-          pattern: ['rgb(137, 204, 81)', 'rgb(255, 0, 41)', '#4579B2', 'rgb(255, 200, 87)', '#DDEDF6']
+          pattern: ['#99CCFF', '#0080FF', '#003366', '#FF0029']
         },
         size: {
           height: 300
         },
         donut: {
-          title: "Control Status"
+          title: "Control Severity",
+          label: {
+            format: function (value, ratio, id) {
+              return value;
+            }
+          }
         }
       }
       this.handler.$emit('init', options);
