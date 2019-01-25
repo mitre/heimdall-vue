@@ -43,6 +43,18 @@ npm run test:unit
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
+## Notes/Commmon Problems
+
+### Proxy Notes
+
+If you have a proxy, remember to setup your NPM enviroment to respect the proxy
+- https://jjasonclark.com/how-to-setup-node-behind-web-proxy/
+- `npm config set strict-ssl false`
+- `npm config set proxy http://myproxy:8080`
+- `npm config set https-proxy https://myproxy:443`
+
+## Release Process 
+
 ### Branches
 The master branch contains the latest version of the software leading up to a new release.
 
@@ -52,6 +64,8 @@ Other branches contain feature-specific updates.
 Tags indicate official releases of the project.
 
 Please note 0.x releases are works in progress (WIP) and may change at any time.
+
+## Legal Stuff
 
 ### NOTICE
 
