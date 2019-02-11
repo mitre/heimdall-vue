@@ -11,6 +11,10 @@ import { far } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { dom } from '@fortawesome/fontawesome-svg-core'
 
+require('@/assets/styles/jquery.dataTables.min.css')
+require('@/assets/styles/prism.css')
+require('@/assets/styles/prism-line-numbers.min.css')
+
 dom.watch()
 
 library.add(fas, far)

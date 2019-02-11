@@ -16,10 +16,10 @@ export default {
   }
 }
 </script>
-
 <style lang="scss" scoped>
 .container-fluid {
     width: 100%;
+    font-size: 14px;
     padding-right: 0px;
     padding-left: 0px;
     margin-right: auto;

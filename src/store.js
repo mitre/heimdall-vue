@@ -16,10 +16,11 @@ export const store = {
     compliance: 0,
     status_filter: "none",
     impact_filter: "none",
+    search_term: "",
     title: "",
     profile_name: "",
     version: "",
-    controls: {},
+    controls: {}
   },
   reset() {
     store.controls = {},
@@ -45,8 +46,6 @@ export const store = {
   },
   parseFile(content, file_name) {
     for (var member in this.state.controls) delete this.state.controls[member];
-    console.log("parseFile Status: " + this.state.status);
-    console.log("parseFile Controls: " + this.state.controls.length);
     var json = JSON.parse(content);
     var profile_name, i, j;
     if (json.profiles == undefined) {
@@ -58,14 +57,11 @@ export const store = {
     else {
       profile_name = 'result;' + file_name + ': ' + this.grab_start_time(json);
       for (i = 0; i < json.profiles.length; i++) {
-        console.log("Parse " + json.profiles[i].controls.length + " controls");
         for (j = 0; j < json.profiles[i].controls.length; j++) {
-          console.log("Parse control " + json.profiles[i].controls[j].id)
           this.setControl(json.profiles[i].controls[j], profile_name);
         }
       }
     }
-    console.log("Parsed Controls: " + Object.keys(this.state.controls));
     this.setStatusFilter("");
     this.setImpactFilter("");
   },
@@ -141,7 +137,7 @@ export const store = {
     }
 
     data[c_id].status           = this.compute_status(data[c_id]);
-    //data[c_id].finding_details  = clk_finding_details(data[c_id]);
+    data[c_id].finding_details  = this.get_finding_details(data[c_id]);
     this.state.controls[c_id] = data[c_id];
   },
   includes(string, myArray) {
@@ -179,11 +175,40 @@ export const store = {
       return 'Profile Error';
     }
   },
+  get_finding_details(control) {
+    var result = '';
+    if (control.status == 'Open') { result = 'One or more of the automated tests failed or was inconclusive for the control \n\n ' + control.message; }
+    if (control.status == 'Not A Finding') { result = 'All Automated tests passed for the control \n\n ' + control.message; }
+    if (control.status == 'Not Reviewed') { result = 'Automated test skipped due to known accepted condition in the control : \n\n' + control.message; }
+    if (control.status == 'Not Applicable') { result = 'Justification: \n\n' + control.message + '\n'; }
+    if (control.status == 'Profile Error') { result = 'No test available for this control'; }
+    return result;
+  },
   getControl(control_id) {
     return this.state.controls[control_id];
   },
   getControls() {
-    return this.state.controls;
+    var impact_filter = this.getImpactFilter();
+    var status_filter = this.getStatusFilter();
+    var controls = this.state.controls;
+    var ctls = []
+    for (var ind in controls) {
+      if (status_filter == "" || status_filter == controls[ind].status) {
+        if (impact_filter == "" || impact_filter == controls[ind].severity) {
+          ctls.push(controls[ind]);
+        }
+      }
+    }
+    let search = this.getSearchTerm();
+    if (search == "") {
+      return ctls;
+    } else {
+      return ctls.filter(function (ctl) {
+        return ctl.gid.toLowerCase().indexOf(search) !== -1 ||
+          ctl.rule_title.toLowerCase().indexOf(search) !== -1 ||
+          ctl.severity.toLowerCase().indexOf(search) !== -1
+      })
+    }
   },
   setProfileName(name) {
     this.state.profile_name = name;
@@ -192,9 +217,6 @@ export const store = {
     return this.state.profile_name
   },
   getStatus() {
-    var status_filter = this.getStatusFilter();
-    var impact_filter = this.getImpactFilter();
-    console.log("filters: " + status_filter + ", " + impact_filter);
     var statusHash = { 'Not A Finding':  0,
       'Open':           0,
       'Not Applicable': 0,
@@ -203,32 +225,19 @@ export const store = {
     };
     var controls = this.getControls();
     for (var index in controls) {
-      console.log("getStatus: " + index + ": " + controls[index].status + ", add to " + statusHash[controls[index].status]);
-      if (status_filter == "" || status_filter == controls[index].status) {
-        if (impact_filter == "" || impact_filter == controls[index].severity) {
-          statusHash[controls[index].status] += 1;
-          console.log("added " + statusHash[controls[index].status]);
-        }
-      }
+      statusHash[controls[index].status] += 1;
     }
     for (var i = 0; i < this.state.status.length; i++) {
-      console.log("Set " + this.state.status[i][0] + " to " + statusHash[this.state.status[i][0]]);
       this.state.status[i][1] = statusHash[this.state.status[i][0]];
     }
-    console.log("status: " + this.state.status);
     this.setCompliance(statusHash['Not A Finding']/(statusHash['Not A Finding'] +
       statusHash['Open'] + statusHash['Not Reviewed'] + statusHash['Profile Error']) * 100)
     return this.state.status;
   },
   setStatus(val) {
-    console.log("setStatus to : " + val);
     this.state.status = val;
-    console.log("setStatus is: " + this.state.status);
   },
   getImpact() {
-    var impact_filter = this.getImpactFilter();
-    var status_filter = this.getStatusFilter();
-    console.log("filters: " + status_filter + ", " + impact_filter);
     var impactHash = {
       'low':      0,
       'medium':   0,
@@ -237,47 +246,41 @@ export const store = {
     };
     var controls = this.getControls();
     for (var ind in controls) {
-      console.log("getImpact: " + ind + ": " + controls[ind].severity + ", add to " + impactHash[controls[ind].severity]);
-      if (status_filter == "" || status_filter == controls[ind].status) {
-        if (impact_filter == "" || impact_filter == controls[ind].severity) {
-          impactHash[controls[ind].severity] += 1;
-          console.log("added " + impactHash[controls[ind].severity]);
-        }
-      }
+      impactHash[controls[ind].severity] += 1;
     }
     for (var i = 0; i < this.state.impact.length; i++) {
-      console.log("Set " + this.state.impact[i][0] + " to " + impactHash[this.state.impact[i][0]]);
       this.state.impact[i][1] = impactHash[this.state.impact[i][0]];
     }
-    console.log("impact: " + this.state.impact);
     return this.state.impact;
   },
   getCompliance() {
     return [['Data', this.state.compliance]];
   },
   setCompliance(val) {
-    console.log("setCompliance to : " + val);
     this.state.compliance = val;
   },
   getTitle() {
     return this.state.title;
   },
   setTitle(val) {
-    console.log("setTitle to : " + val);
     this.state.title = val;
   },
   getStatusFilter() {
     return this.state.status_filter;
   },
   setStatusFilter(val) {
-    console.log("setStatusFilter: " + val);
     this.state.status_filter = val;
   },
   getImpactFilter() {
     return this.state.impact_filter;
   },
   setImpactFilter(val) {
-    console.log("setImpactFilter: " + val);
     this.state.impact_filter = val;
+  },
+  getSearchTerm() {
+    return this.state.search_term;
+  },
+  setSearchTerm(val) {
+    this.state.search_term = val;
   },
 };
