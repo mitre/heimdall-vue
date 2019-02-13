@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/30bdf828-42eb-41ca-9053-8f5c7fd31e90/deploy-status)](https://app.netlify.com/sites/heimdall-vue/deploys)
+
 # [Heimdall-Vue](https://www.github.com/mitre/heimdall-vue)
 
 ## Project setup
