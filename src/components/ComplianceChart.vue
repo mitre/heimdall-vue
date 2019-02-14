@@ -30,8 +30,7 @@
 
     computed: {
       testBind: function() {
-        console.log(this.handler);
-        return store.getStatusFilter() + store.getImpactFilter();
+        return store.getStatusFilter() + store.getImpactFilter() + store.getSearchTerm();
       },
       activeCompliance: function () {
         return store.getCompliance();
@@ -39,7 +38,6 @@
     },
 
     updated: function () {
-      console.log("updated");
       var reload_data = {
         unload: true,
         columns: store.getCompliance()

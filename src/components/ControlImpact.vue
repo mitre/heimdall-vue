@@ -30,8 +30,7 @@
 
     computed: {
       testBind: function() {
-        console.log(this.handler);
-        return store.getStatusFilter() + store.getImpactFilter();
+        return store.getStatusFilter() + store.getImpactFilter() + store.getSearchTerm();
       },
       activeImpact: function () {
         return store.getImpact();
@@ -39,7 +38,6 @@
     },
 
     updated: function () {
-      console.log("updated");
       var reload_data = {
         unload: true,
         columns: store.getImpact()
@@ -54,7 +52,6 @@
           columns: this.activeImpact,
           type : 'donut',
           onclick: function (d, i) {
-            console.log("Clicked " + d.id);
             store.setImpactFilter(d.id);
           }
         },

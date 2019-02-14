@@ -13,20 +13,13 @@ export default {
       const file = ev.target.files[0];
       const reader = new FileReader();
 
-      //reader.onload = e => this.$emit("load", e.target.result);
-      //var reader = new FileReader();
       reader.onload = function(){
         var text = reader.result;
-        console.log(reader.result.substring(0, 200));
         store.reset()
         store.setTitle(file.name);
         store.parseFile(text, file.name);
-        console.log("Done parsing?");
-        //this.$router.push('/result');
       };
       reader.readAsText(file);
-      //reader.onloadend = this.$router.push('/result');
-      //this.$router.push('/result')
     }
   }
 };

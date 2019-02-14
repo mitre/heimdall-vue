@@ -1,4 +1,8 @@
 module.exports = {
+  globals: {
+    "$": true,
+    "jQuery": true
+  },
   parserOptions: {
     sourceType: 'module',
     allowImportExportEverywhere: true,

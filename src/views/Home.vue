@@ -17,8 +17,10 @@
       </b-card-group>
     </b-row>
     <b-row>
-      <button v-on:click="clear">Clear Filter</button>
+      <b-col align-self="start"><button v-on:click="clear">Clear Filter</button></b-col>
+      <b-col align-self="end" style='text-align: right'>Search: <input v-model="search"></b-col>
     </b-row>
+    <DataTable :controls="filteredControls"></DataTable>
   </b-container>
 </template>
 
@@ -28,6 +30,7 @@ import AboutContent from '@/components/AboutContent.vue'
 import ControlStatus from '@/components/ControlStatus.vue'
 import ControlImpact from '@/components/ControlImpact.vue'
 import ComplianceChart from '@/components/ComplianceChart.vue'
+import DataTable from '@/components/DataTable.vue'
 import { store } from "../store.js";
 
 export default {
@@ -37,22 +40,35 @@ export default {
     AboutContent,
     ControlStatus,
     ControlImpact,
-    ComplianceChart
+    ComplianceChart,
+    DataTable
   },
   data () {
     return {
       title: store.getTitle(),
-      store
+      store,
+      search: ''
     }
   },
   computed: {
     shouldShowAbout() {
       return store.state.title == ""
+    },
+    filteredControls: function() {
+      let self = this;
+      store.setSearchTerm(self.search.toLowerCase());
+      var ctls = store.getControls();
+      return ctls;
     }
+  },
+  mounted() {
+    let vm = this;
+    vm.controls = [];
+    vm.controls = store.getControls();
   },
   methods: {
     clear: function (event) {
-      // `this` inside methods point to the Vue instance
+      store.setSearchTerm("");
       store.setStatusFilter("");
       store.setImpactFilter("");
     }
@@ -65,6 +81,16 @@ export default {
 }
 .card-deck {
   width: 100%;
+}
+@media (min-width: 576px) {
+  .card-deck {
+      -ms-flex-flow: row wrap;
+      -webkit-box-orient: horizontal;
+      -webkit-box-direction: normal;
+      flex-flow: row wrap;
+      margin-right: 0px;
+      margin-left: 0px;
+  }
 }
 .container {
     width: 100%;

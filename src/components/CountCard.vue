@@ -36,8 +36,7 @@
         return this.color_variant
       },
       testBind: function() {
-        console.log(this.handler);
-        return store.getStatusFilter() + store.getImpactFilter();
+        return store.getStatusFilter() + store.getImpactFilter() + store.getSearchTerm();
       },
       count: function () {
         var status = store.getStatus();
@@ -45,7 +44,6 @@
         for (var i = 0; i < status.length; i++) {
           if (status[i][0] == this.title) {
             val = status[i][1];
-            console.log("Count = " + val);
           }
         }
         return val;
@@ -53,14 +51,13 @@
     },
 
     updated: function () {
-      console.log("updated");
     },
 
     mounted: function mounted () {
-      console.log("mounted");
     },
   }
 </script>
+
 <style lang="scss" scoped>
 .card-footer {
   padding-top: 0.05rem;
