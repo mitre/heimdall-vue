@@ -43,7 +43,10 @@ export const store = {
     version: "",
     controls: {},
     nist_hsh: {},
-    controls_hsh: {}
+    controls_hsh: {},
+    selected_family: "",
+    selected_subfamily: "",
+    selected_control: ""
   },
   reset() {
     store.controls = {},
@@ -215,6 +218,10 @@ export const store = {
       }
     }
   },
+  getBindValue() {
+    return this.getStatusFilter() + this.getImpactFilter() + this.getSearchTerm()
+      + this.getSelectedFamily() + this.getSelectedSubFamily() + this.getSelectedControl();
+  },
   get_finding_details(control) {
     var result = '';
     if (control.status == 'Failed') { result = 'One or more of the automated tests failed or was inconclusive for the control \n\n ' + control.message; }
@@ -234,6 +241,47 @@ export const store = {
     return this.state.controls[control_id];
   },
   getControls() {
+    var ctls = []
+    var ctl_id = this.getSelectedControl();
+    if (ctl_id != "") {
+      ctls.push(this.getControl(ctl_id));
+      return ctls;
+    } else {
+      var impact_filter = this.getImpactFilter();
+      var status_filter = this.getStatusFilter();
+      var fam_filter = '';
+      if (this.getSelectedSubFamily() != "") {
+        fam_filter = this.getSelectedSubFamily();
+      } else if (this.getSelectedFamily() != "") {
+        fam_filter = this.getSelectedFamily();
+      }
+      var controls = this.state.controls;
+      for (var ind in controls) {
+        var nist_val = controls[ind].nist ? controls[ind].nist.join() : 'UM-1';
+        if (status_filter == "" || status_filter == controls[ind].status) {
+          if (impact_filter == "" || impact_filter == controls[ind].severity) {
+            if (fam_filter == "" || nist_val.includes(fam_filter)) {
+              ctls.push(controls[ind]);
+            }
+          }
+        }
+      }
+      let search = this.getSearchTerm();
+      if (search == "") {
+        return ctls;
+      } else {
+        return ctls.filter(function (ctl) {
+          return ctl.gid.toLowerCase().indexOf(search) !== -1 ||
+            ctl.rule_title.toLowerCase().indexOf(search) !== -1 ||
+            ctl.severity.toLowerCase().indexOf(search) !== -1 ||
+            ctl.status.toLowerCase().indexOf(search) !== -1 ||
+            ctl.finding_details.toLowerCase().indexOf(search) !== -1 ||
+            ctl.code.toLowerCase().indexOf(search) !== -1
+        })
+      }
+    }
+  },
+  getNistControls() {
     var impact_filter = this.getImpactFilter();
     var status_filter = this.getStatusFilter();
     var controls = this.state.controls;
@@ -326,14 +374,35 @@ export const store = {
   setImpactFilter(val) {
     this.state.impact_filter = val;
   },
+  getSelectedFamily() {
+    return this.state.selected_family;
+  },
+  setSelectedFamily(val) {
+    this.state.selected_family = val;
+  },
+  getSelectedSubFamily() {
+    return this.state.selected_subfamily;
+  },
+  setSelectedSubFamily(val) {
+    this.state.selected_subfamily = val;
+  },
+  getSelectedControl() {
+    return this.state.selected_control;
+  },
+  setSelectedControl(val) {
+    this.state.selected_control = val;
+  },
   getSearchTerm() {
-    return this.state.search_term;
+    if (this.state.search_term.length > 1) {
+      return this.state.search_term;
+    } else {
+      return ''
+    }
   },
   setSearchTerm(val) {
     this.state.search_term = val;
   },
   setNistHash() {
-    console.log("setNistHash");
     var hsh = {'name': 'NIST SP 800-53', 'children': []}
     for (var i = 0; i < this.state.families.length; i++) {
       var fam = this.state.families[i];
@@ -354,7 +423,7 @@ export const store = {
     }
     var hsh = this.state.nist_hsh;
     var ctls_hsh = this.state.controls_hsh;
-    var controls = this.getControls()
+    var controls = this.getNistControls()
     for (var index in controls) {
       if (controls[index].nist) {
         var nists = controls[index].nist;

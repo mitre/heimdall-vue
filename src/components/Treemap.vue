@@ -320,6 +320,27 @@ export default {
     // and the template reflects the changes
     selectNode (event) {
       this.selected = event.target.id
+      var fams = event.target.id.split('.');
+      var length = fams.length;
+      if (length == 1) {
+        console.log("Clicked " + fams[0]);
+        store.setSelectedFamily('');
+      } else if (length == 2) {
+        console.log("Clicked " + fams[1]);
+        store.setSelectedFamily(fams[1]);
+        store.setSelectedSubFamily('');
+        store.setSelectedControl('');
+      } else if (length == 3) {
+        console.log("Clicked " + fams[2]);
+        store.setSelectedFamily(fams[1]);
+        store.setSelectedSubFamily(fams[2]);
+        store.setSelectedControl('');
+      } else if (length == 4) {
+        console.log("Clicked " + fams[3]);
+        store.setSelectedFamily(fams[1]);
+        store.setSelectedSubFamily(fams[2]);
+        store.setSelectedControl(fams[3]);
+      }
     }
   }
 }

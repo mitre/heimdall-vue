@@ -30,7 +30,7 @@
 
     computed: {
       testBind: function() {
-        return store.getStatusFilter() + store.getImpactFilter() + store.getSearchTerm();
+        return store.getBindValue();
       },
       activeStatus: function () {
         return store.getStatus();
