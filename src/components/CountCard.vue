@@ -37,7 +37,7 @@
         return this.color_variant
       },
       testBind: function() {
-        return store.getStatusFilter() + store.getImpactFilter() + store.getSearchTerm();
+        return store.getBindValue();
       },
       count: function () {
         var status = store.getStatus();

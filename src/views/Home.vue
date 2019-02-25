@@ -24,7 +24,7 @@
     </b-row>
     <b-row>
       <b-col align-self="start"><button v-on:click="clear">Clear Filter</button></b-col>
-      <b-col align-self="end" style='text-align: right'>Search: <input v-model="search"></b-col>
+      <b-col align-self="end" style='text-align: right'>Search: <input id="search_input" v-model="search"></b-col>
     </b-row>
     <DataTable :controls="filteredControls"></DataTable>
   </b-container>
