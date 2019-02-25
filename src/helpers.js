@@ -2,9 +2,9 @@ export const helpers = {
   status_btn(symbol) {
     if (symbol == "Not Applicable")
       return 'btn btn-info'
-    else if (symbol == 'Open')
+    else if (symbol == 'Failed')
       return 'btn btn-danger'
-    else if (symbol == 'Not A Finding')
+    else if (symbol == 'Passed')
       return 'btn btn-success'
     else if (symbol == 'Not Reviewed')
       return 'btn btn-warning'

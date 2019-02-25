@@ -7,6 +7,7 @@
         <b-col cols="3"><font-awesome-icon :icon="icon" size="5x"/></b-col>
         <b-col cols="9" style="text-align: right">
           <h1>{{count}}</h1>
+          <br/>
           {{title}}
         </b-col>
       </b-row>
