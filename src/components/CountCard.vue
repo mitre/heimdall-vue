@@ -62,6 +62,6 @@
 <style lang="scss" scoped>
 .card-footer {
   padding-top: 0.05rem;
-  height: 50px;
+  height: 70px;
 }
 </style>
