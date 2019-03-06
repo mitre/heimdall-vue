@@ -343,11 +343,6 @@ export default {
         store.setSelectedSubFamily(fams[2]);
         store.setSelectedControl(fams[3]);
       }
-    },
-    clear: function (event) {
-      store.setSearchTerm("");
-      store.setStatusFilter("");
-      store.setImpactFilter("");
     }
   }
 }
