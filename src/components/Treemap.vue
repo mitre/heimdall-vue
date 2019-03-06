@@ -1,13 +1,13 @@
 <template>
   <b-card no-body class="mb-3">
     <b-card-header>
-      <font-awesome-icon icon="chart-area"/> NIST SP 800-53 Coverage
+      <font-awesome-icon icon="chart-area"/> NIST SP 800-53 Coverage <b-button v-on:click="clear" style="float:right;" variant="outline-primary">Clear Filter</b-button>
       <div v-bind:title="testBind"></div>
     </b-card-header>
     <b-card-body>
       <div class="treemap">
         <!-- The SVG structure is explicitly defined in the template with attributes derived from component data -->
-        <svg :height="height" style="margin-left: 15px;" :width="width">
+        <svg id="chartBody" :height="height" style="margin-left: 15px;" :width="width">
           <g style="shape-rendering: crispEdges;" transform="translate(0,20)">
             <!-- We can use Vue transitions too! -->
             <transition-group name="list" tag="g" class="depth">
@@ -140,7 +140,8 @@ export default {
         bottom: 0,
         left: 0
       },
-      width: 960,
+      //width: window.innerWidth - 300,
+      width: document.getElementById("chart") ? document.getElementById("chart").offsetWidth - 100 : window.innerWidth - 300,
       height: 530,
       selected: null,
       color: {}
@@ -210,6 +211,7 @@ export default {
 
       // loads the data and calls the initialization methods
       that.jsonData = store.getNistHash();
+      //this.width = '100%';
       that.initialize()
       that.accumulate(that.rootNode, that)
       that.treemap(that.rootNode)
@@ -354,6 +356,7 @@ text {
 
 .grandparent text {
   font-weight: bold;
+  color: #red
 }
 
 rect {
@@ -367,11 +370,11 @@ rect.parent,
 }
 
 .grandparent rect {
-  fill: orange;
+  fill: #99ccff;
 }
 
 .grandparent:hover rect {
-  fill: #ee9700;
+  fill: #99ccff;
 }
 
 .children rect.parent,

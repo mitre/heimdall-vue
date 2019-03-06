@@ -5,6 +5,7 @@
       <div v-bind:title="testBind"></div>
     </b-card-header>
     <b-card-body>
+      [Passed/(Passed + Failed + Not Reviewed + Profile Error) * 100]
       <vue-c3 :handler="handler"></vue-c3>
     </b-card-body>
   </b-card>
@@ -59,7 +60,7 @@
           }
         },
         size: {
-          height: 300
+          height: 270
         }
       }
       this.handler.$emit('init', options);
