@@ -141,7 +141,7 @@ export default {
         left: 0
       },
       //width: window.innerWidth - 300,
-      width: document.getElementById("chart") ? document.getElementById("chart").offsetWidth - 100 : window.innerWidth - 300,
+      width: document.getElementById("chart") ? document.getElementById("chart").offsetWidth - 100 : window.innerWidth - window.innerWidth/3,
       height: 530,
       selected: null,
       color: {}
@@ -343,6 +343,11 @@ export default {
         store.setSelectedSubFamily(fams[2]);
         store.setSelectedControl(fams[3]);
       }
+    },
+    clear: function (event) {
+      store.setSearchTerm("");
+      store.setStatusFilter("");
+      store.setImpactFilter("");
     }
   }
 }
