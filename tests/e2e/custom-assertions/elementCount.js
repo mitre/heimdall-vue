@@ -1,6 +1,6 @@
 // A custom Nightwatch assertion.
 // The assertion name is the filename.
-// Example usage:
+// Example usage: 
 //
 //   browser.assert.elementCount(selector, count)
 //

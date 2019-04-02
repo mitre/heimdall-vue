@@ -1,4 +1,4 @@
-// For authoring Nightwatch tests, see
+// For authoring Nightwatch tests, see 
 // http://nightwatchjs.org/guide#usage
 
 module.exports = {

@@ -3,7 +3,7 @@ let HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin')
 module.exports = {
   baseUrl: process.env.NODE_ENV === 'production' ? './' : '/',
   configureWebpack: {
-    plugins: [
+    plugins: [ 
       new HtmlWebpackPlugin({template: 'public/index.html',inlineSource: '.(js|css)$'}),
       new HtmlWebpackInlineSourcePlugin()
     ]
