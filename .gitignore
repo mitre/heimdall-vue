@@ -4,5 +4,3 @@ Thumbs.db
 dist/
 node_modules/
 .deploy*/
-#Electron-builder output
-/dist_electron
