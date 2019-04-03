@@ -30,12 +30,10 @@
     "vue-c3": "^1.2.11",
     "vue-cli": "^2.9.6",
     "vue-router": "^3.0.1",
-    "vue-tables-2": "^1.4.70",
     "vuetable-2": "^2.0.0-beta.4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.2.0",
-    "@vue/cli-plugin-e2e-nightwatch": "^3.2.0",
     "@vue/cli-plugin-eslint": "^3.2.0",
     "@vue/cli-plugin-unit-mocha": "^3.2.0",
     "@vue/cli-service": "^3.5.3",
