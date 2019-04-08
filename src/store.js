@@ -154,7 +154,12 @@ export const store = {
 
     if (control.results) {
       // Concatenate all of the results messages
+      var r_i = 0;
       control.results.forEach(function(result) {
+        if (r_i == 0)
+          data[c_id].start_time = result.start_time
+
+        r_i += 1
         //console.log(control.id + ' status: ' + result.status + ', exception: ' + result.exception);
         if (result.bactrace != undefined) {
           result.status = 'error';
