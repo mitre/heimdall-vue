@@ -39,6 +39,7 @@ export const store = {
     impact_filter: "none",
     search_term: "",
     title: "",
+    showing: "About",
     profile_name: "",
     version: "",
     controls: {},
@@ -366,6 +367,7 @@ export const store = {
   },
   setTitle(val) {
     this.state.title = val;
+    this.state.showing = 'Results';
   },
   getStatusFilter() {
     return this.state.status_filter;
@@ -468,6 +470,32 @@ export const store = {
       hsh['children'][j]['status'] = this.getStatusValue(fam_status);
     }
     return hsh;
+  },
+  getFilteredFamilies() {
+    var nist_hsh = this.getNistHash();
+    var filtered_fams = [];
+    for (var i = 0; i < nist_hsh['children'].length; i++) {
+      var family_hsh = nist_hsh['children'][i];
+      var sub_families = [];
+      for (var j = 0; j < family_hsh['children'].length; j++) {
+        var sub_family_hsh = family_hsh['children'][j];
+        if (sub_family_hsh['children'].length > 0) {
+          var children = [];
+          for (var k = 0; k < sub_family_hsh['children'].length; k++) {
+            var control = this.getControl(sub_family_hsh['children'][k]['name'])
+            control.vuln_discuss = control.vuln_discuss.replace(/<br>/g, '\n');
+            control.check_content = control.check_content.replace(/<br>/g, '\n');
+            control.fix_text = control.fix_text.replace(/<br>/g, '\n');
+            children.push(control);
+          }
+          sub_families.push({'name': sub_family_hsh['name'], 'items': children});
+        }
+      }
+      if (sub_families.length > 0) {
+        filtered_fams.push({'name': family_hsh['name'], 'desc': family_hsh['desc'], 'items': sub_families});
+      }
+    }
+    return filtered_fams;
   },
   getStatusValue(status_Ary) {
     var fam_status = 'Empty';
