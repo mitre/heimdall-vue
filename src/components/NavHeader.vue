@@ -7,9 +7,19 @@
         <text-reader @load="text = $event"></text-reader>
       </label>
     </b-nav-form>
-    <b-navbar-nav class="ml-auto">
+    <b-navbar-nav>
       <b-nav-form v-if="showCaat">
-        <b-button v-on:click="exportCaat" size="sm" class="my-2 my-sm-0" type="button">CAAT</b-button>
+        <div>
+          <b-dropdown id="dropdown-1" text="Actions" class="m-2">
+            <b-dropdown-item-button v-on:click="exportCaat">Export CAAT</b-dropdown-item-button>
+            <b-dropdown-divider></b-dropdown-divider>
+            <b-dropdown-item-button v-on:click="showSSP">Show SSP</b-dropdown-item-button>
+            <b-dropdown-item-button v-on:click="showAbout">Show About</b-dropdown-item-button>
+            <b-dropdown-item-button v-on:click="showResults">Show Results</b-dropdown-item-button>
+            <b-dropdown-item-button disabled>Clear Results</b-dropdown-item-button>
+          </b-dropdown>
+        </div>
+        <!--b-button v-on:click="exportCaat" size="sm" class="my-2 my-sm-0" type="button">CAAT</b-button-->
       </b-nav-form>
     </b-navbar-nav>
   </b-navbar>
@@ -42,6 +52,15 @@ export default {
       if (a[0] < b[0]) return -1;
       if (a[0] > b[0]) return 1;
       return 0;
+    },
+    showAbout: function() {
+      store.state.showing = 'About';
+    },
+    showResults: function() {
+      store.state.showing = 'Results';
+    },
+    showSSP: function() {
+      store.state.showing = 'SSP';
     },
     exportCaat: function (event) {
       event.preventDefault();

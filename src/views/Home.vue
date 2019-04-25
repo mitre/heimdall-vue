@@ -1,6 +1,7 @@
 <template>
   <AboutContent v-if="shouldShowAbout" />
-  <b-container v-else>
+  <SspContent v-else-if="shouldShowSSP" />
+  <b-container v-else="shouldShowResults">
     <b-row>
       <b-card-group deck>
         <CountCard title="Passed" explanation="(all tests passed)" fas_icon="check" color_variant="success"></CountCard>
@@ -32,6 +33,7 @@
 <script>
 import CountCard from '@/components/CountCard.vue'
 import AboutContent from '@/components/AboutContent.vue'
+import SspContent from '@/components/SspContent.vue'
 import ControlStatus from '@/components/ControlStatus.vue'
 import ControlImpact from '@/components/ControlImpact.vue'
 import ComplianceChart from '@/components/ComplianceChart.vue'
@@ -44,6 +46,7 @@ export default {
   components: {
     CountCard,
     AboutContent,
+    SspContent,
     ControlStatus,
     ControlImpact,
     ComplianceChart,
@@ -60,7 +63,13 @@ export default {
   },
   computed: {
     shouldShowAbout() {
-      return store.state.title == ""
+      return store.state.showing == "About"
+    },
+    shouldShowResults() {
+      return store.state.showing == "Results"
+    },
+    shouldShowSSP() {
+      return store.state.showing == "SSP"
     },
     filteredControls: function() {
       let self = this;
