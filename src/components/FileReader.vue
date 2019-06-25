@@ -21,6 +21,7 @@ export default {
         store.reset()
         store.setTitle(file.name);
         store.parseFile(text, file.name);
+        store.setShowing("Results");
       };
       reader.readAsText(file);
     }
