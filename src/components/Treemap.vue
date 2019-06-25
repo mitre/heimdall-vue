@@ -12,71 +12,72 @@
             <!-- We can use Vue transitions too! -->
             <transition-group name="list" tag="g" class="depth">
               <!-- Generate each of the visible squares at a given zoom level (the current selected node) -->
-              <g
-                class="children"
-                v-for="(children, index) in selectedNode._children"
-                :key="'c_' + children.id"
-                v-if="selectedNode"
-                >
-
-                <!-- Generate the children squares (only visible on hover of a square) -->
-                <rect
-                  v-for="child in children._children"
-                  class="child"
-                  :id="child.id"
-                  :key="child.id"
-                  :height="y(child.y1) - y(child.y0)"
-                  :width="x(child.x1) - x(child.x0)"
-                  :x="x(child.x0)"
-                  :y="y(child.y0)"
-                  :style="{ fill: color(child.data) }"
-                  >
-                </rect>
-
-                <!--
-                  The visible square rect element.
-                  You can attribute directly an event, that fires a method that changes the current node,
-                  restructuring the data tree, that reactivly gets reflected in the template.
-                -->
-                <rect
-                  class="parent"
-                  v-on:click="selectNode"
-                  :id="children.id"
-                  :key="children.id"
-                  :x="x(children.x0)"
-                  :y="y(children.y0)"
-                  :width="x(children.x1 - children.x0 + children.parent.x0)"
-                  :height="y(children.y1 - children.y0 + children.parent.y0)"
-                  :style="{ fill: color(children.data) }"
+              <div v-if="selectedNode">
+                <g
+                  class="children"
+                  v-for="children in selectedNode._children"
+                  :key="'c_' + children.id"
                   >
 
-                  <!-- The title attribute -->
-                  <title>{{ children.data.desc ? children.data.desc + ' | ' + children.data.count : children.data.count }}</title>
-                </rect>
+                  <!-- Generate the children squares (only visible on hover of a square) -->
+                  <rect
+                    v-for="child in children._children"
+                    class="child"
+                    :id="child.id"
+                    :key="child.id"
+                    :height="y(child.y1) - y(child.y0)"
+                    :width="x(child.x1) - x(child.x0)"
+                    :x="x(child.x0)"
+                    :y="y(child.y0)"
+                    :style="{ fill: color(child.data) }"
+                    >
+                  </rect>
 
-                <!-- The visible square text element with the title and value of the child node -->
-                <text
-                  dy="1em"
-                  :key="'t_' + children.id"
-                  :x="x(children.x0) + 6"
-                  :y="y(children.y0) + 6"
-                  style="fill-opacity: 1;"
-                  >
-                  {{ children.data.name}}
-                </text>
+                  <!--
+                    The visible square rect element.
+                    You can attribute directly an event, that fires a method that changes the current node,
+                    restructuring the data tree, that reactivly gets reflected in the template.
+                  -->
+                  <rect
+                    class="parent"
+                    v-on:click="selectNode"
+                    :id="children.id"
+                    :key="children.id"
+                    :x="x(children.x0)"
+                    :y="y(children.y0)"
+                    :width="x(children.x1 - children.x0 + children.parent.x0)"
+                    :height="y(children.y1 - children.y0 + children.parent.y0)"
+                    :style="{ fill: color(children.data) }"
+                    >
 
-                <text
-                  dy="2.25em"
-                  :key="'tt_' + children.id"
-                  :x="x(children.x0) + 6"
-                  :y="y(children.y0) + 6"
-                  style="fill-opacity: 1;"
-                  >
+                    <!-- The title attribute -->
+                    <title>{{ children.data.desc ? children.data.desc + ' | ' + children.data.count : children.data.count }}</title>
+                  </rect>
 
-                  {{ children.data.count > 0 ? children.data.count : '' }}
-                </text>
+                  <!-- The visible square text element with the title and value of the child node -->
+                  <text
+                    dy="1em"
+                    :key="'t_' + children.id"
+                    :x="x(children.x0) + 6"
+                    :y="y(children.y0) + 6"
+                    style="fill-opacity: 1;"
+                    >
+                    {{ children.data.name}}
+                  </text>
 
-              </g>
+                  <text
+                    dy="2.25em"
+                    :key="'tt_' + children.id"
+                    :x="x(children.x0) + 6"
+                    :y="y(children.y0) + 6"
+                    style="fill-opacity: 1;"
+                    >
+
+                    {{ children.data.count > 0 ? children.data.count : '' }}
+                  </text>
+
+                </g>
+              </div>
             </transition-group>
 
             <!-- The top most element, representing the previous node -->
@@ -280,6 +281,19 @@ export default {
       let that = this
 
       if (that.jsonData) {
+        // Make a child-getter that turns controls into a simpler representation
+        function children(d) {
+          if(d.children) { // Simple test to see if it's a a top level thing
+            return d.children;
+          } else { // Must be a control - reduce to a simpler form
+            return {
+                name: control.tags.gid,
+                status: control.status,
+                value: 1,
+            };
+          }
+        }
+
         that.rootNode = d3.hierarchy(that.jsonData)
         .eachBefore(function (d) { d.id = (d.parent ? d.parent.id + '.' : '') + d.data.name })
         .sum((d) => d.value)
@@ -326,17 +340,17 @@ export default {
       var length = fams.length;
       if (length == 1) {
         console.log("Clicked " + fams[0]);
-        store.setSelectedFamily('');
+        store.setSelectedFamily(null);
       } else if (length == 2) {
         console.log("Clicked " + fams[1]);
         store.setSelectedFamily(fams[1]);
-        store.setSelectedSubFamily('');
-        store.setSelectedControl('');
+        store.setSelectedSubFamily(null);
+        store.setSelectedControl(null);
       } else if (length == 3) {
         console.log("Clicked " + fams[2]);
         store.setSelectedFamily(fams[1]);
         store.setSelectedSubFamily(fams[2]);
-        store.setSelectedControl('');
+        store.setSelectedControl(null);
       } else if (length == 4) {
         console.log("Clicked " + fams[3]);
         store.setSelectedFamily(fams[1]);
@@ -345,9 +359,9 @@ export default {
       }
     },
     clear: function (event) {
-      store.setSearchTerm("");
-      store.setStatusFilter("");
-      store.setImpactFilter("");
+      store.setSearchTerm(null);
+      store.setStatusFilter(null);
+      store.setImpactFilter(null);
     }
   }
 }
