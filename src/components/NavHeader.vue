@@ -67,7 +67,7 @@ export default {
 
       var caat = [];
       var vulnList = [];
-      var controls = store.getControls()
+      var controls = store.getFilteredNistControls()
       for (var ind in controls) {
         var control = controls[ind];
         var field = [];

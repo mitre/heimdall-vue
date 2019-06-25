@@ -74,7 +74,7 @@ export default {
     },
     getControls: function () {
       if (isMounted == true) {
-        var val = store.getControls();
+        var val = store.getFilteredNistControls();
         let vm = this;
         // Here's the magic to keeping the DataTable in sync.
         // It must be cleared, new rows added, then redrawn!
@@ -108,7 +108,7 @@ export default {
   },
   mounted() {
     let vm = this;
-    var val = store.getControls();
+    var val = store.getFilteredNistControls();
     vm.rows = [];
     // You should _probably_ check that this is changed data... but we'll skip that for this example.
 

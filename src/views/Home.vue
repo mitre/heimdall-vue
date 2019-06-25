@@ -74,14 +74,14 @@ export default {
     filteredControls: function() {
       let self = this;
       store.setSearchTerm(self.search.toLowerCase());
-      var ctls = store.getControls();
+      var ctls = store.getFilteredNistControls();
       return ctls;
     }
   },
   mounted() {
     let vm = this;
     vm.controls = [];
-    vm.controls = store.getControls();
+    vm.controls = store.getFilteredNistControls();
   },
   created() {
     window.addEventListener("resize", this.winWidth);
