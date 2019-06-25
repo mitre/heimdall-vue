@@ -78,7 +78,7 @@
     data () {
       return {
         expand: true,
-        status: store.getStatus(),
+        status: store.getStatusHash(),
         families: store.getFilteredFamilies(),
         store,
       }
@@ -95,7 +95,7 @@
         return this.expand == false;
       },
       compliance_level: function () {
-        return Math.round(store.state.compliance, 1);
+        return Math.round(store.getCompliance(), 1);
       },
       passed: function () {
         return this.count('Passed');
@@ -122,13 +122,7 @@
 
     methods: {
       count: function (name) {
-        var val = 0;
-        for (var i = 0; i < this.status.length; i++) {
-          if (this.status[i][0] == name) {
-            val = this.status[i][1];
-          }
-        }
-        return val;
+        return this.status[name] || 0;
       },
       expandAll: function() {
         this.expand = false;

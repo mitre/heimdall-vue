@@ -41,7 +41,7 @@
     updated: function () {
       var reload_data = {
         unload: true,
-        columns: store.getCompliance()
+        columns: [["Data", store.getCompliance()]]
       };
       this.handler.$emit('dispatch', (chart) => chart.load(reload_data));
     },
@@ -50,7 +50,7 @@
       // to init the graph call:
       const options = {
         data: {
-          columns: this.activeCompliance,
+          columns: [["Data", this.activeCompliance]],
           type : 'gauge',
         },
         color: {
