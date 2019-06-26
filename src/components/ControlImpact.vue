@@ -33,14 +33,14 @@
         return store.getBindValue();
       },
       activeImpact: function () {
-        return store.getImpact();
+        return store.getSeverityCount();
       }
     },
 
     updated: function () {
       var reload_data = {
         unload: true,
-        columns: store.getImpact()
+        columns: store.getSeverityCount()
       };
       this.handler.$emit('dispatch', (chart) => chart.load(reload_data));
     },

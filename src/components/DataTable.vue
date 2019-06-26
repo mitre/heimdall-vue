@@ -74,14 +74,12 @@ export default {
     },
     getControls: function () {
       if (isMounted == true) {
-        var val = store.getFilteredNistControls();
+        var controls = store.getFilteredNistControls();
         let vm = this;
         // Here's the magic to keeping the DataTable in sync.
         // It must be cleared, new rows added, then redrawn!
         vm.dtHandle.clear();
-        val.forEach(function (item) {
-          vm.dtHandle.rows.add($(helpers.rowHtml(item))).draw();
-        });
+        controls.forEach(control => vm.dtHandle.rows.add($(helpers.rowHtml(item))).draw());
 
         vm.dtHandle.draw();
       }
@@ -146,7 +144,8 @@ export default {
         }
         else {
             tr.addClass( 'details' );
-            row.child( helpers.detailsPanel( store.getControl(td.innerHTML) ) ).show();
+            var control_uid = tr.attr("unique_id");//
+            row.child( helpers.detailsPanel( store.getControlByUniqueID(control_uid) ) ).show();
 
             // Add to the 'open' array
             if ( idx === -1 ) {

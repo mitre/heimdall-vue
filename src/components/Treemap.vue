@@ -23,7 +23,7 @@
                     v-for="child in children._children"
                     class="child"
                     :id="child.id"
-                    :key="(child.data && child.data.unique_id) || child.id"
+                    :key="child.id"
                     :unique_id="child.data.unique_id"
                     :height="y(child.y1) - y(child.y0)"
                     :width="x(child.x1) - x(child.x0)"
@@ -42,7 +42,7 @@
                     class="parent"
                     v-on:click="selectNode"
                     :id="children.id"
-                    :key="(children.data && children.data.unique_id) || children.id"
+                    :key="children.id"
                     :unique_id="children.data.unique_id"
                     :x="x(children.x0)"
                     :y="y(children.y0)"
@@ -218,7 +218,7 @@ export default {
   // The reactive computed variables that fire rerenders
   computed: {
     testBind: function() {
-      return store.getStatusFilter() + store.getImpactFilter() + store.getSearchTerm();
+      return store.getStatusFilter() + store.getSeverityFilter() + store.getSearchTerm();
     },
     // The grandparent id
     parentId () {
@@ -300,8 +300,14 @@ export default {
 
         that.rootNode = d3.hierarchy(that.jsonData, children)
         .eachBefore(function (d) { 
-          d.id = (d.parent ? d.parent.id + '.' : '') + d.data.name;
-          
+          if(d.data.unique_id) {
+            // Key controls uniquely by their parent id and their unique id
+            // Note that we must do both since controls may appear under multiple parents
+            // and each id must be distinct!
+            d.id = d.parent.id + "." + d.data.unique_id;
+          } else {
+            d.id = (d.parent ? d.parent.id + '.' : '') + d.data.name;
+          }
         })
         .sum((d) => d.value)
         .sort(function (a, b) {
