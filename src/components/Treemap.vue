@@ -10,9 +10,8 @@
         <svg id="chartBody" :height="height" style="margin-left: 15px;" :width="width">
           <g style="shape-rendering: crispEdges;" transform="translate(0,20)">
             <!-- We can use Vue transitions too! -->
-            <transition-group name="list" tag="g" class="depth">
+            <transition-group name="list" tag="g" class="depth" v-if="selectedNode._children">
               <!-- Generate each of the visible squares at a given zoom level (the current selected node) -->
-              <div v-if="selectedNode">
                 <g
                   class="children"
                   v-for="children in selectedNode._children"
@@ -24,7 +23,8 @@
                     v-for="child in children._children"
                     class="child"
                     :id="child.id"
-                    :key="child.id"
+                    :key="(child.data && child.data.unique_id) || child.id"
+                    :unique_id="child.data.unique_id"
                     :height="y(child.y1) - y(child.y0)"
                     :width="x(child.x1) - x(child.x0)"
                     :x="x(child.x0)"
@@ -42,7 +42,8 @@
                     class="parent"
                     v-on:click="selectNode"
                     :id="children.id"
-                    :key="children.id"
+                    :key="(children.data && children.data.unique_id) || children.id"
+                    :unique_id="children.data.unique_id"
                     :x="x(children.x0)"
                     :y="y(children.y0)"
                     :width="x(children.x1 - children.x0 + children.parent.x0)"
@@ -77,7 +78,6 @@
                   </text>
 
                 </g>
-              </div>
             </transition-group>
 
             <!-- The top most element, representing the previous node -->
@@ -184,10 +184,8 @@ export default {
   },
   updated () {
     if (isMounted == false) {
-      console.log("Mounted")
       isMounted = true;
     } else {
-      console.log("Updated")
       isMounted = false;
       var that = this
 
@@ -206,7 +204,6 @@ export default {
         if (obj.status in colors) {
           clr = colors[obj.status];
         }
-        //console.log(obj.name + ", " + obj.status + ": " + clr);
         return clr;
       };
 
@@ -281,21 +278,31 @@ export default {
       let that = this
 
       if (that.jsonData) {
-        // Make a child-getter that turns controls into a simpler representation
+        // Make a function that converts controls into simple objects, for d3 heirarchy
+        // This allows us to convert controls on demand to have whatever properties we require
         function children(d) {
-          if(d.children) { // Simple test to see if it's a a top level thing
-            return d.children;
-          } else { // Must be a control - reduce to a simpler form
-            return {
-                name: control.tags.gid,
-                status: control.status,
-                value: 1,
-            };
+          if(d.children && d.children.length) { // Simple test: does this item have children? Fall through case doesn't matter
+            if(d.children[0].rule_title) { // If so, we want to know: are the children controls? Only controls have a rule_title
+              // Controls aren't what we want. Instead, map them to simplified representations
+              return d.children.map(control => {
+                return {
+                  name: control.id || control.tags.gid,
+                  unique_id: control.unique_id,
+                  status: control.status,
+                  value: 1,
+                }
+              });
+            } else { // Children aren't controls
+              return d.children;
+            }
           }
         }
 
-        that.rootNode = d3.hierarchy(that.jsonData)
-        .eachBefore(function (d) { d.id = (d.parent ? d.parent.id + '.' : '') + d.data.name })
+        that.rootNode = d3.hierarchy(that.jsonData, children)
+        .eachBefore(function (d) { 
+          d.id = (d.parent ? d.parent.id + '.' : '') + d.data.name;
+          
+        })
         .sum((d) => d.value)
         .sort(function (a, b) {
           return b.height - a.height || b.value - a.value
@@ -339,23 +346,29 @@ export default {
       var fams = event.target.id.split('.');
       var length = fams.length;
       if (length == 1) {
-        console.log("Clicked " + fams[0]);
+        // They've clicked the top level item
+        console.log("Clicked root " + fams[0]);
         store.setSelectedFamily(null);
       } else if (length == 2) {
-        console.log("Clicked " + fams[1]);
+        // They've clicked a family
+        console.log("Clicked family " + fams[1]);
         store.setSelectedFamily(fams[1]);
         store.setSelectedSubFamily(null);
         store.setSelectedControl(null);
       } else if (length == 3) {
-        console.log("Clicked " + fams[2]);
+        // They've clicked a subfamily/category
+        console.log("Clicked category " + fams[2]);
         store.setSelectedFamily(fams[1]);
         store.setSelectedSubFamily(fams[2]);
         store.setSelectedControl(null);
       } else if (length == 4) {
-        console.log("Clicked " + fams[3]);
+        // They've clicked a control
+        // This means that our event.target should contain the unique_id of its cassociated control
+        console.log("Clicked control " + fams[3] + "with unique id " + parseInt(event.target.getAttribute("unique_id")));
+        console.log(event);
         store.setSelectedFamily(fams[1]);
         store.setSelectedSubFamily(fams[2]);
-        store.setSelectedControl(fams[3]);
+        store.setSelectedControl(parseInt(event.target.getAttribute("unique_id")));
       }
     },
     clear: function (event) {
@@ -375,7 +388,7 @@ text {
 
 .grandparent text {
   font-weight: bold;
-  color: #red
+  color: red;
 }
 
 rect {
