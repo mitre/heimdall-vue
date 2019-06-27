@@ -1,8 +1,34 @@
 <template>
-  <label class="text-reader">
-    <input type="file" @change="loadTextFromFile">
+  <label class="file-select">
+    <div class="select-button">
+      <span v-if="getTitle()">Selected File: {{getTitle()}}</span>  
+      <span v-else>Select File</span>
+    </div>
+    <input type="file" @change="loadTextFromFile"/>
   </label>
 </template>
+
+
+<style scoped>
+
+.file-select > .select-button {
+  padding: 0.75rem;
+
+  color: white;
+  background-color: #0000FF;
+
+  border-radius: 0.5rem;
+
+  text-align: center;
+  font-weight: bold;
+}
+
+.file-select > input[type="file"] {
+  display: none;
+}
+
+</style>
+
 
 <script>
 import { store } from "../store.js";
@@ -23,6 +49,9 @@ export default {
         store.parseFile(text, file.name);
       };
       reader.readAsText(file);
+    },
+    getTitle() {
+      return store.state.title;
     }
   }
 };
@@ -32,7 +61,7 @@ export default {
 /*
 input[type="file" i] {
     -webkit-appearance: initial;
-    background-color: #6c757d !important;
+    background-color: #FF00FF !important;
     color: white;
     cursor: default;
     padding: initial;
