@@ -18,7 +18,7 @@
          <h2 class="featurette-heading">View the results of an InSpec execution json.</h2>
          <p class="lead">Easily see how many controls passed and failed.</p>
          <p class="lead">Click on the donut charts to filter the controls by status and severity.</p>
-         <img class="featurette-image img-fluid" id="base_image" src="./src/assets/heimdall-lite-controls.png">
+         <img class="featurette-image img-fluid" id="base_image" src="../assets/heimdall-lite-controls.png">
       </div>
 
       <hr class="featurette-divider">
@@ -27,11 +27,11 @@
       <div class="featurette" id="services">
          <h2 class="featurette-heading">Use the treemap or datatable to navigate through your controls.</h2>
          <p class="lead"></p>
-         <img class="featurette-image img-fluid" id="treemap_image" src="./src/assets/nist_tree_map.png">
+         <img class="featurette-image img-fluid" id="treemap_image" src="../assets/nist_tree_map.png">
 
          <hr class="featurette-divider">
 
-         <img class="featurette-image img-fluid" id="data_table_image" style="width: 100%" src="./src/assets/data_table.png">
+         <img class="featurette-image img-fluid" id="data_table_image" style="width: 100%" src="../assets/data_table.png">
       </div>
 
       <hr class="featurette-divider">
@@ -40,7 +40,7 @@
       <div class="featurette" id="contact">
          <h2 class="featurette-heading">Click on a control to detect which tests passed or failed, or see its details and code.</h2>
          <p class="lead"></p>
-         <img class="featurette-image img-fluid pull-right" id="results_image" src="./src/assets/results_details.png">
+         <img class="featurette-image img-fluid pull-right" id="results_image" src="../assets/results_details.png">
       </div>
 
       <hr class="featurette-divider">
