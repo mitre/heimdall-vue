@@ -9,7 +9,9 @@
     "lint": "vue-cli-service lint",
     "test:e2e": "vue-cli-service test:e2e",
     "test:unit": "vue-cli-service test:unit",
-    "electron": "vue-cli-service build; electron ."
+    "electron": "vue-cli-service build; electron .",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.12",
@@ -36,12 +38,19 @@
     "xlsx": "^0.14.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@storybook/addon-actions": "^5.1.9",
+    "@storybook/addon-links": "^5.1.9",
+    "@storybook/addons": "^5.1.9",
+    "@storybook/vue": "^5.1.9",
     "@vue/cli-plugin-babel": "^3.2.0",
     "@vue/cli-plugin-eslint": "^3.2.0",
     "@vue/cli-plugin-unit-mocha": "^3.2.0",
     "@vue/cli-service": "^3.5.3",
     "@vue/test-utils": "^1.0.0-beta.20",
     "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.0.6",
+    "babel-preset-vue": "^2.0.2",
     "chai": "^4.1.2",
     "electron": "^3.0.13",
     "eslint": "^5.8.0",
