@@ -44,7 +44,7 @@ export default {
   },
   computed: {
     showCaat() {
-      return store.state.title != ""
+      return store.getTitle() != ""
     }
   },
   methods: {
@@ -54,20 +54,20 @@ export default {
       return 0;
     },
     showAbout: function() {
-      store.state.showing = 'About';
+      store.setShowing('About');
     },
     showResults: function() {
-      store.state.showing = 'Results';
+      store.setShowing('Results');
     },
     showSSP: function() {
-      store.state.showing = 'SSP';
+      store.setShowing('SSP');
     },
     exportCaat: function (event) {
       event.preventDefault();
 
       var caat = [];
       var vulnList = [];
-      var controls = store.getControls()
+      var controls = store.getFilteredNistControls()
       for (var ind in controls) {
         var control = controls[ind];
         var field = [];

@@ -40,14 +40,7 @@
         return store.getBindValue();
       },
       count: function () {
-        var status = store.getStatus();
-        var val = 0;
-        for (var i = 0; i < status.length; i++) {
-          if (status[i][0] == this.title) {
-            val = status[i][1];
-          }
-        }
-        return val;
+        return store.getStatusHash()[this.title] || 0;
       }
     },
 

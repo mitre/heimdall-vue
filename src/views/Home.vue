@@ -1,7 +1,7 @@
 <template>
   <AboutContent v-if="shouldShowAbout" />
   <SspContent v-else-if="shouldShowSSP" />
-  <b-container v-else="shouldShowResults">
+  <b-container v-else-if="shouldShowResults">
     <b-row>
       <b-card-group deck>
         <CountCard title="Passed" explanation="(all tests passed)" fas_icon="check" color_variant="success"></CountCard>
@@ -63,25 +63,25 @@ export default {
   },
   computed: {
     shouldShowAbout() {
-      return store.state.showing == "About"
+      return store.getShowing() == "About"
     },
     shouldShowResults() {
-      return store.state.showing == "Results"
+      return store.getShowing() == "Results"
     },
     shouldShowSSP() {
-      return store.state.showing == "SSP"
+      return store.getShowing() == "SSP"
     },
     filteredControls: function() {
       let self = this;
       store.setSearchTerm(self.search.toLowerCase());
-      var ctls = store.getControls();
+      var ctls = store.getFilteredNistControls();
       return ctls;
     }
   },
   mounted() {
     let vm = this;
     vm.controls = [];
-    vm.controls = store.getControls();
+    vm.controls = store.getFilteredNistControls();
   },
   created() {
     window.addEventListener("resize", this.winWidth);

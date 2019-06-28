@@ -11,9 +11,17 @@ export const helpers = {
     else
       return 'btn btn-info'
   },
-  rowHtml(item) {
-    var table_rows = '<tr><td class="details-control"><button class="' + helpers.status_btn(item.status) + '" style="width:120px">' + item.status + '</td>'
-      + '<td>' + item.gid + '</td><td>' + item.rule_title + '</td><td>' + item.severity + '</td><td>' + item.nist +'</td></tr>';
+  rowHtml(control) {
+    var table_rows = `<tr unique_id="${control.unique_id}">
+<td class="details-control">
+  <button class="${helpers.status_btn(control.status)}" style="width:120px">
+  ${control.status}
+</td> 
+<td>${control.id}</td>
+<td>${control.rule_title}</td>
+<td>${control.severity}</td>
+<td>${control.tags.raw_nist.join(', ')}</td>
+</tr>`;
     return table_rows;
   },
   format ( control_id ) {

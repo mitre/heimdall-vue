@@ -33,14 +33,14 @@
         return store.getBindValue();
       },
       activeStatus: function () {
-        return store.getStatus();
+        return store.getStatusCount();
       }
     },
 
     updated: function () {
       var reload_data = {
         unload: true,
-        columns: store.getStatus()
+        columns: store.getStatusCount()
       };
       this.handler.$emit('dispatch', (chart) => chart.load(reload_data));
     },
