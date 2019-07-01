@@ -72,6 +72,8 @@ export default {
     testBind: function() {
       return store.getBindValue();
     },
+    
+    /* eslint vue/return-in-computed-property: 0 */
     getControls: function () {
       if (isMounted == true) {
         var val = store.getControls();
@@ -86,6 +88,7 @@ export default {
         vm.dtHandle.draw();
       }
     }
+    /* eslint return-in-computed-property:1 */
   },
   watch: {
     controls(val, oldVal) {

@@ -14,7 +14,7 @@
               <!-- Generate each of the visible squares at a given zoom level (the current selected node) -->
               <g
                 class="children"
-                v-for="(children, index) in selectedNode._children"
+                v-for="(children) in selectedNode._children"
                 :key="'c_' + children.id"
                 v-if="selectedNode"
                 >
