@@ -1,6 +1,9 @@
 language: node_js
 node_js:
   - "stable"
+branches:
+  only: 
+    - master
 notifications:
   email:
     recipients:
@@ -8,4 +11,5 @@ notifications:
     on_success: always
     on_failure: never
 script:
-  - echo "Hello, The World!"
+  - echo "Hello, Linter!"
+  - npm run lint
