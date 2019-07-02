@@ -1,7 +1,7 @@
 <template>
   <AboutContent v-if="shouldShowAbout" />
   <SspContent v-else-if="shouldShowSSP" />
-  <b-container v-else="shouldShowResults">
+  <b-container v-else>
     <b-row>
       <b-card-group deck>
         <CountCard title="Passed" explanation="(all tests passed)" fas_icon="check" color_variant="success"></CountCard>
