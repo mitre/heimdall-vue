@@ -57,6 +57,15 @@ If you have a proxy, remember to setup your NPM enviroment to respect the proxy
 - `npm config set proxy http://myproxy:8080`
 - `npm config set https-proxy https://myproxy:443`
 
+### Install Problems
+
+If you run "npm install" and get the error "unable to get local issuer certificate", you can run this command:
+```
+  npm config set strict-ssl false
+```
+
+If you run "npm install" and get the error "node-pre-gyp ERR! Completion callback never invoked!", you can delete the "package-lock.json" file and try it again.
+
 ## Release Process 
 
 ### Branches
