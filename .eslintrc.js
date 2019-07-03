@@ -20,8 +20,7 @@ module.exports = {
   plugins: ['vue'],
   
   extends: [
-    'plugin:vue/essential',
-    'eslint:essential'
+    'plugin:vue/essential'
   ],
   parserOptions: {
     parser: 'babel-eslint'
