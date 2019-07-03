@@ -34,6 +34,8 @@
     "vue-c3": "^1.2.11",
     "vue-cli": "^2.9.6",
     "vue-router": "^3.0.1",
+    "vuesax": "^3.8.77",
+    "vuetify": "^1.5.16",
     "vuetable-2": "^2.0.0-beta.4",
     "xlsx": "^0.14.2"
   },
@@ -46,7 +48,7 @@
     "@vue/cli-plugin-babel": "^3.2.0",
     "@vue/cli-plugin-eslint": "^3.2.0",
     "@vue/cli-plugin-unit-mocha": "^3.2.0",
-    "@vue/cli-service": "^3.5.3",
+    "@vue/cli-service": "^3.8.4",
     "@vue/test-utils": "^1.0.0-beta.20",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.6",
@@ -57,7 +59,7 @@
     "eslint-plugin-vue": "^5.0.0-0",
     "html-webpack-inline-source-plugin": "0.0.10",
     "html-webpack-plugin": "^3.2.0",
-    "jquery": "^3.3.1",
+    "jquery": "^3.4.1",
     "node-sass": "^4.12.0",
     "sass-loader": "^7.1.0",
     "vue-template-compiler": "^2.5.17"
