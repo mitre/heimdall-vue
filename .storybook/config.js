@@ -12,6 +12,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 // Import your global components.
 
 // import ControlDetail from '../src/components/ControlDetail.vue';
+import VxCard from '../src/components/vx-card/VxCard.vue';
 import AboutContent from '../src/components/AboutContent.vue';
 import CountCard from '../src/components/CountCard.vue';
 import SspContent from '../src/components/SspContent.vue';
@@ -36,6 +37,7 @@ Vue.component('DataTable',DataTable);
 Vue.component('NavHeader',NavHeader);
 Vue.component('Treemap',Treemap);
 Vue.component('Home',Home);
+Vue.component('VxCard',VxCard);
 
 
 // Register global components.
