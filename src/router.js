@@ -47,7 +47,13 @@ const router = new Router({
           path: "/page2",
           name: "page2",
           component: () => import("./views/Page2.vue")
+        },
+        {
+          path: "/page3",
+          name: "page3",
+          component: () => import("./views/Page3.vue")
         }
+
       ]
     },
     // =============================================================================
