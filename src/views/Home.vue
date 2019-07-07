@@ -1,6 +1,6 @@
 <template>
   <AboutContent v-if="shouldShowAbout" />
-  <SspContent v-else-if="shouldShowSSP" />
+  <!-- <SspContent v-else-if="shouldShowSSP" /> -->
   <b-container v-else>
     <b-row>
       <b-card-group deck>
@@ -99,35 +99,35 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.drop_button {
-  position: relative;
-  bottom: -20px;
-  z-index: -1;
-}
-.row {
-  margin-top: 15px;
-}
-.card-deck {
-  width: 100%;
-}
-.card-header {
-  position: relative;
-}
-@media (min-width: 576px) {
-  .card-deck {
-      -ms-flex-flow: row wrap;
-      -webkit-box-orient: horizontal;
-      -webkit-box-direction: normal;
-      flex-flow: row wrap;
-      margin-right: 0px;
-      margin-left: 0px;
-  }
-}
-.container {
-    width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
-}
+// .drop_button {
+//   position: relative;
+//   bottom: -20px;
+//   z-index: -1;
+// }
+// .row {
+//   margin-top: 15px;
+// }
+// .card-deck {
+//   width: 100%;
+// }
+// .card-header {
+//   position: relative;
+// }
+// @media (min-width: 576px) {
+//   .card-deck {
+//       -ms-flex-flow: row wrap;
+//       -webkit-box-orient: horizontal;
+//       -webkit-box-direction: normal;
+//       flex-flow: row wrap;
+//       margin-right: 0px;
+//       margin-left: 0px;
+//   }
+// }
+// .container {
+//     width: 100%;
+//     padding-right: 15px;
+//     padding-left: 15px;
+//     margin-right: auto;
+//     margin-left: auto;
+// }
 </style>

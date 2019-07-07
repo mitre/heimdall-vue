@@ -1,6 +1,6 @@
 <template>
   <b-container fluid>
-    <NavHeader/>
+    <!--  <NavHeader/> -->
     <router-view/>
   </b-container>
 </template>
@@ -12,7 +12,7 @@ import NavHeader from '@/components/NavHeader.vue'
 export default {
   name: 'app',
   components: {
-    NavHeader
+    // NavHeader
   }
 }
 </script>
