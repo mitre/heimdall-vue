@@ -4,44 +4,53 @@ https://heimdall-vue.netlify.com
 
 # [Heimdall-Vue](https://www.github.com/mitre/heimdall-vue)
 
+## Samples
+
+Example JSON profiles are stored in `sample_jsons/`
+
 ## Project setup
-```
+``` bash
 npm install
 ```
 
 ### Compiles and hot-reloads for development
-```
+``` bash
 npm run serve
 ```
 
 ### Compiles and minifies for production
-```
+``` bash
 npm run build
 ```
 
 ### Compiles and runs as electron application
-```
+``` bash
 npm run electron
 ```
 
 ### Run your tests
-```
+``` bash
 npm run test
 ```
 
 ### Lints and fixes files
-```
+``` bash
 npm run lint
 ```
 
 ### Run your end-to-end tests
-```
+``` bash
 npm run test:e2e
 ```
 
 ### Run your unit tests
-```
+``` bash
 npm run test:unit
+```
+
+### Run storybook
+``` bash
+npm run storybook
 ```
 
 ### Customize configuration
@@ -56,6 +65,42 @@ If you have a proxy, remember to setup your NPM enviroment to respect the proxy
 - `npm config set strict-ssl false`
 - `npm config set proxy http://myproxy:8080`
 - `npm config set https-proxy https://myproxy:443`
+
+## Contributing
+
+### Components
+
+When developing Vue components, add your component to `src/components`, following a similar style to existing components.
+
+#### Storybook integration
+
+For visual components it is advised to add a story view of the component to
+storybook. This will serve as a visualization of the component under test
+conditions and serves to help other developers know how newly developed
+components are supposed to be used.
+
+First thing to do is after creating the component, register it in storybooks config.js file (`.storybook/config.js`)
+
+``` js
+import MyComponent from '../src/components/MyComponent.vue';
+Vue.component('MyComponent',MyComponent);
+```
+
+This needs to be done as storybook runs its own instance of vue.
+
+Next step is to add a story to `stories/index.stories.js` or add one to a file in `stories/` then import said story into `stories/index.stories.js`
+
+Stories look like the following example from https://storybook.js.org/docs/guides/guide-vue/:
+
+``` js 
+storiesOf('Button', module)
+  .add('with text', () => '<my-button>with text</my-button>')
+  .add('with emoji', () => '<my-button>😀 😎 👍 💯</my-button>')
+  .add('as a component', () => ({
+    components: { MyButton },
+    template: '<my-button :rounded="true">rounded</my-button>'
+  }));
+```
 
 ## Release Process 
 
