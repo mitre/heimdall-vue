@@ -4,45 +4,73 @@
   <b-container v-else>
     <b-row>
       <b-card-group deck>
-        <CountCard title="Passed" explanation="(all tests passed)" fas_icon="check" color_variant="success"></CountCard>
-        <CountCard title="Failed" explanation="(has tests that failed)" fas_icon="times" color_variant="danger"></CountCard>
-        <CountCard title="Not Applicable" explanation="(exception for this system and/or absent component)" fas_icon="ban" color_variant="primary"></CountCard>
-        <CountCard title="Not Reviewed" explanation="(can only be tested manually or disabled test)" fas_icon="exclamation-triangle" color_variant="warning"></CountCard>
-        <CountCard title="Profile Error" explanation="(check profile run privileges or check with profile author)" fas_icon="exclamation-circle" color_variant="info"></CountCard>
+        <CountCard
+          title="Passed"
+          explanation="(all tests passed)"
+          fas_icon="check"
+          color_variant="success"
+        ></CountCard>
+        <CountCard
+          title="Failed"
+          explanation="(has tests that failed)"
+          fas_icon="times"
+          color_variant="danger"
+        ></CountCard>
+        <CountCard
+          title="Not Applicable"
+          explanation="(exception for this system and/or absent component)"
+          fas_icon="ban"
+          color_variant="primary"
+        ></CountCard>
+        <CountCard
+          title="Not Reviewed"
+          explanation="(can only be tested manually or disabled test)"
+          fas_icon="exclamation-triangle"
+          color_variant="warning"
+        ></CountCard>
+        <CountCard
+          title="Profile Error"
+          explanation="(check profile run privileges or check with profile author)"
+          fas_icon="exclamation-circle"
+          color_variant="info"
+        ></CountCard>
       </b-card-group>
     </b-row>
     <b-row>
       <b-card-group deck>
-        <ControlStatus/>
-        <ControlImpact/>
-        <ComplianceChart/>
+        <ControlStatus />
+        <ControlImpact />
+        <ComplianceChart />
       </b-card-group>
     </b-row>
     <b-row id="chart">
       <b-card-group deck>
-        <Treemap :key="resizeKey"/>
+        <Treemap :key="resizeKey" />
       </b-card-group>
     </b-row>
     <b-row>
-      <b-col align-self="end" style='text-align: right'>Search: <input id="search_input" v-model="search"></b-col>
+      <b-col align-self="end" style="text-align: right">
+        Search:
+        <input id="search_input" v-model="search" />
+      </b-col>
     </b-row>
     <DataTable :controls="filteredControls"></DataTable>
   </b-container>
 </template>
 
 <script>
-import CountCard from '@/components/CountCard.vue'
-import AboutContent from '@/components/AboutContent.vue'
-import SspContent from '@/components/SspContent.vue'
-import ControlStatus from '@/components/ControlStatus.vue'
-import ControlImpact from '@/components/ControlImpact.vue'
-import ComplianceChart from '@/components/ComplianceChart.vue'
-import Treemap from '@/components/Treemap.vue'
-import DataTable from '@/components/DataTable.vue'
+import CountCard from "@/components/CountCard.vue";
+import AboutContent from "@/components/AboutContent.vue";
+import SspContent from "@/components/SspContent.vue";
+import ControlStatus from "@/components/ControlStatus.vue";
+import ControlImpact from "@/components/ControlImpact.vue";
+import ComplianceChart from "@/components/ComplianceChart.vue";
+import Treemap from "@/components/Treemap.vue";
+import DataTable from "@/components/DataTable.vue";
 import { store } from "../store.js";
 
 export default {
-  name: '',
+  name: "",
   components: {
     CountCard,
     AboutContent,
@@ -53,23 +81,23 @@ export default {
     Treemap,
     DataTable
   },
-  data () {
+  data() {
     return {
       title: store.getTitle(),
       store,
-      search: '',
+      search: "",
       resizeKey: window.innerWidth
-    }
+    };
   },
   computed: {
     shouldShowAbout() {
-      return store.state.showing == "About"
+      return store.state.showing == "About";
     },
     shouldShowResults() {
-      return store.state.showing == "Results"
+      return store.state.showing == "Results";
     },
     shouldShowSSP() {
-      return store.state.showing == "SSP"
+      return store.state.showing == "SSP";
     },
     filteredControls: function() {
       let self = this;
@@ -90,13 +118,13 @@ export default {
     window.removeEventListener("resize", this.winWidth);
   },
   methods: {
-    winWidth: function () {
+    winWidth: function() {
       var winw = window.innerWidth;
       console.log("winWidth: " + winw);
       this.resizeKey = winw;
     }
   }
-}
+};
 </script>
 <style lang="scss" scoped>
 .drop_button {
@@ -115,19 +143,19 @@ export default {
 }
 @media (min-width: 576px) {
   .card-deck {
-      -ms-flex-flow: row wrap;
-      -webkit-box-orient: horizontal;
-      -webkit-box-direction: normal;
-      flex-flow: row wrap;
-      margin-right: 0px;
-      margin-left: 0px;
+    -ms-flex-flow: row wrap;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    flex-flow: row wrap;
+    margin-right: 0px;
+    margin-left: 0px;
   }
 }
 .container {
-    width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
 }
 </style>

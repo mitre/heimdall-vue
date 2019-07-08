@@ -7,9 +7,9 @@
   Author URL: http://www.themeforest.net/user/pixinvent
 ==========================================================================================*/
 
-import navbarSearchAndPinList from '@/layouts/components/navbarSearchAndPinList'
-import themeConfig from '@/../themeConfig.js'
-import colors from '@/../themeConfig.js'
+import navbarSearchAndPinList from "@/layouts/components/navbarSearchAndPinList";
+import themeConfig from "@/../themeConfig.js";
+import colors from "@/../themeConfig.js";
 
 const state = {
   isSidebarActive: true,
@@ -18,24 +18,26 @@ const state = {
   reduceButton: themeConfig.sidebarCollapsed,
   bodyOverlay: false,
   sidebarItemsMin: false,
-  theme: themeConfig.theme || 'light',
+  theme: themeConfig.theme || "light",
   navbarSearchAndPinList: navbarSearchAndPinList,
   AppActiveUser: {
     id: 0,
-    name: 'Aaron Lippold',
-    about: 'Dessert chocolate cake lemon drops jujubes. Biscuit cupcake ice cream bear claw brownie brownie marshmallow.',
-    img: 'avatar-s-11.png',
-    status: 'online',
+    name: "Aaron Lippold",
+    about: "He's just this guy, you know.",
+    img: "avatar-s-11.png",
+    status: "online"
   },
 
   themePrimaryColor: colors.primary,
 
-  starredPages: navbarSearchAndPinList.data.filter((page) => page.highlightAction),
+  starredPages: navbarSearchAndPinList.data.filter(
+    page => page.highlightAction
+  ),
   userRole: null,
 
   // Can be used to get current window with
   // Note: Above breakpoint state is for internal use of sidebar component
-  windowWidth: null,
-}
+  windowWidth: null
+};
 
-export default state
+export default state;

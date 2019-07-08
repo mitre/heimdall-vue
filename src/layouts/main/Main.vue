@@ -10,23 +10,23 @@
 
 <template>
   <div class="layout--main" :class="[navbarClasses, footerClasses, {'app-page': isAppPage}]">
-   <the-customizer
-       @updateNavbar="updateNavbar"
-       @updateNavbarColor="updateNavbarColor"
-       :navbarType="navbarType"
-       :navbarColor="navbarColor"
-       :footerType="footerType"
-       @updateFooter="updateFooter"
-       :routerTransition="routerTransition"
-       @updateRouterTransition="updateRouterTransition"
-       v-if="!disableCustomizer"
-       :hideScrollToTop="hideScrollToTop"
-       @toggleHideScrollToTop="toggleHideScrollToTop"
-       />
+    <the-customizer
+      @updateNavbar="updateNavbar"
+      @updateNavbarColor="updateNavbarColor"
+      :navbarType="navbarType"
+      :navbarColor="navbarColor"
+      :footerType="footerType"
+      @updateFooter="updateFooter"
+      :routerTransition="routerTransition"
+      @updateRouterTransition="updateRouterTransition"
+      v-if="!disableCustomizer"
+      :hideScrollToTop="hideScrollToTop"
+      @toggleHideScrollToTop="toggleHideScrollToTop"
+    />
     <vx-sidebar
       :sidebarItems="sidebarItems"
       :logo="require('@/assets/images/logo/logo.png')"
-      title="Vuesax"
+      title="Heimdall Lite"
       parent=".layout--main"
     />
 
@@ -54,7 +54,7 @@
                 </div>
 
                 <!-- BREADCRUMB -->
-                <vx-breadcrumb class="ml-4 md:block hidden" v-if="$route.meta.breadcrumb"/>
+                <vx-breadcrumb class="ml-4 md:block hidden" v-if="$route.meta.breadcrumb" />
 
                 <!-- DROPDOWN -->
                 <vs-dropdown class="ml-auto md:block hidden cursor-pointer" vs-trigger-click>
@@ -99,7 +99,7 @@
             </transition>
             <div class="content-area__content">
               <back-to-top bottom="5%" visibleoffset="500" v-if="!hideScrollToTop">
-                <vs-button icon-pack="feather" icon="icon-arrow-up" class="shadow-lg"/>
+                <vs-button icon-pack="feather" icon="icon-arrow-up" class="shadow-lg" />
               </back-to-top>
               <transition :name="routerTransition" mode="out-in">
                 <router-view @changeRouteTitle="changeRouteTitle"></router-view>
@@ -116,7 +116,7 @@
 
 <script>
 import VxSidebar from "@/layouts/components/vx-sidebar/VxSidebar.vue";
-import TheCustomizer from '../components/customizer/TheCustomizer.vue';
+import TheCustomizer from "../components/customizer/TheCustomizer.vue";
 import TheNavbar from "../components/TheNavbar.vue";
 import TheFooter from "../components/TheFooter.vue";
 import themeConfig from "@/../themeConfig.js";
@@ -216,7 +216,7 @@ export default {
   },
   components: {
     VxSidebar,
-	TheCustomizer,
+    TheCustomizer,
     TheNavbar,
     TheFooter,
     BackToTop
