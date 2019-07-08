@@ -2,5 +2,6 @@
 Thumbs.db
 *.log
 dist/
+dist_electron/**
 node_modules/
 .deploy*/
