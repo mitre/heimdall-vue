@@ -10,6 +10,19 @@
 
 <template>
   <div class="layout--main" :class="[navbarClasses, footerClasses, {'app-page': isAppPage}]">
+   <the-customizer
+       @updateNavbar="updateNavbar"
+       @updateNavbarColor="updateNavbarColor"
+       :navbarType="navbarType"
+       :navbarColor="navbarColor"
+       :footerType="footerType"
+       @updateFooter="updateFooter"
+       :routerTransition="routerTransition"
+       @updateRouterTransition="updateRouterTransition"
+       v-if="!disableCustomizer"
+       :hideScrollToTop="hideScrollToTop"
+       @toggleHideScrollToTop="toggleHideScrollToTop"
+       />
     <vx-sidebar
       :sidebarItems="sidebarItems"
       :logo="require('@/assets/images/logo/logo.png')"
@@ -103,6 +116,7 @@
 
 <script>
 import VxSidebar from "@/layouts/components/vx-sidebar/VxSidebar.vue";
+import TheCustomizer from '../components/customizer/TheCustomizer.vue';
 import TheNavbar from "../components/TheNavbar.vue";
 import TheFooter from "../components/TheFooter.vue";
 import themeConfig from "@/../themeConfig.js";
@@ -202,6 +216,7 @@ export default {
   },
   components: {
     VxSidebar,
+	TheCustomizer,
     TheNavbar,
     TheFooter,
     BackToTop

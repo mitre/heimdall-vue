@@ -22,13 +22,13 @@
 export default [
   {
     url: "/",
-    name: "Home",
+    name: "About",
     slug: "home",
     icon: "HomeIcon",
   },
   {
     url: "/page2",
-    name: "Page 2",
+    name: "Help",
     slug: "page2",
     icon: "FileIcon",
   },

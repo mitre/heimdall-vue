@@ -12,7 +12,7 @@
  * See: https://github.com/tailwindcss/tailwindcss/issues/53#issuecomment-341413622
  */
 /*NOTE: 'preflight' IS RENAMED TO 'base'*/
-/*@tailwind base;*/
+@tailwind base;
 
 /**
  * Here you would add any of your custom component classes; stuff that you'd
