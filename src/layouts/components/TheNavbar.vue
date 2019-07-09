@@ -197,7 +197,7 @@
                 width="40"
                 height="40"
                 class="rounded-full shadow-md cursor-pointer block"
-              >
+              />
               <img
                 v-else
                 key="localImg"
@@ -206,7 +206,7 @@
                 width="40"
                 height="40"
                 class="rounded-full shadow-md cursor-pointer block"
-              >
+              />
             </div>
             <vs-dropdown-menu class="vx-navbar-dropdown">
               <ul style="min-width: 9rem">

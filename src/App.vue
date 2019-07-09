@@ -1,19 +1,19 @@
 <template>
-  <b-container fluid>
-    <NavHeader />
-    <router-view />
-  </b-container>
+  <!-- <b-container fluid> -->
+  <!-- <NavHeader /> -->
+  <router-view />
+  <!-- </b-container> -->
 </template>
 
 <script>
 // @ is an alias to /src
-import NavHeader from "@/components/NavHeader.vue";
+// import NavHeader from "@/components/NavHeader.vue";
 import themeConfig from "@/../themeConfig.js";
 
 export default {
   name: "app",
   components: {
-    NavHeader
+    // NavHeader
   },
   watch: {
     "$store.state.theme"(val) {

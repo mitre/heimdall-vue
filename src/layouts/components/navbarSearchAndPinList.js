@@ -1,8 +1,34 @@
 export default {
-  actionIcon: 'StarIcon',
-  highlightColor: 'warning',
+  actionIcon: "StarIcon",
+  highlightColor: "warning",
   data: [
-    {index: 0, label: 'Home', url: '/', labelIcon: 'HomeIcon', highlightAction: false},
-    {index: 1, label: 'Page 2', url: '/page2', labelIcon: 'CalendarIcon', highlightAction: false},
+    {
+      index: 0,
+      label: "Home",
+      url: "/",
+      labelIcon: "HomeIcon",
+      highlightAction: false
+    },
+    {
+      index: 1,
+      label: "Results",
+      url: "/results",
+      labelIcon: "CalendarIcon",
+      highlightAction: false
+    },
+    {
+      index: 2,
+      label: "SSP",
+      url: "/ssp",
+      labelIcon: "CalendarIcon",
+      highlightAction: false
+    },
+    {
+      index: 3,
+      label: "About",
+      url: "/about",
+      labelIcon: "CalendarIcon",
+      highlightAction: false
+    }
   ]
-}
+};

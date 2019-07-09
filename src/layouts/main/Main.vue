@@ -26,7 +26,7 @@
     <vx-sidebar
       :sidebarItems="sidebarItems"
       :logo="require('@/assets/images/logo/logo.png')"
-      title="Heimdall Lite"
+      title="Heimdall-Lite"
       parent=".layout--main"
     />
 
