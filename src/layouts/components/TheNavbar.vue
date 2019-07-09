@@ -190,18 +190,8 @@
           <vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer">
             <div class="con-img ml-3">
               <img
-                v-if="activeUserImg.startsWith('http')"
                 key="onlineImg"
-                :src="activeUserImg"
-                alt="user-img"
-                width="40"
-                height="40"
-                class="rounded-full shadow-md cursor-pointer block"
-              >
-              <img
-                v-else
-                key="localImg"
-                :src="require(`@/assets/images/portrait/small/${activeUserImg}`)"
+                :src="logo"
                 alt="user-img"
                 width="40"
                 height="40"
@@ -266,7 +256,10 @@ export default {
     navbarColor: {
       type: String,
       default: "#fff"
-    }
+    },
+    logo: {
+        type: String
+    },
   },
   data() {
     return {

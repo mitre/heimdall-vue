@@ -72,23 +72,28 @@
           <!-- CHART -->
           <div slot="no-body">
             <vue-apex-charts
-              type="radialBar"
-              height="350"
-              :options="analyticsData.productOrdersRadialBar.chartOptions"
-              :series="analyticsData.productOrdersRadialBar.series"
+              type="donut"
+              height="330"
+			  class="mt-5"
+              :options="analyticsData.sessionsByDeviceDonut.chartOptions"
+              :series="analyticsData.sessionsByDeviceDonut.series"
             />
           </div>
 
           <!-- CHART DATA -->
-          <!-- <ul>
-                        <li v-for="orderData in analyticsData.productOrdersRadialBar.analyticsData" :key="orderData.orderType" class="flex mb-3 justify-between">
-                            <span class="flex items-center">
-                                    <span class="inline-block h-4 w-4 rounded-full mr-2 bg-white border-3 border-solid" :class="`border-${orderData.color}`"></span>
-                                    <span class="font-semibold">{{ orderData.orderType }}</span>
-                            </span>
-                            <span>{{ orderData.counts }}</span>
-                        </li>
-          </ul>-->
+          <!-- CHART DATA -->
+          <ul>
+              <li v-for="deviceData in analyticsData.sessionsByDeviceDonut.analyticsData" :key="deviceData.device" class="flex mb-3">
+                  <feather-icon :icon="deviceData.icon" :svgClasses="[`h-5 w-5 stroke-current text-${deviceData.color}`]"></feather-icon>
+                  <span class="ml-2 inline-block font-semibold">{{ deviceData.device }}</span>
+                  <span class="mx-2">-</span>
+                  <span class="mr-4">{{ deviceData.sessionsPercentgae }}%</span>
+                  <div class="ml-auto flex -mr-1">
+                  <span class="mr-1">{{ deviceData.comparedResultPercentage }}%</span>
+                  <feather-icon :icon=" deviceData.comparedResultPercentage < 0 ? 'ArrowDownIcon' : 'ArrowUpIcon'" :svgClasses="[deviceData.comparedResultPercentage < 0 ? 'text-danger' : 'text-success'  ,'stroke-current h-4 w-4 mb-1 mr-1']"></feather-icon>
+                  </div>
+              </li>
+          </ul>
         </vx-card>
       </div>
     </div>
@@ -109,7 +114,7 @@ import VueApexCharts from "vue-apexcharts";
 import CountCard from "../components/CountCard.vue";
 // import StatisticsCardLine from '@/components/statistics-cards/StatisticsCardLine.vue'
 import analyticsData from "./ui-elements/card/analyticsData.js";
-// import ChangeTimeDurationDropdown from '@/components/ChangeTimeDurationDropdown.vue'
+import ChangeTimeDurationDropdown from '@/components/ChangeTimeDurationDropdown.vue'
 
 export default {
   data() {
