@@ -44,9 +44,29 @@ const router = new Router({
           component: () => import("./views/Home.vue")
         },
         {
-          path: "/page2",
-          name: "page2",
-          component: () => import("./views/Page2.vue")
+          path: "/results",
+          name: "results",
+          component: () => import("./views/results.vue")
+        },
+        {
+          path: "/ssp",
+          name: "ssp",
+          component: () => import("./views/ssp.vue")
+        },
+        {
+          path: "/about",
+          name: "about",
+          component: () => import("./views/about.vue")
+        },
+        {
+          path: "/results/catt",
+          name: "catt",
+          component: () => import("./views/catt.vue")
+        },
+        {
+          path: "/results/print",
+          name: "print",
+          component: () => import("./views/print.vue")
         }
       ]
     },

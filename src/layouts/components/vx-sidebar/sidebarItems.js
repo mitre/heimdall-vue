@@ -18,18 +18,52 @@
   Author URL: http://www.themeforest.net/user/pixinvent
 ==========================================================================================*/
 
-
 export default [
   {
     url: "/",
-    name: "About",
+    name: "Home",
     slug: "home",
-    icon: "HomeIcon",
+    icon: "HomeIcon"
   },
   {
-    url: "/page2",
-    name: "Help",
-    slug: "page2",
-    icon: "FileIcon",
+    url: "/results",
+    name: "Results",
+    slug: "results",
+    icon: "FileIcon"
   },
-]
+  {
+    url: null,
+    name: "Tools",
+    slug: "tools",
+    icon: "ToolIcon",
+    i18n: "Tools",
+    submenu: [
+      {
+        url: "/results/catt", // example only
+        name: "CATT File",
+        slug: "toolsCatt",
+        icon: "ToolIcon",
+        i18n: "CATT"
+      },
+      {
+        url: "/results/print",
+        name: "print",
+        slug: "print",
+        icon: "PrinterIcon",
+        i18n: "print"
+      }
+    ]
+  },
+  {
+    url: "/ssp",
+    name: "SSP",
+    slug: "ssp",
+    icon: "FileIcon"
+  },
+  {
+    url: "/about",
+    name: "About",
+    slug: "about",
+    icon: "FileIcon"
+  }
+];
