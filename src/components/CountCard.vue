@@ -1,67 +1,76 @@
 <template>
-  <b-card no-body :bg-variant="variant" text-variant="white">
-    <b-card-body>
-      <b-row>
-        <b-col cols="3">
-          <font-awesome-icon :icon="icon" size="5x" />
-        </b-col>
-        <b-col cols="9" style="text-align: right">
-          <h1>{{count}}</h1>
-          <br />
-          {{title}}
-        </b-col>
-      </b-row>
-    </b-card-body>
-    <b-card-footer>
-      <small>{{explanation}}</small>
-    </b-card-footer>
-  </b-card>
+  <vx-card class="overflow-hidden" content-color="#fff" :card-background="background">
+    <div slot="no-body">
+      <div
+        class="p-6 pb-0"
+        :class="{'flex justify-between flex-row-reverse items-center': iconRight}"
+      >
+        <feather-icon
+          :icon="icon"
+          class="p-3 inline-flex rounded-full"
+          :class="[`text-$white`, {'mb-4': !iconRight}]"
+        ></feather-icon>
+        <div>
+          <h1 style="color:white;font-size:40px;" class="mb-1 fold-bold">{{statistic}}</h1>
+        </div>
+      </div>
+
+      <div class="p-6 pb-4">
+        <h2 style="color:white;">{{statisticTitle}}</h2>
+        <span>{{statisticSub}}</span>
+      </div>
+    </div>
+  </vx-card>
 </template>
 
 <script>
-import Vue from "vue";
-import { store } from "../store.js";
-
 export default {
-  name: "",
-  props: ["title", "explanation", "fas_icon", "color_variant"],
-  data() {
-    return {
-      store
-    };
-  },
-
-  computed: {
-    icon() {
-      return ["fas", this.fas_icon];
+  props: {
+    icon: {
+      type: String,
+      required: true
     },
-    variant() {
-      return this.color_variant;
+    statistic: {
+      type: [Number, String],
+      required: true
     },
-    testBind: function() {
-      return store.getBindValue();
+    statisticTitle: {
+      type: String
     },
-    count: function() {
-      var status = store.getStatus();
-      var val = 0;
-      for (var i = 0; i < status.length; i++) {
-        if (status[i][0] == this.title) {
-          val = status[i][1];
-        }
-      }
-      return val;
+    statisticSub: {
+      type: String
+    },
+    background: {
+      type: String
+    },
+    iconRight: {
+      type: Boolean,
+      default: false
     }
   },
-
-  updated: function() {},
-
-  mounted: function mounted() {}
+  computed: {
+    themePrimaryColor() {
+      return this.$store.state.themePrimaryColor;
+    }
+  },
+  methods: {
+    getHex() {
+      let rgb = window
+        .getComputedStyle(document.documentElement)
+        .getPropertyValue(`--vs-${this.color}`);
+      rgb = rgb.split(",");
+      return (
+        "#" +
+        (
+          (1 << 24) +
+          (Number(rgb[0]) << 16) +
+          (Number(rgb[1]) << 8) +
+          Number(rgb[2])
+        )
+          .toString(16)
+          .slice(1)
+      );
+    }
+  }
 };
 </script>
-
-<style lang="scss" scoped>
-.card-footer {
-  padding-top: 0.05rem;
-  height: 70px;
-}
-</style>
