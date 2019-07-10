@@ -36,7 +36,7 @@ import { far } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { dom } from '@fortawesome/fontawesome-svg-core'
 // Vuex Store
-import store from './newstore/store'
+import store from './store/store'
 
 
 // Vuesax Admin Filters
