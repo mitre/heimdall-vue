@@ -27,9 +27,10 @@ export default new Vuex.Store({
     allReports: [], // Unused for now
   },
 
+
   mutations: {
     addControl(state, control) {
-      state.controls.push(control);
+      state.allControls.push(control);
     },
 
     reset(state) {
