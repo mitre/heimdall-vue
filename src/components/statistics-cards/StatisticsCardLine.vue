@@ -69,7 +69,7 @@ export default{
     },
     computed: {
         themePrimaryColor() {
-            return this.$store.state.themePrimaryColor;
+            return this.$store.state.theme.themePrimaryColor;
         }
     },
     methods: {

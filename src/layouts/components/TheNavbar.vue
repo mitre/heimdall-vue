@@ -263,7 +263,7 @@ export default {
   },
   data() {
     return {
-      navbarSearchAndPinList: this.$store.state.navbarSearchAndPinList,
+      navbarSearchAndPinList: this.$store.state.theme.navbarSearchAndPinList,
       searchQuery: "",
       showFullSearch: false,
       unreadNotifications: [
@@ -326,7 +326,7 @@ export default {
   computed: {
     theme: {
       get() {
-        return this.$store.state.theme;
+        return this.$store.state.theme.theme;
       },
       set(val) {
         this.$store.dispatch("updateTheme", val);
@@ -334,10 +334,10 @@ export default {
     },
     // HELPER
     sidebarWidth() {
-      return this.$store.state.sidebarWidth;
+      return this.$store.state.theme.sidebarWidth;
     },
     breakpoint() {
-      return this.$store.state.breakpoint;
+      return this.$store.state.theme.breakpoint;
     },
 
     // NAVBAR STYLE
@@ -349,10 +349,10 @@ export default {
 
     // BOOKMARK & SEARCH
     data() {
-      return this.$store.state.navbarSearchAndPinList;
+      return this.$store.state.theme.navbarSearchAndPinList;
     },
     starredPages() {
-      return this.$store.state.starredPages;
+      return this.$store.state.theme.starredPages;
     },
     starredPagesLimited: {
       get() {
@@ -379,7 +379,7 @@ export default {
     activeUserImg() {
       return (
         JSON.parse(localStorage.getItem("userInfo")).photoURL ||
-        this.$store.state.AppActiveUser.img
+        this.$store.state.theme.AppActiveUser.img
       );
     }
   },

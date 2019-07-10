@@ -63,7 +63,7 @@ export default {
     }),
     computed: {
         sidebarItemsMin() {
-            return this.$store.state.sidebarItemsMin;
+            return this.$store.state.theme.sidebarItemsMin;
         },
         styleItems() {
             return {
@@ -118,7 +118,7 @@ export default {
             this.openItems = this.maxHeight != '0px'
         },
         // OPEN AND CLOSES DROPDOWN MENU ON SIDEBAR COLLAPSE AND DEFAULT VIEW
-        '$store.state.sidebarItemsMin'(val) {
+        '$store.state.theme.sidebarItemsMin'(val) {
             let scrollHeight = this.$refs.items.scrollHeight
             if (!val && this.open) {
                 this.maxHeight = `${scrollHeight}px`
