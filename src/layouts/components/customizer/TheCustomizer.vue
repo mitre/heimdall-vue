@@ -184,14 +184,14 @@ export default {
     computed: {
         theme: {
             get() {
-                return this.$store.state.theme;
+                return this.$store.state.theme.theme;
             },
             set(val) {
                 this.$store.dispatch('updateTheme', val);
             }
         },
         reduced_sidebar: {
-            get() { return this.$store.state.reduceButton },
+            get() { return this.$store.state.theme.reduceButton },
             set(val) { this.$store.commit('TOGGLE_REDUCE_BUTTON', val) }
         },
         navbarTypeLocal: {
@@ -218,7 +218,7 @@ export default {
             set(val) { this.$emit('updateRouterTransition', val) }
         },
         primaryColor: {
-            get() { return this.$store.state.themePrimaryColor },
+            get() { return this.$store.state.theme.themePrimaryColor },
             set(val) { this.$store.commit('UPDATE_PRIMARY_COLOR', val) }
         },
         hideScrollToTopLocal: {

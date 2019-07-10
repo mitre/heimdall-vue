@@ -6,7 +6,7 @@
         <count-card
           icon="CheckCircleIcon"
           icon-right
-          statistic="138"
+          :statistic="$store.getters['statusCounts/passed']"
           statisticTitle="Passed"
           statisticSub="All tests passed."
           background="success"
@@ -16,7 +16,7 @@
         <count-card
           icon="XCircleIcon"
           icon-right
-          statistic="52"
+          :statistic="$store.getters['statusCounts/failed']"
           statisticTitle="Errors"
           statisticSub="Has tests that failed."
           background="danger"
@@ -26,7 +26,7 @@
         <count-card
           icon="SlashIcon"
           icon-right
-          statistic="25"
+          :statistic="$store.getters['statusCounts/notApplicable']"
           statisticTitle="Not Applicable"
           statisticSub="System exception/absent component."
           background="primary"
@@ -36,7 +36,7 @@
         <count-card
           icon="AlertTriangleIcon"
           icon-right
-          statistic="12"
+          :statistic="$store.getters['statusCounts/notReviewed']"
           statisticTitle="Not Reviewed"
           statisticSub="Manual testing required/disabled test."
           background="warning"

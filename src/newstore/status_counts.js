@@ -10,7 +10,6 @@
 export const module = {
     // Puts our data/getters under whatever name we give this module
     namespaced: true,
-    state: {},
 
     getters: {
         passed:         (s, g, rootState) => countStatus(rootState, "Passed"),

@@ -16,7 +16,7 @@ export default {
     // NavHeader
   },
   watch: {
-    "$store.state.theme"(val) {
+    "$store.state.theme.theme"(val) {
       this.toggleClassInBody(val);
     }
   },

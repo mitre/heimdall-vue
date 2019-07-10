@@ -20,7 +20,7 @@ Vue.use(Vuex);
  * the current page of a datatable probably isn't. Be sensible
  */
 
-const store = new Vuex.Store({
+export default new Vuex.Store({
   state: {
     allControls: [],
     allProfiles: [], // Unused for now
@@ -45,5 +45,3 @@ const store = new Vuex.Store({
     severityCounts: severity_count_module,
   }
 });
-
-export default store;

@@ -158,13 +158,13 @@ export default {
       else return false;
     },
     isThemeDark() {
-      return this.$store.state.theme == "dark";
+      return this.$store.state.theme.theme == "dark";
     },
     sidebarWidth() {
-      return this.$store.state.sidebarWidth;
+      return this.$store.state.theme.sidebarWidth;
     },
     bodyOverlay() {
-      return this.$store.state.bodyOverlay;
+      return this.$store.state.theme.bodyOverlay;
     },
     contentAreaClass() {
       if (this.sidebarWidth == "default") return "content-area-default";
