@@ -54,6 +54,16 @@ export default {
       window.addEventListener("resize", this.handleWindowResize);
     });
     this.$store.dispatch("updateWindowWidth", window.innerWidth);
+
+    // Populate store with some dummy data
+    // TODO: Remove
+    for(var i=0; i<500; i++) {
+      var index = (max) => Math.floor(Math.random() * 10);
+      this.$store.commit("addControl", {
+        status: ["Passed", "Failed", "Not Applicable", "Not Reviewed", "Profile Error"][index(5)],
+        impact: ["low", "medium", "high", "critical"][index(4)]
+      });
+    }
   },
   beforeDestroy() {
     window.removeEventListener("resize", this.handleWindowResize);
