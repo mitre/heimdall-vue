@@ -167,9 +167,17 @@ export default {
       return this.$store.state.theme.bodyOverlay;
     },
     contentAreaClass() {
-      if (this.sidebarWidth == "default") return "content-area-default";
-      else if (this.sidebarWidth == "reduced") return "content-area-reduced";
-      else if (this.sidebarWidth) return "content-area-full";
+      switch (this.sidebarWidth) 
+	  {
+		case "default": 
+			return "content-area-default";
+		case "reduced": 
+			return "content-area-reduced";
+		case null:
+			return "";
+		default:  
+			return "content-area-full";
+	  }
     },
     navbarClasses() {
       return {

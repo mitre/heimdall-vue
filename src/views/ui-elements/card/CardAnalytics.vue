@@ -391,7 +391,7 @@
 <script>
 import VueApexCharts from 'vue-apexcharts'
 
-import StatisticsCardLine from '@/components/statistics-cards/StatisticsCardLine.vue'
+// import StatisticsCardLine from '@/components/statistics-cards/StatisticsCardLine.vue'
 import analyticsData from './analyticsData.js'
 import ChangeTimeDurationDropdown from '@/components/ChangeTimeDurationDropdown.vue'
 
@@ -550,7 +550,7 @@ export default {
     },
     components: {
         VueApexCharts,
-        StatisticsCardLine,
+        //StatisticsCardLine,
         ChangeTimeDurationDropdown
     }
 }

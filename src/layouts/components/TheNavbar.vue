@@ -145,7 +145,7 @@
               <vs-radio v-model="theme" vs-value="semi-dark">Semi Dark</vs-radio>
             </div>
 
-            <!--<VuePerfectScrollbar
+            <VuePerfectScrollbar
               ref="mainSidebarPs"
               class="scroll-area--nofications-dropdown p-0 mb-10"
               :settings="settings"
@@ -173,6 +173,7 @@
                 </li>
               </ul>
             </VuePerfectScrollbar>
+			<!--
             <div
               class="checkout-footer fixed bottom-0 rounded-b-lg text-primary w-full p-2 font-semibold text-center border border-b-0 border-l-0 border-r-0 border-solid d-theme-border-grey-light cursor-pointer"
             >
@@ -342,9 +343,17 @@ export default {
 
     // NAVBAR STYLE
     classObj() {
-      if (this.sidebarWidth == "default") return "navbar-default";
-      else if (this.sidebarWidth == "reduced") return "navbar-reduced";
-      else if (this.sidebarWidth) return "navbar-full";
+      switch (this.sidebarWidth) 
+	  {
+		case "default": 
+			return "navbar-default";
+		case "reduced": 
+			return "navbar-reduced";
+		case null:
+			return "";
+		default:  
+			return "navbar-full";
+	  }
     },
 
     // BOOKMARK & SEARCH
