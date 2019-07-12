@@ -8,22 +8,21 @@ import themeConfig from "@/../themeConfig.js";
 import colors from "@/../themeConfig.js";
 
 @Module({
-  name: "theme",
   namespaced: true,
 })
 class InspecThemeModule extends VuexModule {
   // ////////////////////////////////////////////
   // STATE
   // ////////////////////////////////////////////
-  public isSidebarActive: boolean = true;
-  public breakpoint: string | null = null;
-  public sidebarWidth: string = "default";
-  public reduceButton: boolean = themeConfig.sidebarCollapsed;
-  public bodyOverlay: boolean = false;
-  public sidebarItemsMin: boolean = false;
-  public theme: string = themeConfig.theme || "light";
-  public navbarSearchAndPinList = navbarSearchAndPinList;
-  public AppActiveUser = {
+   isSidebarActive: boolean = true;
+   breakpoint: string | null = null;
+   sidebarWidth: string = "default";
+   reduceButton: boolean = themeConfig.sidebarCollapsed;
+   bodyOverlay: boolean = false;
+   sidebarItemsMin: boolean = false;
+   theme: string = themeConfig.theme || "light";
+   navbarSearchAndPinList = navbarSearchAndPinList;
+   AppActiveUser = {
     id: 0,
     name: "Aaron Lippold",
     about: "He's just this guy, you know.",
@@ -31,15 +30,15 @@ class InspecThemeModule extends VuexModule {
     status: "online",
   };
 
-  public themePrimaryColor: string = colors.primary;
+   themePrimaryColor: string = colors.primary;
 
-  public starredPages = navbarSearchAndPinList.data.filter(
+   starredPages = navbarSearchAndPinList.data.filter(
     page => page.highlightAction
   );
 
   // Can be used to get current window with
   // Note: Above breakpoint state is for internal use of sidebar component
-  public windowWidth: number | null = null;
+   windowWidth: number | null = null;
 
   // ////////////////////////////////////////////
   // MUTATIONS
@@ -60,8 +59,8 @@ class InspecThemeModule extends VuexModule {
     this.reduceButton = val;
   }
   @Mutation
-  TOGGLE_CONTENT_OVERLAY(val: boolean) {
-    this.bodyOverlay = val;
+  TOGGLE_CONTENT_OVERLAY() {
+    this.bodyOverlay = !this.bodyOverlay;
   }
   @Mutation
   TOGGLE_IS_SIDEBAR_ACTIVE(value: boolean) {
@@ -89,13 +88,8 @@ class InspecThemeModule extends VuexModule {
   // ////////////////////////////////////////////
 
   @Action
-  public updateSidebarWidth(width: number) {
+   updateSidebarWidth(width: string) {
     this.context.commit("UPDATE_WINDOW_WIDTH", width);
-  }
-
-  @Action
-  updateI18nLocale(locale: string) {
-    this.context.commit("UPDATE_I18N_LOCALE", locale);
   }
 
   @Action
@@ -109,7 +103,7 @@ class InspecThemeModule extends VuexModule {
   }
 
   @Action
-  updateWindowWidth(width: string) {
+  updateWindowWidth(width: number) {
     this.context.commit("UPDATE_WINDOW_WIDTH", width);
   }
 }
