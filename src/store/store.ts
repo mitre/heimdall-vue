@@ -23,11 +23,11 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   modules: {
-    "data": Data,
-    "theme": Theme,
-    "statusCounts": StatusCounts,
-    "severityCounts": SeverityCounts
-  }
+    data: Data,
+    theme: Theme,
+    statusCounts: StatusCounts,
+    severityCounts: SeverityCounts,
+  },
 });
 
 export default store;

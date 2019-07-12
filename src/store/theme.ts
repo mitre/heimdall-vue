@@ -9,20 +9,21 @@ import colors from "@/../themeConfig.js";
 
 @Module({
   namespaced: true,
+  name: "theme",
 })
 class InspecThemeModule extends VuexModule {
   // ////////////////////////////////////////////
   // STATE
   // ////////////////////////////////////////////
-   isSidebarActive: boolean = true;
-   breakpoint: string | null = null;
-   sidebarWidth: string = "default";
-   reduceButton: boolean = themeConfig.sidebarCollapsed;
-   bodyOverlay: boolean = false;
-   sidebarItemsMin: boolean = false;
-   theme: string = themeConfig.theme || "light";
-   navbarSearchAndPinList = navbarSearchAndPinList;
-   AppActiveUser = {
+  isSidebarActive: boolean = true;
+  breakpoint: string | null = null;
+  sidebarWidth: string = "default";
+  reduceButton: boolean = themeConfig.sidebarCollapsed;
+  bodyOverlay: boolean = false;
+  sidebarItemsMin: boolean = false;
+  theme: string = themeConfig.theme || "light";
+  navbarSearchAndPinList = navbarSearchAndPinList;
+  AppActiveUser = {
     id: 0,
     name: "Aaron Lippold",
     about: "He's just this guy, you know.",
@@ -30,15 +31,15 @@ class InspecThemeModule extends VuexModule {
     status: "online",
   };
 
-   themePrimaryColor: string = colors.primary;
+  themePrimaryColor: string = colors.primary;
 
-   starredPages = navbarSearchAndPinList.data.filter(
+  starredPages = navbarSearchAndPinList.data.filter(
     page => page.highlightAction
   );
 
   // Can be used to get current window with
   // Note: Above breakpoint state is for internal use of sidebar component
-   windowWidth: number | null = null;
+  windowWidth: number | null = null;
 
   // ////////////////////////////////////////////
   // MUTATIONS
@@ -60,7 +61,7 @@ class InspecThemeModule extends VuexModule {
   }
   @Mutation
   TOGGLE_CONTENT_OVERLAY() {
-    this.bodyOverlay = !this.bodyOverlay;
+    this.bodyOverlay = false; //!this.bodyOverlay;
   }
   @Mutation
   TOGGLE_IS_SIDEBAR_ACTIVE(value: boolean) {
@@ -79,6 +80,7 @@ class InspecThemeModule extends VuexModule {
     this.themePrimaryColor = val;
   }
 
+  @Mutation
   UPDATE_WINDOW_WIDTH(width: number) {
     this.windowWidth = width;
   }
@@ -88,7 +90,7 @@ class InspecThemeModule extends VuexModule {
   // ////////////////////////////////////////////
 
   @Action
-   updateSidebarWidth(width: string) {
+  updateSidebarWidth(width: string) {
     this.context.commit("UPDATE_WINDOW_WIDTH", width);
   }
 
