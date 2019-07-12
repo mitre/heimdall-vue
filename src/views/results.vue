@@ -2,102 +2,88 @@
   <div>
     <!-- ROW 1 -->
     <div class="vx-row">
-      <div class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base">
+      <!--PASSED-->
+      <div :class="getClass()">
         <count-card
-          icon="CheckCircleIcon"
-          icon-right
+          index="0"
           statistic="138"
           statisticTitle="Passed"
           statisticSub="All tests passed."
           background="success"
         ></count-card>
       </div>
-      <div class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base">
+      <!--ERRORS-->
+      <div :class="getClass()">
         <count-card
-          icon="XCircleIcon"
-          icon-right
+          index="1"
           statistic="52"
-          statisticTitle="Errors"
+          statisticTitle="Failed"
           statisticSub="Has tests that failed."
           background="danger"
         ></count-card>
       </div>
-      <div class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base">
+      <!--N/A-->
+      <div :class="getClass()">
         <count-card
-          icon="SlashIcon"
-          icon-right
+          index="2"
           statistic="25"
           statisticTitle="Not Applicable"
           statisticSub="System exception/absent component."
           background="primary"
         ></count-card>
       </div>
-      <div class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base">
+      <!--NOT REVIEWED-->
+      <div :class="getClass()">
         <count-card
-          icon="AlertTriangleIcon"
-          icon-right
+          index="3"
           statistic="12"
           statisticTitle="Not Reviewed"
           statisticSub="Manual testing required/disabled test."
           background="warning"
         ></count-card>
       </div>
+      <div v-if="isProfileError" :class="getClass()">
+        <count-card
+          index="4"
+          statistic="15"
+          statisticTitle="Profile Error"
+          statisticSub="Check profile run privileges/check with profile author."
+          background="dark"
+        ></count-card>
+      </div>
     </div>
 
     <!-- ROW 2 -->
     <div class="vx-row">
+      <!--CONTROL STATUS-->
       <div class="vx-col w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
-        <vx-card title="Control Status">
-          <!-- SLOT = ACTIONS -->
-          <template slot="actions">
-            <change-time-duration-dropdown />
-          </template>
-
-          <!-- CHART -->
+        <control-card title="Control Status" :controls="analyticsData.sessionsByDeviceDonut"></control-card>
+      </div>
+      <!--CONTROL SEVERITY-->
+      <div class="vx-col w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
+        <control-card title="Control Severity" :controls="analyticsData.sessionsByDeviceDonut"></control-card>
+      </div>
+      <!--COMPLIANCE LEVEL-->
+      <div class="vx-col w-full md:w-1/3 lg:w-1/3 xl:w-1/3 mb-base">
+        <!--class "card" can be found in ControlCard.vue-->
+        <vx-card title="Compliance Level" class="card">
           <div slot="no-body">
-            <vue-apex-charts
-              type="donut"
-              height="330"
-              class="mt-5"
-              :options="analyticsData.sessionsByDeviceDonut.chartOptions"
-              :series="analyticsData.sessionsByDeviceDonut.series"
-            />
-          </div>
-
-          <!-- CHART DATA -->
-          <!-- CHART DATA -->
-          <ul>
-            <li
-              v-for="deviceData in analyticsData.sessionsByDeviceDonut.analyticsData"
-              :key="deviceData.device"
-              class="flex mb-3"
-            >
-              <feather-icon
-                :icon="deviceData.icon"
-                :svgClasses="[`h-5 w-5 stroke-current text-${deviceData.color}`]"
-              ></feather-icon>
-              <span class="ml-2 inline-block font-semibold">{{ deviceData.device }}</span>
-              <span class="mx-2">-</span>
-              <span class="mr-4">{{ deviceData.sessionsPercentgae }}%</span>
-              <div class="ml-auto flex -mr-1">
-                <span class="mr-1">{{ deviceData.comparedResultPercentage }}%</span>
-                <feather-icon
-                  :icon=" deviceData.comparedResultPercentage < 0 ? 'ArrowDownIcon' : 'ArrowUpIcon'"
-                  :svgClasses="[deviceData.comparedResultPercentage < 0 ? 'text-danger' : 'text-success'  ,'stroke-current h-4 w-4 mb-1 mr-1']"
-                ></feather-icon>
+            <div class="p-4">
+              <span>[Passed/(Passed + Failed + Not Reviewed + Profile Error) * 100]</span>
+            </div>
+            <div class="vx-row text-center">
+              <div class="vx-col sm:w-4/5 justify-center mx-auto">
+                <vue-apex-charts
+                  type="radialBar"
+                  height="400"
+                  :options="analyticsData.supportTrackerRadialBar.chartOptions"
+                  :series="analyticsData.supportTrackerRadialBar.series"
+                />
               </div>
-            </li>
-          </ul>
+            </div>
+          </div>
         </vx-card>
       </div>
-    </div>
-
-    <div class="vx-col w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
-      <!-- <statistics-card-line icon="UserCheckIcon" icon-right statistic="659.8k" statisticTitle="Active Users" :chartData="analyticsData.activeUsers" color="success"></statistics-card-line> -->
-    </div>
-
-    <div class="vx-col w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
-      <!-- <statistics-card-line icon="MailIcon" icon-right statistic="28.7k" statisticTitle="Newsletter" :chartData="analyticsData.newsletter" color="warning"></statistics-card-line> -->
     </div>
   </div>
 </template>
@@ -106,19 +92,30 @@
 //import { store } from "../store.js";
 import VueApexCharts from "vue-apexcharts";
 import CountCard from "../components/CountCard.vue";
-// import StatisticsCardLine from '@/components/statistics-cards/StatisticsCardLine.vue'
+import ControlCard from "../components/ControlCard.vue";
 import analyticsData from "./ui-elements/card/analyticsData.js";
-import ChangeTimeDurationDropdown from "@/components/ChangeTimeDurationDropdown.vue";
 
 export default {
   data() {
     return {
-      analyticsData: analyticsData
+      analyticsData: analyticsData,
+      isProfileError: true //boolean for now
     };
   },
   components: {
     VueApexCharts,
-    CountCard
+    CountCard,
+    ControlCard
+  },
+  methods: {
+    getClass() {
+      return {
+        "vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base": !this.$data
+          .isProfileError,
+        "vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/5 xl:w-1/5 mb-base": this.$data
+          .isProfileError
+      };
+    }
   }
 };
 </script>
