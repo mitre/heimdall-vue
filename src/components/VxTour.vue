@@ -12,10 +12,8 @@
         <template slot-scope="tour">
             <transition name="fade">
                 <v-step
-                    v-if="tour.currentStep === index"
-                    v-for="(step, index) of tour.steps"
-                    :key="index"
-                    :step="step"
+                    :key="tour.currentStep"
+                    :step="tour.steps[tour.currentStep]"
                     :previous-step="tour.previousStep"
                     :next-step="tour.nextStep"
                     :stop="tour.stop"
