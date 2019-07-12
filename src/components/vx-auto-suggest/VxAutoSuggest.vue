@@ -113,7 +113,7 @@ export default{
 	},
 	computed: {
 		bodyOverlay() {
-			return this.$store.state.bodyOverlay;
+			return this.$store.state.theme.bodyOverlay;
 		},
 		actionClasses() {
 			return (isHighlighted) => {

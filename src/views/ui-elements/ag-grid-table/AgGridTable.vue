@@ -216,7 +216,7 @@ export default {
     }
   },
   watch: {
-    '$store.state.windowWidth'(val) {
+    '$store.state.theme.windowWidth'(val) {
       if(val <= 576) {
         this.maxPageNumbers = 4;
         this.gridOptions.columnApi.setColumnPinned('email', null);

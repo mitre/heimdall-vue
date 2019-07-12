@@ -766,7 +766,7 @@ export default {
     // Product Orders
     productOrdersRadialBar: {
         analyticsData: [
-            { 'orderType': 'Passed', 'counts': 89, color: 'primary' },
+            { 'orderType': 'Passed', 'counts': 140, color: 'primary' },
             { 'orderType': 'Failed', 'counts': 23, color: 'warning' },
             { 'orderType': 'Not Applicable', 'counts': 3, color: 'blue' },
             { 'orderType': 'Not Reviewed', 'counts': 5, color: 'yellow'},

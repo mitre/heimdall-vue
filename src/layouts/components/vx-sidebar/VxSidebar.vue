@@ -103,7 +103,7 @@ export default {
     computed: {
         isSidebarActive: {
             get() {
-                return this.$store.state.isSidebarActive
+                return this.$store.state.theme.isSidebarActive
             },
             set(val) {
               this.$store.commit('TOGGLE_IS_SIDEBAR_ACTIVE', val)
@@ -114,14 +114,14 @@ export default {
         },
         reduceButton: {
             get() {
-                return this.$store.state.reduceButton;
+                return this.$store.state.theme.reduceButton;
             },
             set(val) {
                 this.$store.commit('TOGGLE_REDUCE_BUTTON', val)
             }
         },
         sidebarItemsMin() {
-            return this.$store.state.sidebarItemsMin;
+            return this.$store.state.theme.sidebarItemsMin;
         },
         isGroupActive() {
             return (sidebarItem) => {

@@ -2,53 +2,44 @@
   <div>
     <!-- ROW 1 -->
     <div class="vx-row">
-      <!--PASSED-->
-      <div :class="getClass()">
+      <div class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base">
         <count-card
-          index="0"
-          statistic="138"
+          icon="CheckCircleIcon"
+          icon-right
+          :statistic="$store.getters['statusCounts/passed']"
           statisticTitle="Passed"
           statisticSub="All tests passed."
           background="success"
         ></count-card>
       </div>
-      <!--ERRORS-->
-      <div :class="getClass()">
+      <div class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base">
         <count-card
-          index="1"
-          statistic="52"
-          statisticTitle="Failed"
+          icon="XCircleIcon"
+          icon-right
+          :statistic="$store.getters['statusCounts/failed']"
+          statisticTitle="Errors"
           statisticSub="Has tests that failed."
           background="danger"
         ></count-card>
       </div>
-      <!--N/A-->
-      <div :class="getClass()">
+      <div class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base">
         <count-card
-          index="2"
-          statistic="25"
+          icon="SlashIcon"
+          icon-right
+          :statistic="$store.getters['statusCounts/notApplicable']"
           statisticTitle="Not Applicable"
           statisticSub="System exception/absent component."
           background="primary"
         ></count-card>
       </div>
-      <!--NOT REVIEWED-->
-      <div :class="getClass()">
+      <div class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base">
         <count-card
-          index="3"
-          statistic="12"
+          icon="AlertTriangleIcon"
+          icon-right
+          :statistic="$store.getters['statusCounts/notReviewed']"
           statisticTitle="Not Reviewed"
           statisticSub="Manual testing required/disabled test."
           background="warning"
-        ></count-card>
-      </div>
-      <div v-if="isProfileError" :class="getClass()">
-        <count-card
-          index="4"
-          statistic="15"
-          statisticTitle="Profile Error"
-          statisticSub="Check profile run privileges/check with profile author."
-          background="dark"
         ></count-card>
       </div>
     </div>
@@ -94,6 +85,7 @@ import VueApexCharts from "vue-apexcharts";
 import CountCard from "../components/CountCard.vue";
 import ControlCard from "../components/ControlCard.vue";
 import analyticsData from "./ui-elements/card/analyticsData.js";
+import ChangeTimeDurationDropdown from "@/components/ChangeTimeDurationDropdown.vue";
 
 export default {
   data() {
