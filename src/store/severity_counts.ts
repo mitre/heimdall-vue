@@ -4,7 +4,6 @@
 
 import { Module, VuexModule, Mutation, Action, getModule } from "vuex-module-decorators";
 import DataModule from "./data_store";
-import Store from "./store";
 
  // Helper function for counting a severity in a list of controls
 function countSeverity( state: DataModule, severity: string): number {
@@ -12,12 +11,10 @@ function countSeverity( state: DataModule, severity: string): number {
  }
 
 @Module({
-  dynamic: true,
-  store: Store,
-  name: "severityCounts",
+  name: "statusCounts",
   namespaced: true,
 })
-export default class StatusCountModule extends VuexModule {
+class StatusCountModule extends VuexModule {
   public get low(): number {
     return countSeverity(getModule(DataModule), "low");
   }
@@ -34,3 +31,5 @@ export default class StatusCountModule extends VuexModule {
     return countSeverity(getModule(DataModule), "critical");
   }
 }
+
+export default StatusCountModule;

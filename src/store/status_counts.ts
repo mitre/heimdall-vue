@@ -3,9 +3,7 @@
  */
 
 import { Module, VuexModule, Mutation, Action, getModule } from "vuex-module-decorators";
-import { Control } from "inspecjs";
 import DataModule from "./data_store";
-import Store from "./store";
 
 // Helper function for counting a severity in a list of controls
 function countStatus( state: DataModule, status: string): number {
@@ -13,12 +11,10 @@ function countStatus( state: DataModule, status: string): number {
 }
 
 @Module({
-  dynamic: true,
-  store: Store,
   name: "statusCounts",
   namespaced: true,
 })
-export default class StatusCountModule extends VuexModule {
+class StatusCountModule extends VuexModule {
   public get passed(): number {
     return countStatus(getModule(DataModule), "Passed");
   }
@@ -39,3 +35,5 @@ export default class StatusCountModule extends VuexModule {
     return countStatus(getModule(DataModule), "Profile Error");
   }
 }
+
+export default StatusCountModule;

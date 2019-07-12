@@ -3,19 +3,15 @@
  */
 
 import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators";
-import { Control, Profile, InspecOutput } from "inspecjs";
 import navbarSearchAndPinList from "@/layouts/components/navbarSearchAndPinList";
 import themeConfig from "@/../themeConfig.js";
 import colors from "@/../themeConfig.js";
-import Store from "./store";
 
 @Module({
-  dynamic: true,
-  store: Store,
   name: "theme",
   namespaced: true,
 })
-export default class InspecThemeModule extends VuexModule {
+class InspecThemeModule extends VuexModule {
   // ////////////////////////////////////////////
   // STATE
   // ////////////////////////////////////////////
@@ -117,3 +113,5 @@ export default class InspecThemeModule extends VuexModule {
     this.context.commit("UPDATE_WINDOW_WIDTH", width);
   }
 }
+
+export default InspecThemeModule;

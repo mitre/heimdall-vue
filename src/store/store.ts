@@ -1,5 +1,9 @@
 import Vue from "vue";
-import Vuex, { StoreOptions } from "vuex";
+import Vuex from "vuex";
+import Data from "./data_store";
+import Theme from "./theme";
+import StatusCounts from "./status_counts";
+import SeverityCounts from "./severity_counts";
 
 Vue.use(Vuex);
 
@@ -17,5 +21,13 @@ Vue.use(Vuex);
  * the current page of a datatable probably isn't. Be sensible
  */
 
-export default new Vuex.Store({});
+const store = new Vuex.Store({
+  modules: {
+    Data,
+    Theme,
+    StatusCounts,
+    SeverityCounts
+  }
+});
 
+export default store;

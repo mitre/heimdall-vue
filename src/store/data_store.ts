@@ -4,15 +4,12 @@
 
 import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators";
 import { Control, Profile, InspecOutput } from "inspecjs";
-import Store from "./store";
 
 @Module({
-  dynamic: true,
-  store: Store,
   name: "data",
   namespaced: true,
 })
-export default class InspecDataModule extends VuexModule {
+class InspecDataModule extends VuexModule {
   public allControls: Control[] = [];
   public allProfiles: Profile[] = [];
   public allReports: InspecOutput[] = [];
@@ -39,3 +36,5 @@ export default class InspecDataModule extends VuexModule {
       this.allReports = [];
   }
 }
+
+export default InspecDataModule;
