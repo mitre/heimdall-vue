@@ -9,7 +9,7 @@ import colors from "@/../themeConfig.js";
 
 @Module({
   namespaced: true,
-  name: "theme",
+  // name: "theme",  // Note: Commented because otherwise we get hella errors
 })
 class InspecThemeModule extends VuexModule {
   // ////////////////////////////////////////////
