@@ -11,23 +11,22 @@ function countSeverity( state: DataModule, severity: string): number {
  }
 
 @Module({
-  name: "statusCounts",
   namespaced: true,
 })
 class StatusCountModule extends VuexModule {
-  public get low(): number {
+   get low(): number {
     return countSeverity(getModule(DataModule), "low");
   }
 
-  public get medium(): number {
+   get medium(): number {
     return countSeverity(getModule(DataModule), "medium");
   }
 
-  public get high(): number {
+   get high(): number {
     return countSeverity(getModule(DataModule), "high");
   }
 
-  public get critical(): number {
+   get critical(): number {
     return countSeverity(getModule(DataModule), "critical");
   }
 }

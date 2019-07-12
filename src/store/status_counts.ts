@@ -11,27 +11,26 @@ function countStatus( state: DataModule, status: string): number {
 }
 
 @Module({
-  name: "statusCounts",
   namespaced: true,
 })
 class StatusCountModule extends VuexModule {
-  public get passed(): number {
+  get passed(): number {
     return countStatus(getModule(DataModule), "Passed");
   }
 
-  public get failed(): number {
+  get failed(): number {
     return countStatus(getModule(DataModule), "Failed");
   }
 
-  public get notApplicable(): number {
+  get notApplicable(): number {
     return countStatus(getModule(DataModule), "Not Applicable");
   }
 
-  public get notReviewed(): number {
+   get notReviewed(): number {
     return countStatus(getModule(DataModule), "Not Reviewed");
   }
 
-  public get profileError(): number {
+   get profileError(): number {
     return countStatus(getModule(DataModule), "Profile Error");
   }
 }
