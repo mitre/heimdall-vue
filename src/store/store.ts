@@ -1,8 +1,5 @@
 import Vue from "vue";
 import Vuex, { StoreOptions } from "vuex";
-import { Control, Profile, InspecOutput } from "inspecjs";
-import { module as severity_count_module } from "./severity_counts";
-import { module as theme_module } from "./theme/module";
 
 Vue.use(Vuex);
 
