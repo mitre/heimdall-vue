@@ -24,7 +24,8 @@ export default {
     try {
       await this.$auth.renewTokens();
     } catch (e) {
-      console.log(e);
+      // console.log(e);
+      console.log("Auth failed - but it's not yet implemented so no worries")
     }
   },
   methods: {
