@@ -9,7 +9,6 @@ import Store from "./store";
 @Module({
   namespaced: true,
   name: "data",
-  store: Store,
 })
 class InspecDataModule extends VuexModule {
   allControls: Control[] = [];
