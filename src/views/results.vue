@@ -90,7 +90,6 @@ import VueApexCharts from "vue-apexcharts";
 import CountCard from "../components/CountCard.vue";
 import ControlCard from "../components/ControlCard.vue";
 import analyticsData from "./ui-elements/card/analyticsData.js";
-import ChangeTimeDurationDropdown from "@/components/ChangeTimeDurationDropdown.vue";
 
 export default {
   data() {
