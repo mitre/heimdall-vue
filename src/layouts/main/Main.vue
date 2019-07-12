@@ -220,13 +220,13 @@ export default {
     },
     setSidebarWidth() {
       if (this.windowWidth < 1200) {
-        this.$store.commit("TOGGLE_IS_SIDEBAR_ACTIVE", false);
-        this.$store.dispatch("updateSidebarWidth", "no-sidebar");
+        this.$store.commit("theme/TOGGLE_IS_SIDEBAR_ACTIVE", false);
+        this.$store.dispatch("theme/updateSidebarWidth", "no-sidebar");
         this.disableThemeTour = true;
       } else if (this.windowWidth < 1200) {
-        this.$store.dispatch("updateSidebarWidth", "reduced");
+        this.$store.dispatch("theme/updateSidebarWidth", "reduced");
       } else {
-        this.$store.commit("TOGGLE_IS_SIDEBAR_ACTIVE", true);
+        this.$store.commit("theme/TOGGLE_IS_SIDEBAR_ACTIVE", true);
       }
     },
     toggleHideScrollToTop(val) {

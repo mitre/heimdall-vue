@@ -45,7 +45,7 @@ export default {
       }
     },
     handleWindowResize(event) {
-      this.$store.dispatch("updateWindowWidth", event.currentTarget.innerWidth);
+      this.$store.dispatch("theme/updateWindowWidth", event.currentTarget.innerWidth);
     }
   },
   mounted() {
@@ -53,7 +53,7 @@ export default {
     this.$nextTick(() => {
       window.addEventListener("resize", this.handleWindowResize);
     });
-    this.$store.dispatch("updateWindowWidth", window.innerWidth);
+    this.$store.dispatch("theme/updateWindowWidth", window.innerWidth);
   },
   beforeDestroy() {
     window.removeEventListener("resize", this.handleWindowResize);

@@ -20,7 +20,7 @@
                     </div>
                     <div>
                         <template v-if="showCloseButton">
-                            <feather-icon icon="XIcon" class="m-0 cursor-pointer" @click="$store.commit('TOGGLE_IS_SIDEBAR_ACTIVE', false)"></feather-icon>
+                            <feather-icon icon="XIcon" class="m-0 cursor-pointer" @click="$store.commit('theme/TOGGLE_IS_SIDEBAR_ACTIVE', false)"></feather-icon>
                         </template>
                         <template v-else-if="!showCloseButton && !sidebarItemsMin">
                             <feather-icon icon="DiscIcon" class="mr-0 cursor-pointer" svg-classes="stroke-current" v-show="!reduce" @click="toggleReduce(true)" id="btnSidebarToggler"></feather-icon>
@@ -113,7 +113,7 @@ export default {
                 return this.$store.state.theme.isSidebarActive
             },
             set(val) {
-              this.$store.commit('TOGGLE_IS_SIDEBAR_ACTIVE', val)
+              this.$store.commit('theme/TOGGLE_IS_SIDEBAR_ACTIVE', val)
             }
         },
         reduceSidebar() {
@@ -124,7 +124,7 @@ export default {
                 return this.$store.state.theme.reduceButton;
             },
             set(val) {
-                this.$store.commit('TOGGLE_REDUCE_BUTTON', val)
+                this.$store.commit('theme/TOGGLE_REDUCE_BUTTON', val)
             }
         },
         sidebarItemsMin() {
@@ -151,9 +151,9 @@ export default {
         reduce(val) {
 
             if (val == true) {
-                this.$store.dispatch('updateSidebarWidth', 'reduced');
+                this.$store.dispatch('theme/updateSidebarWidth', 'reduced');
             } else {
-                this.$store.dispatch('updateSidebarWidth', 'default');
+                this.$store.dispatch('theme/updateSidebarWidth', 'default');
             }
 
             setTimeout(function(){
@@ -164,17 +164,17 @@ export default {
             this.setSidebarWidth();
         },
         '$route'() {
-            if(this.isSidebarActive && this.showCloseButton) this.$store.commit('TOGGLE_IS_SIDEBAR_ACTIVE', false);
+            if(this.isSidebarActive && this.showCloseButton) this.$store.commit('theme/TOGGLE_IS_SIDEBAR_ACTIVE', false);
         },
     },
     methods: {
         sidebarMouseEntered() {
-            if (this.reduce) this.$store.commit('UPDATE_SIDEBAR_ITEMS_MIN', false)
+            if (this.reduce) this.$store.commit('theme/UPDATE_SIDEBAR_ITEMS_MIN', false)
             this.isMouseEnter = true;
         },
         sidebarMouseLeave() {
             if (this.reduce) {
-                this.$store.commit('UPDATE_SIDEBAR_ITEMS_MIN', true);
+                this.$store.commit('theme/UPDATE_SIDEBAR_ITEMS_MIN', true);
             }
             this.isMouseEnter = false;
         },
@@ -188,32 +188,32 @@ export default {
         },
         setSidebarWidth() {
             if (this.windowWidth < 1200) {
-                if(this.windowWidth < 992) this.$store.commit('UPDATE_WINDOW_BREAKPOINT', 'md')
-                else this.$store.commit('UPDATE_WINDOW_BREAKPOINT', 'lg')
+                if(this.windowWidth < 992) this.$store.commit('theme/UPDATE_WINDOW_BREAKPOINT', 'md')
+                else this.$store.commit('theme/UPDATE_WINDOW_BREAKPOINT', 'lg')
 
-                this.$store.commit('TOGGLE_IS_SIDEBAR_ACTIVE', false)
+                this.$store.commit('theme/TOGGLE_IS_SIDEBAR_ACTIVE', false)
                 if (this.reduceButton) this.reduce = false;
                 // this.reduceButton = false;
                 this.showCloseButton = true;
                 this.clickNotClose = false;
-                this.$store.dispatch('updateSidebarWidth', 'no-sidebar')
-                this.$store.commit('UPDATE_SIDEBAR_ITEMS_MIN', false)
+                this.$store.dispatch('theme/updateSidebarWidth', 'no-sidebar')
+                this.$store.commit('theme/UPDATE_SIDEBAR_ITEMS_MIN', false)
             }
             else {
-                this.$store.commit('UPDATE_WINDOW_BREAKPOINT', 'xl')
+                this.$store.commit('theme/UPDATE_WINDOW_BREAKPOINT', 'xl')
                 if (this.reduceButton) this.reduce = true;
                 else this.reduce = false;
 
-                this.$store.commit('TOGGLE_IS_SIDEBAR_ACTIVE', true)
-                if (this.reduceButton && !this.isMouseEnter) this.$store.commit('UPDATE_SIDEBAR_ITEMS_MIN', true)
-                else this.$store.commit('UPDATE_SIDEBAR_ITEMS_MIN', false)
+                this.$store.commit('theme/TOGGLE_IS_SIDEBAR_ACTIVE', true)
+                if (this.reduceButton && !this.isMouseEnter) this.$store.commit('theme/UPDATE_SIDEBAR_ITEMS_MIN', true)
+                else this.$store.commit('theme/UPDATE_SIDEBAR_ITEMS_MIN', false)
 
                 this.clickNotClose = true;
                 this.showCloseButton = false;
                 if (this.reduceSidebar)
-                    this.$store.dispatch('updateSidebarWidth', 'reduced')
+                    this.$store.dispatch('theme/updateSidebarWidth', 'reduced')
                 else
-                    this.$store.dispatch('updateSidebarWidth', 'default')
+                    this.$store.dispatch('theme/updateSidebarWidth', 'default')
             }
         },
         psSectionScroll() {

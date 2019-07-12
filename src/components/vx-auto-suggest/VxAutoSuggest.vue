@@ -72,9 +72,9 @@ export default{
 		searchQuery(val) {
 			if(val == '') {
 				this.inputInit();
-				if(this.bodyOverlay) this.$store.commit('TOGGLE_CONTENT_OVERLAY', false);
+				if(this.bodyOverlay) this.$store.commit('theme/TOGGLE_CONTENT_OVERLAY', false);
 			}else {
-				if(this.backgroundOverlay && !this.bodyOverlay) this.$store.commit('TOGGLE_CONTENT_OVERLAY', true);
+				if(this.backgroundOverlay && !this.bodyOverlay) this.$store.commit('theme/TOGGLE_CONTENT_OVERLAY', true);
 				let exactEle = this.data.data.filter((item) => {
 					return item.label.toLowerCase().startsWith(this.searchQuery.toLowerCase())
 				});
@@ -151,7 +151,7 @@ export default{
 			}
 		},
 		suggestionSelected() {
-			if(this.bodyOverlay && this.filteredData[0].url) this.$store.commit('TOGGLE_CONTENT_OVERLAY', false);
+			if(this.bodyOverlay && this.filteredData[0].url) this.$store.commit('theme/TOGGLE_CONTENT_OVERLAY', false);
 			if(this.filteredData.length) {
 				if(this.filteredData[0].url){
 					this.searchQuery = '';

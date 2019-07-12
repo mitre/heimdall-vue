@@ -334,7 +334,7 @@ export default {
         return this.$store.state.theme.theme;
       },
       set(val) {
-        this.$store.dispatch("updateTheme", val);
+        this.$store.dispatch("theme/updateTheme", val);
       }
     },
     // HELPER
@@ -347,17 +347,10 @@ export default {
 
     // NAVBAR STYLE
     classObj() {
-      switch (this.sidebarWidth) 
-	  {
-		case "default": 
-			return "navbar-default";
-		case "reduced": 
-			return "navbar-reduced";
-		case null:
-			return "";
-		default:  
-			return "navbar-full";
-	  }
+      if (this.sidebarWidth == "default") return "navbar-default";
+      else if (this.sidebarWidth == "reduced") return "navbar-reduced";
+      else if (this.sidebarWidth) return "navbar-full";
+      else return null;
     },
 
     // BOOKMARK & SEARCH
@@ -372,7 +365,7 @@ export default {
         return this.starredPages.slice(0, 10);
       },
       set(list) {
-        this.$store.dispatch("arrangeStarredPagesLimited", list);
+        this.$store.dispatch("theme/arrangeStarredPagesLimited", list);
       }
     },
     starredPagesMore: {
@@ -380,7 +373,7 @@ export default {
         return this.starredPages.slice(10);
       },
       set(list) {
-        this.$store.dispatch("arrangeStarredPagesMore", list);
+        this.$store.dispatch("theme/arrangeStarredPagesMore", list);
       }
     },
 
@@ -398,7 +391,7 @@ export default {
   },
   methods: {
     showSidebar() {
-      this.$store.commit("TOGGLE_IS_SIDEBAR_ACTIVE", true);
+      this.$store.commit("theme/TOGGLE_IS_SIDEBAR_ACTIVE", true);
     },
     selected(item) {
       this.$router.push(item.url);
@@ -406,7 +399,7 @@ export default {
     },
     actionClicked(item) {
       // e.stopPropogation();
-      this.$store.dispatch("updateStarredPage", {
+      this.$store.dispatch("theme/updateStarredPage", {
         index: item.index,
         val: !item.highlightAction
       });
