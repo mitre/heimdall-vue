@@ -2,44 +2,49 @@
   <div>
     <!-- ROW 1 -->
     <div class="vx-row">
-      <div class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base">
+      <div :class="getClass()">
         <count-card
-          icon="CheckCircleIcon"
-          icon-right
+          index="0"
           :statistic="$store.getters['statusCounts/passed']"
           statisticTitle="Passed"
           statisticSub="All tests passed."
           background="success"
         ></count-card>
       </div>
-      <div class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base">
+      <div :class="getClass()">
         <count-card
-          icon="XCircleIcon"
-          icon-right
+          index="1"
           :statistic="$store.getters['statusCounts/failed']"
           statisticTitle="Errors"
           statisticSub="Has tests that failed."
           background="danger"
         ></count-card>
       </div>
-      <div class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base">
+      <div :class="getClass()">
         <count-card
-          icon="SlashIcon"
-          icon-right
+          index="2"
           :statistic="$store.getters['statusCounts/notApplicable']"
           statisticTitle="Not Applicable"
           statisticSub="System exception/absent component."
           background="primary"
         ></count-card>
       </div>
-      <div class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base">
+      <div :class="getClass()">
         <count-card
-          icon="AlertTriangleIcon"
-          icon-right
+          index="3"
           :statistic="$store.getters['statusCounts/notReviewed']"
           statisticTitle="Not Reviewed"
           statisticSub="Manual testing required/disabled test."
           background="warning"
+        ></count-card>
+      </div>
+      <div v-if="isProfileError" :class="getClass()">
+        <count-card
+          index="4"
+          :statistic="$store.getters['statusCounts/profileError']"
+          statisticTitle="Profile Error"
+          statisticSub="Check profile run privileges."
+          background="dark"
         ></count-card>
       </div>
     </div>
