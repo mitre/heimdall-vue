@@ -8,52 +8,62 @@ https://heimdall-vue.netlify.com
 
 Example JSON profiles are stored in `sample_jsons/`
 
-## Project setup
+## Project setup  
+
 ``` bash
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Compiles and hot-reloads for development  
+
 ``` bash
 npm run serve
 ```
 
-### Compiles and minifies for production
+### Compiles and minifies for production  
+
 ``` bash
 npm run build
 ```
 
-### Compiles and runs as electron application
+### Compiles and runs as electron application  
+
 ``` bash
 npm run electron
 ```
 
-### Run your tests
+### Run your tests  
+
 ``` bash
 npm run test
 ```
 
-### Lints and fixes files
+### Lints and fixes files  
+
 ``` bash
 npm run lint
 ```
 
-### Run your end-to-end tests
+### Run your end-to-end tests  
+
 ``` bash
 npm run test:e2e
 ```
 
-### Run your unit tests
+### Run your unit tests  
+
 ``` bash
 npm run test:unit
 ```
 
-### Run storybook
+### Run storybook  
+
 ``` bash
 npm run storybook
 ```
 
-### Customize configuration
+### Customize configuration  
+
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## Notes/Commmon Problems
@@ -65,6 +75,15 @@ If you have a proxy, remember to setup your NPM enviroment to respect the proxy
 - `npm config set strict-ssl false`
 - `npm config set proxy http://myproxy:8080`
 - `npm config set https-proxy https://myproxy:443`
+
+### Install Problems
+
+If you run "npm install" and get the error "unable to get local issuer certificate", you can run this command:
+```
+  npm config set strict-ssl false
+```
+
+If you run "npm install" and get the error "node-pre-gyp ERR! Completion callback never invoked!", you can delete the "package-lock.json" file and try it again.
 
 ## Contributing
 
@@ -118,11 +137,12 @@ Please note 0.x releases are works in progress (WIP) and may change at any time.
 
 ### NOTICE
 
-© 2018 The MITRE Corporation.  
+© 2019 The MITRE Corporation.  
 
 Approved for Public Release; Distribution Unlimited. Case Number 18-3678.  
 
-## NOTICE
+## NOTICE  
+
 MITRE hereby grants express written permission to use, reproduce, distribute, modify, and otherwise leverage this software to the extent permitted by the licensed terms provided in the LICENSE.md file included with this project.
 
 ### NOTICE  
