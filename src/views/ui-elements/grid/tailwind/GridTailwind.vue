@@ -39,7 +39,7 @@ export default{
         GridColumnSpacing,
         GridAutoColumnWidth,
         GridSimpleOffset,
-        GridColumnOrder,
+    //    GridColumnOrder,
     }
 }
 </script>
