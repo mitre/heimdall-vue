@@ -1,4 +1,8 @@
 module.exports = {
+  root: true,
+  env: {
+    node: true
+  },
   globals: {
     "$": true,
     "jQuery": true
@@ -6,20 +10,19 @@ module.exports = {
   parserOptions: {
     sourceType: 'module',
     allowImportExportEverywhere: true,
+    parser: 'babel-eslint'
   },
   rules: {
     'no-console': 0,
-	'name-property-casing': 0
+	  'name-property-casing': 0,
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
   },
   plugins: ['vue'],
   
   extends: [
-    // add more generic rulesets here, such as:
-    // 'eslint:recommended',
     'plugin:vue/essential'
   ],
-  rules: {
-    // override/add rules settings here, such as:
-    // 'vue/no-unused-vars': 'error'
+  parserOptions: {
+    parser: 'babel-eslint'
   }
 };

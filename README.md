@@ -4,47 +4,66 @@ https://heimdall-vue.netlify.com
 
 # [Heimdall-Vue](https://www.github.com/mitre/heimdall-vue)
 
-## Project setup
-```
+## Samples
+
+Example JSON profiles are stored in `sample_jsons/`
+
+## Project setup  
+
+``` bash
 npm install
 ```
 
-### Compiles and hot-reloads for development
-```
+### Compiles and hot-reloads for development  
+
+``` bash
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
+### Compiles and minifies for production  
+
+``` bash
 npm run build
 ```
 
-### Compiles and runs as electron application
-```
+### Compiles and runs as electron application  
+
+``` bash
 npm run electron
 ```
 
-### Run your tests
-```
+### Run your tests  
+
+``` bash
 npm run test
 ```
 
-### Lints and fixes files
-```
+### Lints and fixes files  
+
+``` bash
 npm run lint
 ```
 
-### Run your end-to-end tests
-```
+### Run your end-to-end tests  
+
+``` bash
 npm run test:e2e
 ```
 
-### Run your unit tests
-```
+### Run your unit tests  
+
+``` bash
 npm run test:unit
 ```
 
-### Customize configuration
+### Run storybook  
+
+``` bash
+npm run storybook
+```
+
+### Customize configuration  
+
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## Notes/Commmon Problems
@@ -66,6 +85,42 @@ If you run "npm install" and get the error "unable to get local issuer certifica
 
 If you run "npm install" and get the error "node-pre-gyp ERR! Completion callback never invoked!", you can delete the "package-lock.json" file and try it again.
 
+## Contributing
+
+### Components
+
+When developing Vue components, add your component to `src/components`, following a similar style to existing components.
+
+#### Storybook integration
+
+For visual components it is advised to add a story view of the component to
+storybook. This will serve as a visualization of the component under test
+conditions and serves to help other developers know how newly developed
+components are supposed to be used.
+
+First thing to do is after creating the component, register it in storybooks config.js file (`.storybook/config.js`)
+
+``` js
+import MyComponent from '../src/components/MyComponent.vue';
+Vue.component('MyComponent',MyComponent);
+```
+
+This needs to be done as storybook runs its own instance of vue.
+
+Next step is to add a story to `stories/index.stories.js` or add one to a file in `stories/` then import said story into `stories/index.stories.js`
+
+Stories look like the following example from https://storybook.js.org/docs/guides/guide-vue/:
+
+``` js 
+storiesOf('Button', module)
+  .add('with text', () => '<my-button>with text</my-button>')
+  .add('with emoji', () => '<my-button>😀 😎 👍 💯</my-button>')
+  .add('as a component', () => ({
+    components: { MyButton },
+    template: '<my-button :rounded="true">rounded</my-button>'
+  }));
+```
+
 ## Release Process 
 
 ### Branches
@@ -82,11 +137,12 @@ Please note 0.x releases are works in progress (WIP) and may change at any time.
 
 ### NOTICE
 
-© 2018 The MITRE Corporation.  
+© 2019 The MITRE Corporation.  
 
 Approved for Public Release; Distribution Unlimited. Case Number 18-3678.  
 
-## NOTICE
+## NOTICE  
+
 MITRE hereby grants express written permission to use, reproduce, distribute, modify, and otherwise leverage this software to the extent permitted by the licensed terms provided in the LICENSE.md file included with this project.
 
 ### NOTICE  

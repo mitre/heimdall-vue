@@ -1,29 +1,83 @@
 <template>
-  <b-container fluid>
-    <NavHeader/>
-    <router-view/>
-  </b-container>
+  <!-- <b-container fluid> -->
+  <!-- <NavHeader /> -->
+  <router-view />
+  <!-- </b-container> -->
 </template>
 
 <script>
 // @ is an alias to /src
-import NavHeader from '@/components/NavHeader.vue'
+// import NavHeader from "@/components/NavHeader.vue";
+import themeConfig from "@/../themeConfig.js";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
-    NavHeader
+    // NavHeader
+  },
+  watch: {
+    "$store.state.theme.theme"(val) {
+      this.toggleClassInBody(val);
+    }
+  },
+  async created() {
+    try {
+      await this.$auth.renewTokens();
+    } catch (e) {
+      console.log(e);
+    }
+  },
+  methods: {
+    toggleClassInBody(className) {
+      if (className == "dark") {
+        if (document.body.className.match("theme-semi-dark"))
+          document.body.classList.remove("theme-semi-dark");
+        document.body.classList.add("theme-dark");
+      } else if (className == "semi-dark") {
+        if (document.body.className.match("theme-dark"))
+          document.body.classList.remove("theme-dark");
+        document.body.classList.add("theme-semi-dark");
+      } else {
+        if (document.body.className.match("theme-dark"))
+          document.body.classList.remove("theme-dark");
+        if (document.body.className.match("theme-semi-dark"))
+          document.body.classList.remove("theme-semi-dark");
+      }
+    },
+    handleWindowResize(event) {
+      this.$store.dispatch("updateWindowWidth", event.currentTarget.innerWidth);
+    }
+  },
+  mounted() {
+    this.toggleClassInBody(themeConfig.theme);
+    this.$nextTick(() => {
+      window.addEventListener("resize", this.handleWindowResize);
+    });
+    this.$store.dispatch("updateWindowWidth", window.innerWidth);
+
+    // Populate store with some dummy data
+    // TODO: Remove
+    for(var i=0; i<500; i++) {
+      var index = (max) => Math.floor(Math.random() * 10);
+      this.$store.commit("addControl", {
+        status: ["Passed", "Failed", "Not Applicable", "Not Reviewed", "Profile Error"][index(5)],
+        impact: ["low", "medium", "high", "critical"][index(4)]
+      });
+    }
+  },
+  beforeDestroy() {
+    window.removeEventListener("resize", this.handleWindowResize);
   }
-}
+};
 </script>
 <style lang="scss" scoped>
 .container-fluid {
-    width: 100%;
-    font-size: 14px;
-    padding-right: 0px;
-    padding-left: 0px;
-    margin-right: auto;
-    margin-left: auto;
+  width: 100%;
+  font-size: 14px;
+  padding-right: 0px;
+  padding-left: 0px;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 #nist_treemap_profile rect {
@@ -40,10 +94,10 @@ export default {
   min-height: 300px;
 }
 .hidden_column {
- display: none;
+  display: none;
 }
 .c3-event-rects {
-   display: none;
+  display: none;
 }
 
 footer {
@@ -58,7 +112,7 @@ footer {
 
 .svgContainer {
   display: block;
-    margin: auto;
+  margin: auto;
 }
 
 .node {
@@ -70,7 +124,7 @@ footer {
 
 .node-rect-closed {
   stroke-width: 2px;
-  stroke: rgb(0,0,0);
+  stroke: rgb(0, 0, 0);
 }
 
 .link {
@@ -97,7 +151,7 @@ footer {
 
 .link text {
   font: 7px sans-serif;
-  fill: #CC0000;
+  fill: #cc0000;
 }
 
 .wordwrap {
@@ -131,9 +185,9 @@ footer {
   visibility: hidden;
   position: absolute;
   border-style: solid;
-    border-width: 1px;
-    border-color: black;
-    border-top-right-radius: 0.5em;
+  border-width: 1px;
+  border-color: black;
+  border-top-right-radius: 0.5em;
 }
 
 p {
@@ -151,7 +205,7 @@ a.exchangeName {
 rect.partitionRect {
   stroke: #eee;
   fill: #aaa;
-  fill-opacity: .8;
+  fill-opacity: 0.8;
 }
 
 rect.parent {
@@ -160,11 +214,11 @@ rect.parent {
 }
 
 pre {
-  white-space: pre-wrap;       /* Since CSS 2.1 */
-  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
-  white-space: -pre-wrap;      /* Opera 4-6 */
-  white-space: -o-pre-wrap;    /* Opera 7 */
-  word-wrap: break-word;       /* Internet Explorer 5.5+ */
+  white-space: pre-wrap; /* Since CSS 2.1 */
+  white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+  white-space: -pre-wrap; /* Opera 4-6 */
+  white-space: -o-pre-wrap; /* Opera 7 */
+  word-wrap: break-word; /* Internet Explorer 5.5+ */
 }
 .chat {
   list-style: none;
@@ -173,14 +227,14 @@ body {
   background-color: #f8f8f8;
 }
 #wrapper {
-  width: 100%
+  width: 100%;
 }
 #page-wrapper {
   padding: 0 15px;
   min-height: 568px;
   background-color: #fff;
 }
-@media (min-width:768px) {
+@media (min-width: 768px) {
   #page-wrapper {
     position: inherit;
     margin: 0 0 0 250px;
@@ -191,7 +245,7 @@ body {
 .btn-outline {
   color: inherit;
   background-color: transparent;
-  transition: all .5s;
+  transition: all 0.5s;
 }
 .btn-primary.btn-outline {
   color: #428bca;
@@ -208,7 +262,11 @@ body {
 .btn-danger.btn-outline {
   color: #d9534f;
 }
-.btn-danger.btn-outline:hover, .btn-info.btn-outline:hover, .btn-primary.btn-outline:hover, .btn-success.btn-outline:hover, .btn-warning.btn-outline:hover {
+.btn-danger.btn-outline:hover,
+.btn-info.btn-outline:hover,
+.btn-primary.btn-outline:hover,
+.btn-success.btn-outline:hover,
+.btn-warning.btn-outline:hover {
   color: #fff;
 }
 .chat {
@@ -229,7 +287,8 @@ body {
 .chat li .chat-body p {
   margin: 0;
 }
-.chat .glyphicon, .panel .slidedown .glyphicon {
+.chat .glyphicon,
+.panel .slidedown .glyphicon {
   margin-right: 5px;
 }
 .chat-panel .panel-body {
@@ -237,16 +296,20 @@ body {
   overflow-y: scroll;
 }
 .login-panel {
-  margin-top: 25%
+  margin-top: 25%;
 }
 .flot-chart {
   height: 400px;
 }
 .flot-chart-content {
   width: 100%;
-  height: 100%
+  height: 100%;
 }
-table.dataTable thead .sorting, table.dataTable thead .sorting_asc, table.dataTable thead .sorting_asc_disabled, table.dataTable thead .sorting_desc, table.dataTable thead .sorting_desc_disabled {
+table.dataTable thead .sorting,
+table.dataTable thead .sorting_asc,
+table.dataTable thead .sorting_asc_disabled,
+table.dataTable thead .sorting_desc,
+table.dataTable thead .sorting_desc_disabled {
   background: 0 0;
 }
 table.dataTable thead .sorting_asc:after {
@@ -263,7 +326,7 @@ table.dataTable thead .sorting:after {
   content: "\f0dc";
   float: right;
   font-family: fontawesome;
-  color: rgba(50, 50, 50, .5);
+  color: rgba(50, 50, 50, 0.5);
 }
 .btn-circle {
   width: 30px;
@@ -290,11 +353,11 @@ table.dataTable thead .sorting:after {
   font-size: 24px;
   line-height: 1.33;
 }
-.show-grid [class^=col-] {
+.show-grid [class^="col-"] {
   padding-top: 10px;
   padding-bottom: 10px;
   border: 1px solid #ddd;
-  background-color: #eee!important;
+  background-color: #eee !important;
 }
 .show-grid {
   margin: 15px 0;
@@ -305,43 +368,43 @@ table.dataTable thead .sorting:after {
 .panel-green {
   border-color: #5cb85c;
 }
-.panel-green>.panel-heading {
+.panel-green > .panel-heading {
   border-color: #5cb85c;
   color: #fff;
   background-color: #5cb85c;
 }
-.panel-green>a {
+.panel-green > a {
   color: #5cb85c;
 }
-.panel-green>a:hover {
+.panel-green > a:hover {
   color: #3d8b3d;
 }
 .panel-red {
   border-color: #d9534f;
 }
-.panel-red>.panel-heading {
+.panel-red > .panel-heading {
   border-color: #d9534f;
   color: #fff;
   background-color: #d9534f;
 }
-.panel-red>a {
+.panel-red > a {
   color: #d9534f;
 }
-.panel-red>a:hover {
+.panel-red > a:hover {
   color: #b52b27;
 }
 .panel-yellow {
   border-color: #f0ad4e;
 }
-.panel-yellow>.panel-heading {
+.panel-yellow > .panel-heading {
   border-color: #f0ad4e;
   color: #fff;
   background-color: #f0ad4e;
 }
-.panel-yellow>a {
+.panel-yellow > a {
   color: #f0ad4e;
 }
-.panel-yellow>a:hover {
+.panel-yellow > a:hover {
   color: #df8a13;
 }
 </style>
