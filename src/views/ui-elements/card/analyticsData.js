@@ -567,7 +567,7 @@ export default {
                     }
                 }
             },
-            colors: ['#00db89'],
+            colors: ['#0ed907'],
             fill: {
                 type: 'gradient',
                 gradient: {
@@ -575,7 +575,6 @@ export default {
                     type: 'horizontal',
                     shadeIntensity: 0.5,
                     gradientToColors: ['#00b5b5'],
-                    inverseColors: true,
                     opacityFrom: 1,
                     opacityTo: 1,
                     stops: [0, 100]
@@ -598,22 +597,23 @@ export default {
             },
         }
     },
+    //important one
     supportTrackerRadialBar: {
         chartData: {
             totalTickets: 163,
             openTickets: 103,
             lastResponse: '1d',
         },
-        series: [83],
+        series: [100],
         chartOptions: {
             plotOptions: {
                 radialBar: {
                     size: 150,
-                    offsetY: 15,
+                    offsetY: 0,
                     startAngle: -150,
                     endAngle: 150,
                     hollow: {
-                        size: '65%',
+                        size: '70%',
                     },
                     track: {
                         background: "#fff",
@@ -629,20 +629,19 @@ export default {
                     }
                 },
             },
-            colors: ['#EA5455'],
             fill: {
-                type: 'gradient',
-                gradient: {
-                    // enabled: true,
-                    shade: 'dark',
-                    type: 'horizontal',
-                    shadeIntensity: 0.5,
-                    gradientToColors: ['#7367F0'],
-                    inverseColors: true,
-                    opacityFrom: 1,
-                    opacityTo: 1,
-                    stops: [0, 100]
-                },
+                type: 'solid',
+                colors: [function({value}) {
+                    if (value < 60) {
+                        return '#F02607'; //red
+                    }
+                    else if (value >=60 && value < 90) {
+                        return '#EBDB02'; //yellow
+                    }
+                    else {
+                        return '#06BA00'; //green
+                    }
+                }]
             },
             stroke: {
                 dashArray: 8
@@ -651,7 +650,7 @@ export default {
                 sparkline: {
                 }
             },
-            labels: ['Completed Tickets'],
+            labels: ['Compliance Level'],
         }
     },
     // RADAR
@@ -721,16 +720,19 @@ export default {
     // SessionsByDevice
     sessionsByDeviceDonut: {
         analyticsData: [
-            { device: 'Dekstop', icon: 'MonitorIcon', color: 'primary', sessionsPercentgae: 58.6, comparedResultPercentage: 2 },
-            { device: 'Mobile', icon: 'SmartphoneIcon', color: 'warning', sessionsPercentgae: 34.9, comparedResultPercentage: 8 },
-            { device: 'Tablet', icon: 'TabletIcon', color: 'danger', sessionsPercentgae: 6.5, comparedResultPercentage: -5 },
+            { device: 'Passed', icon: 'CheckCircleIcon', color: 'success', sessionsAmount: 30},
+            { device: 'Failed', icon: 'XCircleIcon', color: 'danger', sessionsAmount: 40},
+            { device: 'Not Applicable', icon: 'SlashIcon', color: 'primary', sessionsAmount: 60},
+            { device: 'Not Reviewed', icon: 'AlertTriangleIcon', color: 'warning', sessionsAmount: 71},
+            { device: 'Profile Error', icon: 'AlertCircleIcon', color: 'dark', sessionsAmount: 15}
         ],
-        comparedResult: [2, -3, 8],
-        series: [58.6, 34.9, 6.5],
+        series: [30, 40, 60, 71, 15],
         chartOptions: {
-            labels: ['Desktop', 'Mobile', 'Tablet'],
+            labels: ['Passed', 'Failed', 'Not Applicable', 'Not Reviewed', 'Profile Error'],
             dataLabels: {
-                enabled: false
+                formatter: function (val, opts) {
+                    return opts.w.config.series[opts.seriesIndex]
+                }
             },
             legend: { show: false },
             chart: {
@@ -738,14 +740,25 @@ export default {
                 type: 'donut',
                 toolbar: {
                     show: false
-                }
+                },
+                name: "Compliance2"
             },
             stroke: { width: 0 },
-            colors: ['#7961F9', '#FF9F43', '#EA5455'],
+            colors: ['#56ab2f', '#EA5455', '#7961F9', '#F7EB02', '#2A2B2E'],
             fill: {
                 type: 'gradient',
                 gradient: {
-                    gradientToColors: ['#9c8cfc', '#FFC085', '#f29292']
+                    gradientToColors: ['#a8e063', '#f29292', '#9c8cfc', '#D9CE02', '#3E4857']
+                }
+            }
+        },
+        plotOptions: {
+            pie: {
+                donut: {
+                    labels: {
+                        show: true,
+                        name: "Compliance"
+                    }
                 }
             }
         }
