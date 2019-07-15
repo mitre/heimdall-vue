@@ -18,12 +18,18 @@
   Author URL: http://www.themeforest.net/user/pixinvent
 ==========================================================================================*/
 
+
+
 export default [
   {
     url: "/",
     name: "Home",
     slug: "home",
     icon: "HomeIcon"
+  },
+  {
+    name: "File Select",
+    icon: "FilePlusIcon",
   },
   {
     url: "/results",
