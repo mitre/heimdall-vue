@@ -5,7 +5,7 @@
 import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators";
 import navbarSearchAndPinList from "@/layouts/components/navbarSearchAndPinList";
 import themeConfig from "@/../themeConfig.js";
-import colors from "@/../themeConfig.js";
+import { colors } from "@/../themeConfig.js";
 
 @Module({
   namespaced: true,
