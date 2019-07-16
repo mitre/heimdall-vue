@@ -12,7 +12,7 @@
     "electron": "vue-cli-service build; electron .",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "check-types": "tsc"
+    "check-types": "tsc --strict --noEmit"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.19",
