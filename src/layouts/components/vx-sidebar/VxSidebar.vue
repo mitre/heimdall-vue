@@ -32,6 +32,11 @@
                 <div class="shadow-bottom" v-show="showShadowBottom"></div>
 
                 <VuePerfectScrollbar ref="mainSidebarPs" class="scroll-area--main-sidebar pt-2" :settings="settings" @ps-scroll-y="psSectionScroll">
+                    <div class="vs-sidebar--item">
+                        <a>
+                    <FileReader><span>File Select</span></FileReader>
+                    </a>
+                    </div>
                     <template v-for="(sidebarItem, index) in sidebarItems">
 
                         <!-- GROUP ITEM HEADER -->
@@ -61,6 +66,8 @@
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import VxSidebarGroup from './VxSidebarGroup.vue'
 import VxSidebarItem  from './VxSidebarItem.vue'
+import FileReader from '../../../components/FileReader'
+import Items from './sidebarItems.js'
 
 export default {
     name: 'vx-sidebar',
@@ -218,12 +225,13 @@ export default {
         },
         onSwipeRightSidebarSwipeArea() {
           if(!this.isSidebarActive && this.showCloseButton) this.isSidebarActive = true
-        }
+        },
     },
     components: {
         VxSidebarGroup,
         VxSidebarItem,
         VuePerfectScrollbar,
+        FileReader
     },
     mounted() {
         this.$nextTick(() => {

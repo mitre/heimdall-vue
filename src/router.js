@@ -49,6 +49,11 @@ const router = new Router({
           component: () => import("./views/results.vue")
         },
         {
+          path: "/results/:id",
+          name: "results-list",
+          component: () => import("./views/results.vue")
+        },
+        {
           path: "/ssp",
           name: "ssp",
           component: () => import("./views/ssp.vue")
