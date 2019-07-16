@@ -28,14 +28,20 @@ export default [
     icon: "HomeIcon"
   },
   {
-    name: "File Select",
-    icon: "FilePlusIcon",
-  },
-  {
     url: "/results",
     name: "Results",
     slug: "results",
-    icon: "FileIcon"
+    icon: "FileIcon",
+    i18n: "Results",
+
+    submenu: [
+      {
+        url: "/results", // example only
+        name: "All Results",
+        slug: "results",
+        icon: "FileIcon",
+      }
+    ]
   },
   {
     url: null,

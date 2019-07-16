@@ -90,12 +90,13 @@
                 background-overlay
               ></vx-auto-suggest>
             </div>
+            <FileReader></FileReader>
           </div>
         </template>
 
         <vs-spacer></vs-spacer>
         
-        <FileReader></FileReader>
+        <!--<FileReader></FileReader>-->
 
         <!-- SEARCHBAR -->
         <div

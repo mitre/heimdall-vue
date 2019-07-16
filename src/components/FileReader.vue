@@ -5,6 +5,7 @@
     class="cursor-pointer mt-1 sm:mr-6 mr-2">
     </feather-icon>
     <input type="file" @change="loadTextFromFile"/>
+    <slot></slot>
   </label>
 </template>
 
@@ -32,6 +33,8 @@
 
 <script>
 // import { store } from "../store.js";
+import Items from '../layouts/components/vx-sidebar/sidebarItems'
+import router from '../../src/router.js'
 
 export default {
   mounted () {
@@ -42,6 +45,8 @@ export default {
       const file = ev.target.files[0];
       const reader = new FileReader();
       const store = this.$store;
+      const routes = router.routes
+
       reader.onload = function(){
         var text = reader.result;
         store.commit("reset"); 
@@ -50,10 +55,18 @@ export default {
         // store.parseFile(text, file.name);
       };
       reader.readAsText(file);
+
+      //ADDS SIDE BAR ITEM
+      Items[1].submenu.push({
+        url: "/results/" + Items[1].submenu.length, 
+        name: "results " + Items[1].submenu.length,
+        slug: "result" + Items[1].submenu.length,
+        icon: "FileIcon",
+      })
     },
     getTitle() {
       return "TODO!";
-    }
+    },
   }
 };
 
