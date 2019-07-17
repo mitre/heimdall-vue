@@ -73,7 +73,9 @@ export default {
       return store.getBindValue();
     },
     
-    /* eslint vue/return-in-computed-property: 0 */
+	// Should be a method/doesnt need a return value as it modifies the object
+	// directly. As it is this.
+	// eslint-disable-next-line
     getControls: function () {
       if (isMounted == true) {
         var val = store.getControls();
@@ -88,7 +90,6 @@ export default {
         vm.dtHandle.draw();
       }
     }
-    /* eslint return-in-computed-property:1 */
   },
   watch: {
     controls(val, oldVal) {
