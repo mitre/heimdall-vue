@@ -1,0 +1,24 @@
+language: node_js
+node_js:
+  - "stable"
+branches:
+  only: 
+    - master
+    - dev 
+notifications:
+  email:
+    recipients:
+      - jgarriss@mitre.org
+      - lmalinowski@mitre.org
+      - jchenry@mitre.org
+    on_success: always
+    on_failure: never
+jobs:
+  include:
+    - stage: "Tests"
+      script: npm run lint
+      name: "Linter"
+    - script: npm run test:unit
+      name: "Unit Tests"
+    - stage: "Build"
+      script: npm run build
