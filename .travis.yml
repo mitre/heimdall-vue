@@ -16,14 +16,9 @@ notifications:
 jobs:
   include:
     - stage: "Tests"
-    
-    - name: "Linter"
       script: npm run lint
-
-    - name: "Unit Tests"
-      script: npm run test:unit
-      
-    - name: "Build" 
-      # Run build in the test stage, since using a seperate stage
-      # means if tests fail then the build cmd isnt even run
+      name: "Linter"
+    - script: npm run test:unit
+      name: "Unit Tests"
+    - stage: "Build"
       script: npm run build
