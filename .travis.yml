@@ -10,9 +10,15 @@ notifications:
     recipients:
       - jgarriss@mitre.org
       - lmalinowski@mitre.org
+      - jchenry@mitre.org
     on_success: always
     on_failure: never
-script:
-  - echo "Hello, Linter!"
-  - npm run test
-  - npm run lint
+jobs:
+  include:
+    - stage: "Tests"
+      script: npm run lint
+      name: "Linter"
+    - script: npm run test:unit
+      name: "Unit Tests"
+    - stage: "Build"
+      script: npm run build
