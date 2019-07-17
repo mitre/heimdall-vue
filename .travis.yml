@@ -4,12 +4,15 @@ node_js:
 branches:
   only: 
     - master
+    - dev 
 notifications:
   email:
     recipients:
       - jgarriss@mitre.org
+      - lmalinowski@mitre.org
     on_success: always
     on_failure: never
 script:
   - echo "Hello, Linter!"
+  - npm run test
   - npm run lint
