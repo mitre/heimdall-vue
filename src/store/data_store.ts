@@ -22,11 +22,6 @@ class InspecDataModule extends VuexModule {
    * Adds a control to the store.
    * @param newControl The control to add
    */
-  private recursiveAddProfile(profile: Profile) {
-    this.allProfiles.push(profile);
-    this.allControls.push(...profile.controls);
-  }
-
   @Mutation
   addControl(newControl: Control) {
     this.allControls.push(newControl);
@@ -38,7 +33,8 @@ class InspecDataModule extends VuexModule {
    */
   @Mutation
   addProfile(newProfile: Profile) {
-    this.recursiveAddProfile(newProfile);
+    this.allProfiles.push(newProfile);
+    this.allControls.push(...newProfile.controls);
   }
 
   /**
@@ -49,7 +45,10 @@ class InspecDataModule extends VuexModule {
   @Mutation
   addReport(newReport: InspecOutput) {
     this.allReports.push(newReport);
-    newReport.profiles.forEach(p => this.recursiveAddProfile(p));
+    newReport.profiles.forEach(profile => {
+      this.allProfiles.push(profile);
+      this.allControls.push(...profile.controls);
+    });
   }
 
   /**
