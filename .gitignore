@@ -4,3 +4,6 @@ Thumbs.db
 dist/
 node_modules/
 .deploy*/
+dist_electron/
+*.lock
+.vscode/**

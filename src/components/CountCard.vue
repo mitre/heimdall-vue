@@ -1,67 +1,77 @@
 <template>
-  <b-card no-body
-          :bg-variant="variant"
-          text-variant="white">
-    <b-card-body>
-      <b-row>
-        <b-col cols="3"><font-awesome-icon :icon="icon" size="5x"/></b-col>
-        <b-col cols="9" style="text-align: right">
-          <h1>{{count}}</h1>
-          <br/>
-          {{title}}
-        </b-col>
-      </b-row>
-    </b-card-body>
-    <b-card-footer><small>{{explanation}}</small></b-card-footer>
-  </b-card>
+  <vx-card class="card" content-color="#fff" :card-background="background">
+    <div slot="no-body">
+      <div class="p-6 pb-0 flex justify-between flex-row-reverse items-center">
+        <!--possible icons-->
+        <check-circle-icon v-if="index==0" class="feathericon"></check-circle-icon>
+        <x-circle-icon v-else-if="index==1" class="feathericon"></x-circle-icon>
+        <slash-icon v-else-if="index==2" class="feathericon"></slash-icon>
+        <alert-triangle-icon v-else-if="index==3" class="feathericon"></alert-triangle-icon>
+        <alert-circle-icon v-else class="feathericon"></alert-circle-icon>
+
+        <h1 style="color:white;font-size:40px;" class="mb-1 fold-bold">{{statistic}}</h1>
+      </div>
+
+      <div class="p-6 pb-4">
+        <h2 style="color:white;">{{statisticTitle}}</h2>
+        <span>{{statisticSub}}</span>
+      </div>
+    </div>
+  </vx-card>
 </template>
 
 <script>
-  import Vue from 'vue'
-  import { store } from "../store.js";
+import {
+  CheckCircleIcon,
+  XCircleIcon,
+  SlashIcon,
+  AlertTriangleIcon,
+  AlertCircleIcon
+} from "vue-feather-icons";
 
-  export default {
-    name: '',
-    props: ['title', 'explanation', 'fas_icon', 'color_variant'],
-    data () {
-      return {
-        store
-      }
+export default {
+  props: {
+    index: [Number, String],
+    statistic: {
+      type: [Number, String],
+      required: true
     },
-
-    computed: {
-      icon() {
-        return ['fas', this.fas_icon]
-      },
-      variant() {
-        return this.color_variant
-      },
-      testBind: function() {
-        return store.getBindValue();
-      },
-      count: function () {
-        var status = store.getStatus();
-        var val = 0;
-        for (var i = 0; i < status.length; i++) {
-          if (status[i][0] == this.title) {
-            val = status[i][1];
-          }
-        }
-        return val;
-      }
+    statisticTitle: {
+      type: String
     },
-
-    updated: function () {
+    statisticSub: {
+      type: String
     },
-
-    mounted: function mounted () {
-    },
+    background: {
+      type: String
+    }
+  },
+  components: {
+    CheckCircleIcon,
+    XCircleIcon,
+    SlashIcon,
+    AlertTriangleIcon,
+    AlertCircleIcon
   }
+};
 </script>
 
-<style lang="scss" scoped>
-.card-footer {
-  padding-top: 0.05rem;
-  height: 70px;
+<style scoped>
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  flex-grow: 1;
+}
+.feathericon {
+  height: 5em;
+  margin-top: -4px;
+  pointer-events: none;
+  vertical-align: middle;
+  width: 5em;
+  padding: 3px;
+  flex: inline;
+  border-radius: 9999px; /*rounded full*/
 }
 </style>
