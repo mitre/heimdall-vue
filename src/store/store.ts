@@ -4,6 +4,7 @@ import Data from "./data_store";
 import Theme from "./theme";
 import StatusCounts from "./status_counts";
 import SeverityCounts from "./severity_counts";
+import Intake from "./report_intake";
 
 Vue.use(Vuex);
 
@@ -27,6 +28,7 @@ const store = new Vuex.Store({
     theme: Theme,
     statusCounts: StatusCounts,
     severityCounts: SeverityCounts,
+    intake: Intake,
   },
 });
 
