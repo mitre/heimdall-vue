@@ -75,7 +75,6 @@ export default {
         this.CheckIsActive();
     }
 }
-}
 </script>
 
 <style>

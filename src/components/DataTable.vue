@@ -88,7 +88,7 @@ export default {
         vm.dtHandle.draw();
       }
     }
-    /* eslint return-in-computed-property:1 */
+    /* eslint vue/return-in-computed-property:1 */
   },
   watch: {
     controls(val, oldVal) {
