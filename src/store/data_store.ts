@@ -15,6 +15,15 @@ class InspecDataModule extends VuexModule {
   allProfiles: Profile[] = [];
   allReports: InspecOutput[] = [];
 
+  /**
+   * Add a profile and all of its controls to our state.
+   * @param profile Profile to read from
+   */
+  private recursiveAddProfile(profile: Profile) {
+    this.allProfiles.push(profile);
+    this.allControls.push(...profile.controls);
+  }
+
   @Mutation
   addControl(newControl: Control) {
     this.allControls.push(newControl);
@@ -22,12 +31,13 @@ class InspecDataModule extends VuexModule {
 
   @Mutation
   addProfile(newProfile: Profile) {
-    this.allProfiles.push(newProfile);
+    this.recursiveAddProfile(newProfile);
   }
 
   @Mutation
   addReport(newReport: InspecOutput) {
     this.allReports.push(newReport);
+    newReport.profiles.forEach(p => this.recursiveAddProfile(p));
   }
 
   @Mutation
