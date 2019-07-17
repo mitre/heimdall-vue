@@ -7,5 +7,8 @@ module.exports = {
       new HtmlWebpackPlugin({template: 'public/index.html',inlineSource: '.(js|css)$'}),
       new HtmlWebpackInlineSourcePlugin()
     ]
-  }
+  },
+  transpileDependencies: [
+    'vuex-module-decorators'
+  ]
 }

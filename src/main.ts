@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 
 // Vuesax Component Framework
+//@ts-ignore
 import Vuesax from 'vuesax'
 import 'material-icons/iconfont/material-icons.css' //Material Icons
 import 'vuesax/dist/vuesax.css'; // Vuesax
@@ -44,6 +45,7 @@ import './filters/filters'
 
 
 // Vuejs - Vue wrapper for hammerjs
+//@ts-ignore
 import { VueHammer } from 'vue2-hammer'
 Vue.use(VueHammer)
 
