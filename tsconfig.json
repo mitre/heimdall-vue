@@ -1,0 +1,50 @@
+{
+  // "compilerOptions": {
+  //     // Target latest version of ECMAScript.
+  //     "target": "esnext",
+  //     // Search under node_modules for non-relative imports.
+  //     "moduleResolution": "node",
+  //     // Process & infer types from .js files.
+  //     "allowJs": true,
+  //     // Don't emit; allow Babel to transform files.
+  //     // Enable strictest settings like strictNullChecks & noImplicitAny.
+  //     "strict": true,
+  //     // Disallow features that require cross-file information for emit.
+  //     "isolatedModules": true,
+  //     // Import non-ES modules as default imports.
+  //     "esModuleInterop": true,
+  //     // Allow experimental decorators
+  //     "experimentalDecorators": true
+  // },
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "strict": false,
+    "allowJs": true,
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "noEmit": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "types": ["webpack-env"],
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
+    "experimentalDecorators": true
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/*.vue",
+    "src/**/*.vue",
+    "tests/**/*.ts",
+    "tests/**/*.tsx"
+  ],
+  "files": [
+    "./static/vue-shims.d.ts"
+  ],
+  "exclude": ["node_modules"]
+}

@@ -66,7 +66,7 @@ export default {
 
       reader.onload = function(){
         var text = reader.result;
-        store.commit("reset"); 
+        store.commit("data/reset"); 
         // store.setTitle(file.name);
         store.dispatch("intake/loadReportFile", text);
         // store.parseFile(text, file.name);

@@ -187,12 +187,12 @@ export default {
                 return this.$store.state.theme.theme;
             },
             set(val) {
-                this.$store.dispatch('updateTheme', val);
+                this.$store.dispatch('theme/updateTheme', val);
             }
         },
         reduced_sidebar: {
             get() { return this.$store.state.theme.reduceButton },
-            set(val) { this.$store.commit('TOGGLE_REDUCE_BUTTON', val) }
+            set(val) { this.$store.commit('theme/TOGGLE_REDUCE_BUTTON', val) }
         },
         navbarTypeLocal: {
             get() {
@@ -219,7 +219,7 @@ export default {
         },
         primaryColor: {
             get() { return this.$store.state.theme.themePrimaryColor },
-            set(val) { this.$store.commit('UPDATE_PRIMARY_COLOR', val) }
+            set(val) { this.$store.commit('theme/UPDATE_PRIMARY_COLOR', val) }
         },
         hideScrollToTopLocal: {
             get() { return this.hideScrollToTop },
