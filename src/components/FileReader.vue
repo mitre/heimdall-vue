@@ -45,22 +45,21 @@ export default {
       const file = ev.target.files[0];
       const reader = new FileReader();
       const store = this.$store;
-      const routes = router.routes
-      const id = Items[1].submenu.length
-      let fileName = file.name
+      const routes = router.routes;
+      const id = Items[1].submenu.length;
+      let fileName = file.name;
 
-      let fileCount = 2
+      let fileCount = 2;
 
       for (let results in Items[1].submenu) {
         if (Items[1].submenu[results].name == fileName) {
           if (fileCount < 3) {
-          fileName = fileName + ' ' + fileCount
-          fileCount++
+            fileName = fileName + ' ' + fileCount;
+            fileCount++;
           }
           else {
-            fileName = fileName.substr(0, fileName.length - 2) + ' ' + fileCount
-            fileCount++
-          
+            fileName = fileName.substr(0, fileName.length - 2) + ' ' + fileCount;
+            fileCount++;
           }
         }
       }
