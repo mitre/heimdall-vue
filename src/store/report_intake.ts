@@ -21,7 +21,6 @@ class InspecIntakeModule extends VuexModule {
 
     // Construct a report
     let report = new InspecOutput(content);
-    console.log(report);
 
     // Deliver
     let data = getModule(DataModule, Store);
