@@ -34,7 +34,7 @@
                 <VuePerfectScrollbar ref="mainSidebarPs" class="scroll-area--main-sidebar pt-2" :settings="settings" @ps-scroll-y="psSectionScroll">
                     <div class="vs-sidebar--item">
                         <a>
-                    <FileReader><span>File Select</span></FileReader>
+                    <FileReader><span v-show="!sidebarItemsMin" class="truncate"> File Select</span></FileReader>
                     </a>
                     </div>
                     <template v-for="(sidebarItem, index) in sidebarItems">

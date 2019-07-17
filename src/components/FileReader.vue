@@ -45,7 +45,24 @@ export default {
       const file = ev.target.files[0];
       const reader = new FileReader();
       const store = this.$store;
-      const routes = router.routes
+      const routes = router.routes;
+      const id = Items[1].submenu.length;
+      let fileName = file.name;
+
+      let fileCount = 2;
+
+      for (let results in Items[1].submenu) {
+        if (Items[1].submenu[results].name == fileName) {
+          if (fileCount < 3) {
+            fileName = fileName + ' ' + fileCount;
+            fileCount++;
+          }
+          else {
+            fileName = fileName.substr(0, fileName.length - 2) + ' ' + fileCount;
+            fileCount++;
+          }
+        }
+      }
 
       reader.onload = function(){
         var text = reader.result;
@@ -58,11 +75,13 @@ export default {
 
       //ADDS SIDE BAR ITEM
       Items[1].submenu.push({
-        url: "/results/" + Items[1].submenu.length, 
-        name: "results " + Items[1].submenu.length,
-        slug: "result" + Items[1].submenu.length,
+        url: "/results/" + id, 
+        name: fileName,
+        slug: "result" + id,
         icon: "FileIcon",
       })
+
+      router.push("/results/" + id)
     },
     getTitle() {
       return "TODO!";
