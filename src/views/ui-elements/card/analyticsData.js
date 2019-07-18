@@ -599,16 +599,11 @@ export default {
     },
     //important one
     supportTrackerRadialBar: {
-        chartData: {
-            totalTickets: 163,
-            openTickets: 103,
-            lastResponse: '1d',
-        },
         series: [100],
         chartOptions: {
             plotOptions: {
                 radialBar: {
-                    size: 150,
+                    size: 175,
                     offsetY: 0,
                     startAngle: -150,
                     endAngle: 150,
@@ -741,7 +736,6 @@ export default {
                 toolbar: {
                     show: false
                 },
-                name: "Compliance2"
             },
             stroke: { width: 0 },
             colors: ['#56ab2f', '#EA5455', '#7961F9', '#F7EB02', '#2A2B2E'],
@@ -752,16 +746,6 @@ export default {
                 }
             }
         },
-        plotOptions: {
-            pie: {
-                donut: {
-                    labels: {
-                        show: true,
-                        name: "Compliance"
-                    }
-                }
-            }
-        }
     },
     // Product Orders
     productOrdersRadialBar: {

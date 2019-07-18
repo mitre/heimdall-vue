@@ -258,8 +258,8 @@ export default {
       default: "#fff"
     },
     logo: {
-        type: String
-    },
+      type: String
+    }
   },
   data() {
     return {
@@ -345,6 +345,7 @@ export default {
       if (this.sidebarWidth == "default") return "navbar-default";
       else if (this.sidebarWidth == "reduced") return "navbar-reduced";
       else if (this.sidebarWidth) return "navbar-full";
+      return "";
     },
 
     // BOOKMARK & SEARCH
@@ -463,7 +464,7 @@ export default {
   },
   components: {
     VxAutoSuggest,
-    VuePerfectScrollbar,
+    //VuePerfectScrollbar,
     draggable
   }
 };
