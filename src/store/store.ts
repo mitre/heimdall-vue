@@ -2,8 +2,9 @@ import Vue from "vue";
 import Vuex from "vuex";
 import Data from "./data_store";
 import Theme from "./theme";
-import StatusCounts from "./status_counts";
 import SeverityCounts from "./severity_counts";
+import Sidebar from "./sidebar";
+import StatusCounts from "./status_counts";
 import Intake from "./report_intake";
 
 Vue.use(Vuex);
@@ -29,6 +30,7 @@ const store = new Vuex.Store({
     statusCounts: StatusCounts,
     severityCounts: SeverityCounts,
     intake: Intake,
+    sidebar: Sidebar
   },
 });
 

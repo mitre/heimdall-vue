@@ -4,14 +4,15 @@
 
 import { InspecOutput, Profile, Control } from "inspecjs";
 import { Module, VuexModule, getModule, Action } from "vuex-module-decorators";
-import DataModule from "./data_store";
+import DataModule, { FileID } from "./data_store";
 import Store from "./store";
 
-// To give files unique id's with
-let file_index : number = 0;
-function genFileIndex(): number {
-  file_index++;
-  return file_index;
+export type LoadOptions = {
+  /** The file to load */
+  file: File;
+
+  /** The unique id to grant it */
+  unique_id: FileID;
 }
 
 @Module({
@@ -20,8 +21,9 @@ function genFileIndex(): number {
 })
 class InspecIntakeModule extends VuexModule {
 
+  /** Load a file with the specified options */
   @Action
-  async loadFile(file: File) {
+  async loadFile(options: LoadOptions) {
     // Make the reader
     let reader = new FileReader();
 
@@ -39,15 +41,14 @@ class InspecIntakeModule extends VuexModule {
       let data = getModule(DataModule, Store);
 
       // Retrieve common elements for either case (profile or report)
-      let unique_id = genFileIndex();
-      let filename = file.name;
+      let filename = options.file.name;
 
       // Determine what sort of file we (hopefully) have, then add it
       if("profiles" in json) {
         // It must be a report
         let report = new InspecOutput(json);
         let reportFile = {
-          unique_id,
+          unique_id: options.unique_id,
           filename,
           report,
         }
@@ -56,7 +57,7 @@ class InspecIntakeModule extends VuexModule {
         // It must be a profile
         let profile = new Profile(null, json);
         let profileFile = {
-          unique_id,
+          unique_id: options.unique_id,
           filename,
           profile
         }
@@ -66,7 +67,7 @@ class InspecIntakeModule extends VuexModule {
     }
 
     // Dispatch the read
-    reader.readAsText(file);
+    reader.readAsText(options.file);
   }
 }
 

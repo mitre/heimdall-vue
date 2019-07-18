@@ -6,8 +6,12 @@ import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators";
 import { Control, Profile, InspecOutput } from "inspecjs";
 import Store from "./store";
 
+
+/** Each FileID corresponds to a unique File in this store */
+export type FileID = number
+
 /** Represents the minimum data to represent an uploaded file handle. */
-type File = {
+export type InspecFile = {
   /** 
    * Unique identifier for this file. Used to encode which file is currently selected, etc. 
    * 
@@ -15,14 +19,14 @@ type File = {
    * A.unique_id > B.unique_id.
    * Using this property, one might order files by order in which they were added.
    */
-  unique_id: number,
+  unique_id: FileID,
   /** The filename that this file was uploaded under. */
   filename: string
 }
 /** Represents a file containing an Inspec Report output */
-type ReportFile = File & { report: InspecOutput };
+export type ReportFile = InspecFile & { report: InspecOutput };
 /** Represents a file containing an Inspec Profile (not run) */
-type ProfileFile = File & { profile: Profile };
+export type ProfileFile = InspecFile & { profile: Profile };
 
 
 @Module({
@@ -31,10 +35,10 @@ type ProfileFile = File & { profile: Profile };
 })
 class InspecDataModule extends VuexModule {
   /** State var containing all report files that have been added */
-  reportFiles: ReportFile[];
+  reportFiles: ReportFile[] = [];
 
   /** State var containing all profile files that have been added */
-  profileFiles: ProfileFile[];
+  profileFiles: ProfileFile[] = [];
 
   /** Return all of the files that we currently have. */
   get allFiles(): (ReportFile | ProfileFile)[] {
@@ -68,6 +72,19 @@ class InspecDataModule extends VuexModule {
    */
   get allControls(): Control[] {
     return this.allProfiles.flatMap(profile => profile.controls);
+  }
+
+  /**
+   * Yields a guaranteed currently free file ID
+   * TODO: Verify stability under async
+   */
+  get nextFreeFileID(): FileID {
+    let currentMax = 0;
+    // If we have any files find the max among them
+    if(this.allFiles.length) {
+      currentMax = Math.max(...this.allFiles.map(f => f.unique_id)); 
+    }
+    return currentMax + 1;
   }
 
   /**

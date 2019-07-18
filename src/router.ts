@@ -45,12 +45,12 @@ const router = new Router({
         },
         {
           path: "/results",
-          name: "results",
+          name: "results-all",
           component: () => import("./views/results.vue")
         },
         {
           path: "/results/:id",
-          name: "results-list",
+          name: "results-single",
           component: () => import("./views/results.vue")
         },
         {
@@ -64,12 +64,12 @@ const router = new Router({
           component: () => import("./views/about.vue")
         },
         {
-          path: "/results/catt",
+          path: "/tools/catt",
           name: "catt",
           component: () => import("./views/catt.vue")
         },
         {
-          path: "/results/print",
+          path: "/tools/print",
           name: "print",
           component: () => import("./views/print.vue")
         }
