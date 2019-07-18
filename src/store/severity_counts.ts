@@ -3,12 +3,18 @@
  */
 
 import { Module, VuexModule, getModule } from "vuex-module-decorators";
-import DataModule from "./data_store";
+import DataModule, {Filter} from "./data_store";
 import Store from "./store";
+import { Severity } from 'inspecjs/dist/types';
 
 // Helper function for counting a severity in a list of controls
-function countSeverity(state: DataModule, severity: string): number {
-  return state.allControls.filter(c => c.severity === severity).length;
+function countSeverity(filter: Filter, severity: Severity): number {
+  // Get the controls
+  let data = getModule(DataModule, Store);
+  let controls = data.allControls(filter);
+
+  // Refine our filter to the severity, and return length
+  return controls.filter(c => c.severity === severity).length;
 }
 
 @Module({
@@ -16,20 +22,24 @@ function countSeverity(state: DataModule, severity: string): number {
   name: "severityCounts",
 })
 class SeverityCountModule extends VuexModule {
-  get low(): number {
-    return countSeverity(getModule(DataModule, Store), "low");
+  get none(): (filter: Filter) => number {
+    return (filter) => countSeverity(filter, "none");
   }
 
-  get medium(): number {
-    return countSeverity(getModule(DataModule, Store), "medium");
+  get low(): (filter: Filter) => number {
+    return (filter) => countSeverity(filter, "low");
   }
 
-  get high(): number {
-    return countSeverity(getModule(DataModule, Store), "high");
+  get medium(): (filter: Filter) => number {
+    return (filter) => countSeverity(filter, "medium");
   }
 
-  get critical(): number {
-    return countSeverity(getModule(DataModule, Store), "critical");
+  get high(): (filter: Filter) => number {
+    return (filter) => countSeverity(filter, "high");
+  }
+
+  get critical(): (filter: Filter) => number {
+    return (filter) => countSeverity(filter, "critical");
   }
 }
 

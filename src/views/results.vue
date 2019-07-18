@@ -12,7 +12,7 @@
         <span>
           You have
           <!--May need to switch the below with statusCounts[4]-->
-          <b>{{ this.$store.getters["statusCounts/profileError"] }} profile errors</b> you need to resolve.
+          <b>{{ this.$store.getters["statusCounts/profileError"](fileFilter) }} profile errors</b> you need to resolve.
         </span>
       </vs-alert>
       <br />
@@ -64,7 +64,7 @@
         <control-status-card
           :series="statusCounts"
           :subtitle="isProfileError ? 'There are still profile errors.' : ''"
-          @apply-filter="applyFromStatus"
+          @apply-filter="applyFilterStatus"
         ></control-status-card>
       </div>
       <!--CONTROL SEVERITY-->
@@ -72,7 +72,7 @@
         <control-severity-card
           :series="severityCounts"
           :subtitle="isProfileError ? 'There are still profile errors.' : ''"
-          @apply-filter="applyFromSeverity"
+          @apply-filter="applyFilterSeverity"
         ></control-severity-card>
       </div>
       <!--COMPLIANCE LEVEL-->
@@ -105,50 +105,58 @@ export default {
   },
   computed: {
     isProfileError() {
-      return this.$store.getters["statusCounts/profileError"] > 0;
+      return this.$store.getters["statusCounts/profileError"](this.fileFilter) > 0;
     },
     clearButtonVisible() {
       if (this.status || this.severity) return true;
       return false;
     },
-    filteredControls() {
-      var filtered = this.$store.state.data.allControls;
-      console.log(filtered);
-      if (this.status) {
-        filtered = filtered.filter(c => c.status === this.status);
+    /** Construct a filter object that matches the current file(s) */
+    fileFilter() {
+      if(this.$route.params.id !== undefined) {
+        // If theres an id, set it as the filter
+        return { fromFile: parseInt(this.$route.params.id) };
+      } else {
+        return {};
       }
-      if (this.severity) {
-        filtered = filtered.filter(c => c.severity === this.severity);
-      }
-      return filtered;
+    },
+    /** Construct a filter dict based on current status/severity selections (on top of file filters) */
+    filter(){
+      // Init our filter
+      let finalFilter = {};
+
+      // Add file filter
+      Object.apply(finalFilter, this.fileFilter);
+
+      // Add status and severity filters
+      if(this.status !== null) { finalFilter.status = this.status; }
+      if(this.severity !== null) { finalFilter.severity = this.severity; }
+
+      return finalFilter;
     },
     statusCounts() {
-      var countFiltered = status =>
-        this.filteredControls.filter(c => c.status === status).length;
       return [
-        countFiltered("Passed"),
-        countFiltered("Failed"),
-        countFiltered("Not Applicable"),
-        countFiltered("Not Reviewed"),
-        countFiltered("Profile Error")
+        this.$store.getters["statusCounts/passed"](this.filter),
+        this.$store.getters["statusCounts/failed"](this.filter),
+        this.$store.getters["statusCounts/notApplicable"](this.filter),
+        this.$store.getters["statusCounts/notReviewed"](this.filter),
+        this.$store.getters["statusCounts/profileError"](this.filter),
       ];
     },
     severityCounts() {
-      var countFiltered = severity =>
-        this.filteredControls.filter(c => c.severity === severity).length;
       return [
-        countFiltered("low"),
-        countFiltered("medium"),
-        countFiltered("high"),
-        countFiltered("critical")
+        this.$store.getters["severityCounts/low"](this.filter),
+        this.$store.getters["severityCounts/medium"](this.filter),
+        this.$store.getters["severityCounts/high"](this.filter),
+        this.$store.getters["severityCounts/critical"](this.filter),
       ];
-    }
+    },
   },
   methods: {
-    applyFromStatus(status) {
+    applyFilterStatus(status) {
       this.status = status;
     },
-    applyFromSeverity(severity) {
+    applyFilterSeverity(severity) {
       this.severity = severity;
     },
     clearFilters() {
@@ -173,3 +181,4 @@ export default {
   z-index: 1;
 }
 </style>
+
