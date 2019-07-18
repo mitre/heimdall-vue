@@ -32,9 +32,6 @@
 
 
 <script>
-// import { store } from "../store.js";
-import Items from '../layouts/components/vx-sidebar/sidebarItems'
-import router from '../../src/router.js'
 
 export default {
   mounted () {
@@ -42,8 +39,13 @@ export default {
   },
   methods: {
     loadTextFromFile(ev) {
-      file = ev.target.files[0];
-      store.commit("intake/loadFile", file);
+      // Get the file from the event
+      let file = ev.target.files[0];
+      // Submit it to be loaded
+      let unique_id = this.$store.getters["data/nextFreeFileID"];
+      this.$store.dispatch("intake/loadFile", {file, unique_id});
+      // Go to that directory
+      this.$router.push("/results/" + unique_id)
     },
   }
 };
