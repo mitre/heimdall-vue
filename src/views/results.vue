@@ -5,7 +5,7 @@
       <div :class="getClass()">
         <count-card
           index="0"
-          :statistic="$store.getters['statusCounts/passed']"
+          :statistic="$store.getters['statusCounts/passed'](filter)"
           statisticTitle="Passed"
           statisticSub="All tests passed."
           background="success"
@@ -14,7 +14,7 @@
       <div :class="getClass()">
         <count-card
           index="1"
-          :statistic="$store.getters['statusCounts/failed']"
+          :statistic="$store.getters['statusCounts/failed'](filter)"
           statisticTitle="Errors"
           statisticSub="Has tests that failed."
           background="danger"
@@ -23,7 +23,7 @@
       <div :class="getClass()">
         <count-card
           index="2"
-          :statistic="$store.getters['statusCounts/notApplicable']"
+          :statistic="$store.getters['statusCounts/notApplicable'](filter)"
           statisticTitle="Not Applicable"
           statisticSub="System exception/absent component."
           background="primary"
@@ -32,7 +32,7 @@
       <div :class="getClass()">
         <count-card
           index="3"
-          :statistic="$store.getters['statusCounts/notReviewed']"
+          :statistic="$store.getters['statusCounts/notReviewed'](filter)"
           statisticTitle="Not Reviewed"
           statisticSub="Manual testing required/disabled test."
           background="warning"
@@ -41,7 +41,7 @@
       <div v-if="isProfileError" :class="getClass()">
         <count-card
           index="4"
-          :statistic="$store.getters['statusCounts/profileError']"
+          :statistic="$store.getters['statusCounts/profileError'](filter)"
           statisticTitle="Profile Error"
           statisticSub="Check profile run privileges."
           background="dark"
@@ -97,6 +97,17 @@ export default {
       analyticsData: analyticsData,
       isProfileError: true //boolean for now
     };
+  },
+  computed: {
+    filter: (state) => {
+      // Init our filter
+      let finalFilter = {};
+
+      // Add file filter
+      let fileID = parseInt(state.$route.params.id);
+      if(fileID !== NaN) { finalFilter.fromFile = fileID; }
+      return finalFilter;
+    }
   },
   components: {
     VueApexCharts,

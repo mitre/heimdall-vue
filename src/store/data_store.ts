@@ -5,6 +5,7 @@
 import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators";
 import { Control, Profile, InspecOutput } from "inspecjs";
 import Store from "./store";
+import { ControlStatus, ControlResult, Severity } from 'inspecjs/dist/types';
 
 
 /** Each FileID corresponds to a unique File in this store */
@@ -28,6 +29,21 @@ export type ReportFile = InspecFile & { report: InspecOutput };
 /** Represents a file containing an Inspec Profile (not run) */
 export type ProfileFile = InspecFile & { profile: Profile };
 
+/** Represents the set of potential filters a  */
+export interface Filter {
+  // General
+  /** Which file these objects came from. Undefined => any */
+  fromFile?: FileID;
+ 
+  // Control specific
+  /** What status the controls can have. Undefined => any */
+  status?: ControlStatus;
+
+  /** What severity the controls can have. Undefined => any */
+  severity?: Severity;
+
+  // Add more as necessary
+}
 
 @Module({
   namespaced: true,
@@ -49,29 +65,58 @@ class InspecDataModule extends VuexModule {
   }
 
   /** 
-   * Get all reports that have been added, regardless of originating file. 
-   * TODO: Deprecate this? The only "all" we still need is for the All Report view (?)
+   * Parameterized getter.
+   * Get all profiles from the specified file id.
    */
-  get allReports(): InspecOutput[] {
-    return this.reportFiles.map(f => f.report);
+  get allProfiles(): (filter: Filter) => Profile[] {
+    return (filter: Filter = {}) => {
+      // Initialize our lists
+      let profiles: Profile[] = [];
+
+      // First find the relevant profile files
+      let profileFiles = this.profileFiles;
+      // Filter unmatching files
+      if(filter.fromFile !== undefined) {
+        let profileFiles = this.profileFiles.filter(file => file.unique_id === filter.fromFile);
+      }
+      // Add them all to the list
+      profiles.push(...profileFiles.map(f => f.profile));
+
+      // Next go to the report files
+      let reportFiles = this.reportFiles;
+      // Filter unmatching files
+      if(filter.fromFile !== undefined) {
+        reportFiles = reportFiles.filter(file => file.unique_id === filter.fromFile);
+      }
+      // Add each of their profiles to the list
+      profiles.push(...reportFiles.flatMap(f => f.report.profiles));
+
+      // Return the result
+      return profiles;
+    }
   }
 
   /** 
-   * Get all profiles that have been added, regardless of originating file. 
-   * TODO: Deprecate this? The only "all" we still need is for the All Report view (?)
+   * Parameterized getter.
+   * Get all controls from all profiles from the specified file id.
    */
-  get allProfiles(): Profile[] {
-    let fileProfiles = this.profileFiles.map(f => f.profile);
-    let nestedProfiles = this.allReports.flatMap(r => r.profiles);
-    return fileProfiles.concat(nestedProfiles);
-  }
+  get allControls(): (filter: Filter) => Control[] {
+    return (filter: Filter = {}) => {
+      // First get all of the profiles using the same filter
+      let controls = this.allProfiles(filter).flatMap(profile => profile.controls);
 
-  /** 
-   * Get all controls that have been added, regardless of originating file/profile 
-   * TODO: Deprecate this? The only "all" we still need is for the All Report view (?)
-   */
-  get allControls(): Control[] {
-    return this.allProfiles.flatMap(profile => profile.controls);
+      // Filter by status, if necessary
+      if(filter.status !== undefined) {
+        controls = controls.filter(control => control.status === filter.status);
+      }
+
+      // Filter by severity, if necessary
+      if(filter.severity !== undefined) {
+        controls = controls.filter(control => control.severity === filter.severity);
+      }
+
+      return controls;
+    }
   }
 
   /**
