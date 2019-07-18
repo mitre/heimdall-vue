@@ -24,7 +24,7 @@
       @toggleHideScrollToTop="toggleHideScrollToTop"
     />
     <vx-sidebar
-      :sidebarItems="sidebarItems"
+      :sidebarItems="$store.getters['sidebar/allItems']"
       :logo="require('@/assets/images/logo/logo.png')"
       title="Heimdall-Lite"
       parent=".layout--main"
@@ -121,7 +121,6 @@ import TheCustomizer from "../components/customizer/TheCustomizer.vue";
 import TheNavbar from "../components/TheNavbar.vue";
 import TheFooter from "../components/TheFooter.vue";
 import themeConfig from "@/../themeConfig.js";
-import sidebarItems from "@/layouts/components/vx-sidebar/sidebarItems.js";
 import BackToTop from "vue-backtotop";
 
 export default {
@@ -133,7 +132,6 @@ export default {
       routerTransition: themeConfig.routerTransition || "none",
       isNavbarDark: false,
       routeTitle: this.$route.meta.pageTitle,
-      sidebarItems: sidebarItems,
       disableCustomizer: themeConfig.disableCustomizer,
       windowWidth: window.innerWidth, //width of windows
       hideScrollToTop: themeConfig.hideScrollToTop,

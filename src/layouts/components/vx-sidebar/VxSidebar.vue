@@ -67,7 +67,6 @@ import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import VxSidebarGroup from './VxSidebarGroup.vue'
 import VxSidebarItem  from './VxSidebarItem.vue'
 import FileReader from '../../../components/FileReader'
-import Items from './sidebarItems.js'
 
 export default {
     name: 'vx-sidebar',
