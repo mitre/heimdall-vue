@@ -27,7 +27,7 @@ export default {
       chartOptions: {
         plotOptions: {
           pie: {
-            size: 150,
+            size: 140,
             customScale: 0.8
           }
         },

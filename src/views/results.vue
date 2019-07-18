@@ -1,7 +1,7 @@
 <template>
   <div>
     <vs-button
-      v-show="filtersNeeded"
+      v-show="clearButtonVisible"
       color="primary"
       type="filled"
       class="button"
@@ -96,12 +96,8 @@ import ComplianceLevelCard from "../components/ComplianceLevelCard.vue";
 export default {
   data() {
     return {
-      statusCounts: [],
-      severityCounts: [],
-      filtersNeeded: false, //controls presence of 'Clear Filters' button
-      array: null, //stores results of first filter
       status: null, //needed to prevent from clicking Control Status twice
-      impact: null //needed to prevent from clicking Control Severity twice
+      severity: null //needed to prevent from clicking Control Severity twice
     };
   },
   created() {
@@ -110,88 +106,54 @@ export default {
   computed: {
     isProfileError() {
       return this.$store.getters["statusCounts/profileError"] > 0;
+    },
+    clearButtonVisible() {
+      if (this.status || this.severity) return true;
+      return false;
+    },
+    filteredControls() {
+      var filtered = this.$store.state.data.allControls;
+      console.log(filtered);
+      if (this.status) {
+        filtered = filtered.filter(c => c.status === this.status);
+      }
+      if (this.severity) {
+        filtered = filtered.filter(c => c.severity === this.severity);
+      }
+      return filtered;
+    },
+    statusCounts() {
+      var countFiltered = status =>
+        this.filteredControls.filter(c => c.status === status).length;
+      return [
+        countFiltered("Passed"),
+        countFiltered("Failed"),
+        countFiltered("Not Applicable"),
+        countFiltered("Not Reviewed"),
+        countFiltered("Profile Error")
+      ];
+    },
+    severityCounts() {
+      var countFiltered = severity =>
+        this.filteredControls.filter(c => c.severity === severity).length;
+      return [
+        countFiltered("low"),
+        countFiltered("medium"),
+        countFiltered("high"),
+        countFiltered("critical")
+      ];
     }
   },
   methods: {
     applyFromStatus(status) {
-      if (!this.status) {
-        this.filtersNeeded = true;
-        if (!this.array) {
-          this.array = this.$store.state.allControls.filter(
-            c => c.status === status
-          );
-        } else {
-          this.array = this.array.filter(c => c.status === status);
-        }
-        if (status === "Passed") {
-          this.statusCounts = [this.array.length, 0, 0, 0, 0];
-        } else if (status === "Failed") {
-          this.statusCounts = [0, this.array.length, 0, 0, 0];
-        } else if (status === "Not Applicable") {
-          this.statusCounts = [0, 0, this.array.length, 0, 0];
-        } else if (status === "Not Reviewed") {
-          this.statusCounts = [0, 0, 0, this.array.length, 0];
-        } else {
-          this.statusCounts = [0, 0, 0, 0, this.array.length];
-        }
-
-        this.severityCounts = [
-          this.array.filter(c => c.impact === "low").length,
-          this.array.filter(c => c.impact === "medium").length,
-          this.array.filter(c => c.impact === "high").length,
-          this.array.filter(c => c.impact === "critical").length
-        ];
-        this.status = status;
-      }
+      this.status = status;
     },
-    applyFromSeverity(impact) {
-      if (!this.impact) {
-        this.filtersNeeded = true;
-        if (!this.array) {
-          this.array = this.$store.state.allControls.filter(
-            c => c.impact === impact
-          );
-        } else {
-          this.array = this.array.filter(c => c.impact === impact);
-        }
-        if (impact === "low") {
-          this.severityCounts = [this.array.length, 0, 0, 0];
-        } else if (impact === "medium") {
-          this.severityCounts = [0, this.array.length, 0, 0];
-        } else if (impact === "high") {
-          this.severityCounts = [0, 0, this.array.length, 0];
-        } else {
-          this.severityCounts = [0, 0, 0, this.array.length];
-        }
-
-        this.statusCounts = [
-          this.array.filter(c => c.status === "Passed").length,
-          this.array.filter(c => c.status === "Failed").length,
-          this.array.filter(c => c.status === "Not Applicable").length,
-          this.array.filter(c => c.status === "Not Reviewed").length,
-          this.array.filter(c => c.status === "Profile Error").length
-        ];
-        this.impact = impact;
-      }
+    applyFromSeverity(severity) {
+      this.severity = severity;
     },
     clearFilters() {
-      this.statusCounts = [
-        this.$store.getters["statusCounts/passed"],
-        this.$store.getters["statusCounts/failed"],
-        this.$store.getters["statusCounts/notApplicable"],
-        this.$store.getters["statusCounts/notReviewed"],
-        this.$store.getters["statusCounts/profileError"]
-      ];
-      this.severityCounts = [
-        this.$store.getters["severityCounts/low"],
-        this.$store.getters["severityCounts/medium"],
-        this.$store.getters["severityCounts/high"],
-        this.$store.getters["severityCounts/critical"]
-      ];
-      this.filtersNeeded = false;
-      this.array = null;
       this.status = null;
-      this.impact = null;
+      this.severity = null;
     }
   },
   components: {
