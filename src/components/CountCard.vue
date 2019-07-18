@@ -9,11 +9,11 @@
         <alert-triangle-icon v-else-if="index==3" class="feathericon"></alert-triangle-icon>
         <alert-circle-icon v-else class="feathericon"></alert-circle-icon>
 
-        <h1 style="color:white;font-size:40px;" class="mb-1 fold-bold">{{statistic}}</h1>
+        <h1>{{statistic}}</h1>
       </div>
 
       <div class="p-6 pb-4">
-        <h2 style="color:white;">{{statisticTitle}}</h2>
+        <h2>{{statisticTitle}}</h2>
         <span>{{statisticSub}}</span>
       </div>
     </div>
@@ -28,6 +28,7 @@ import {
   AlertTriangleIcon,
   AlertCircleIcon
 } from "vue-feather-icons";
+import { ResponsiveDirective } from "vue-responsive-components";
 
 export default {
   props: {
@@ -52,6 +53,9 @@ export default {
     SlashIcon,
     AlertTriangleIcon,
     AlertCircleIcon
+  },
+  directives: {
+    responsive: ResponsiveDirective
   }
 };
 </script>
@@ -64,7 +68,16 @@ export default {
   overflow: hidden;
   flex-grow: 1;
 }
-.feathericon {
+.card h1 {
+  color: white;
+  font-size: 40px;
+  margin-bottom: 1;
+  font-weight: bold;
+}
+.card h2 {
+  color: white;
+}
+.card .feathericon {
   height: 5em;
   margin-top: -4px;
   pointer-events: none;
@@ -74,4 +87,17 @@ export default {
   flex: inline;
   border-radius: 9999px; /*rounded full*/
 }
+
+/*using v-responsive*/
+/*
+.card.small h1 {
+  font-size: 3em;
+}
+.card.small h2 {
+  font-size: 2em;
+}
+.card.small span {
+  font-size: 1em;
+}
+*/
 </style>
