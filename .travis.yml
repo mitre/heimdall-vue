@@ -16,8 +16,8 @@ notifications:
 jobs:
   include:
     - stage: "Tests"
-      script: npm run lint
-      name: "Linter"
+      script: npm run lint && npm run check-types
+      name: "Linter and Typescript Compile"
     - script: npm run test:unit
       name: "Unit Tests"
     - stage: "Build"

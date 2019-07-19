@@ -10,7 +10,8 @@ module.exports = {
   parserOptions: {
     sourceType: 'module',
     allowImportExportEverywhere: true,
-    parser: 'babel-eslint'
+    parser: "@typescript-eslint/parser",
+    plugins: ["@typescript-eslint", "@vue/eslint-config-typescript"]
   },
   rules: {
     'no-console': 0,
@@ -22,7 +23,4 @@ module.exports = {
   extends: [
     'plugin:vue/essential'
   ],
-  parserOptions: {
-    parser: 'babel-eslint'
-  }
 };
