@@ -51,7 +51,7 @@ export default {
         },
         legend: {
           position: "bottom",
-          offsetY: 35
+          offsetY: 25
         },
         chart: {
           offsetY: 30,

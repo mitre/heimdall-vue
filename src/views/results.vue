@@ -19,7 +19,7 @@
     </div>
     <!-- ROW 1 -->
     <div class="vx-row">
-      <div class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base">
+      <div class="vx-col w-full sm:w-1/1 md:w-1/2 lg:w-1/2 xl:w-1/4 mb-base">
         <count-card
           index="0"
           :statistic="statusCounts[0]"
@@ -28,7 +28,7 @@
           background="success"
         ></count-card>
       </div>
-      <div class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base">
+      <div class="vx-col w-full sm:w-1/1 md:w-1/2 lg:w-1/2 xl:w-1/4 mb-base">
         <count-card
           index="1"
           :statistic="statusCounts[1]"
@@ -37,7 +37,7 @@
           background="danger"
         ></count-card>
       </div>
-      <div class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base">
+      <div class="vx-col w-full sm:w-1/1 md:w-1/2 lg:w-1/2 xl:w-1/4 mb-base">
         <count-card
           index="2"
           :statistic="statusCounts[2]"
@@ -46,7 +46,7 @@
           background="primary"
         ></count-card>
       </div>
-      <div class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base">
+      <div class="vx-col w-full sm:w-1/1 md:w-1/2 lg:w-1/2 xl:w-1/4 mb-base">
         <count-card
           index="3"
           :statistic="statusCounts[3]"
@@ -60,7 +60,7 @@
     <!-- ROW 2 -->
     <div class="vx-row">
       <!--CONTROL STATUS-->
-      <div class="vx-col w-full md:w-1/1 lg:w-1/3 xl:w-1/3">
+      <div class="vx-col w-full md:w-1/1 lg:w-1/2 xl:w-1/3">
         <control-status-card
           :series="statusCounts"
           :subtitle="isProfileError ? 'There are still profile errors.' : ''"
@@ -68,7 +68,7 @@
         ></control-status-card>
       </div>
       <!--CONTROL SEVERITY-->
-      <div class="vx-col w-full md:w-1/1 lg:w-1/3 xl:w-1/3">
+      <div class="vx-col w-full md:w-1/1 lg:w-1/2 xl:w-1/3">
         <control-severity-card
           :series="severityCounts"
           :subtitle="isProfileError ? 'There are still profile errors.' : ''"
@@ -76,7 +76,7 @@
         ></control-severity-card>
       </div>
       <!--COMPLIANCE LEVEL-->
-      <div class="vx-col w-full md:w-1/1 lg:w-1/3 xl:w-1/3 mb-base">
+      <div class="vx-col w-full md:w-1/1 lg:w-1/1 xl:w-1/3 mb-base">
         <compliance-level-card
           :series="statusCounts"
           :subtitle="isProfileError ? 'There are still profile errors.' : ''"
