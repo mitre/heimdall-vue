@@ -91,7 +91,7 @@ class InspecThemeModule extends VuexModule {
 
   @Action
   updateSidebarWidth(width: string) {
-    this.context.commit("UPDATE_WINDOW_WIDTH", width);
+    this.context.commit("UPDATE_SIDEBAR_WIDTH", width);
   }
 
   @Action
