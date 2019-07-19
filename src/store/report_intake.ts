@@ -46,7 +46,7 @@ class InspecIntakeModule extends VuexModule {
       // Determine what sort of file we (hopefully) have, then add it
       if("profiles" in json) {
         // It must be a report
-        let report = new InspecOutput(json);
+        let report = Object.freeze(new InspecOutput(json));
         let reportFile = {
           unique_id: options.unique_id,
           filename,
@@ -55,7 +55,7 @@ class InspecIntakeModule extends VuexModule {
         data.addReport(reportFile);
       } else {
         // It must be a profile
-        let profile = new Profile(null, json);
+        let profile = Object.freeze(new Profile(null, json));
         let profileFile = {
           unique_id: options.unique_id,
           filename,
