@@ -40,7 +40,6 @@
     "json-server": "^0.15.0",
     "material-icons": "^0.3.1",
     "reprism": "0.0.11",
-    "typescript": "^3.5.3",
     "v-file-upload": "^3.1.7",
     "vue": "^2.6.10",
     "vue-apexcharts": "^1.4.0",
