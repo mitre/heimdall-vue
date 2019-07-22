@@ -120,7 +120,6 @@ export default {
   methods: {
     winWidth: function() {
       var winw = window.innerWidth;
-      console.log("winWidth: " + winw);
       this.resizeKey = winw;
     }
   }
