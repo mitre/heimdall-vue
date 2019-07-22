@@ -156,11 +156,12 @@ export default {
   methods: {
     getSeries(series) {
       var sum = series.reduce((a, b) => a + b, 0);
+      /// hack for no data loaded yet, to be fixed later
+      sum <= 0 ? (sum = 0.00001) : sum;
       return [Math.round((series[0] * 1000.0) / sum) / 10];
     }
   },
   props: {
-    //subtitle: String,
     series: Array
   },
   components: {

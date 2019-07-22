@@ -93,8 +93,8 @@ export default {
     }
   },
   props: {
-    //subtitle: String,
-    series: Array
+    series: Array,
+    subtitle: String
   },
   components: {
     VueApexCharts
