@@ -8,7 +8,7 @@ import themeConfig from "@/../themeConfig.js";
 import { colors } from "@/../themeConfig.js";
 
 @Module({
-  namespaced: true,
+  namespaced: true
   // name: "theme",  // Note: Commented because otherwise we get hella errors
 })
 class InspecThemeModule extends VuexModule {
@@ -28,7 +28,7 @@ class InspecThemeModule extends VuexModule {
     name: "Aaron Lippold",
     about: "He's just this guy, you know.",
     img: "avatar-s-11.png",
-    status: "online",
+    status: "online"
   };
 
   themePrimaryColor: string = colors.primary;

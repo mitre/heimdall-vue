@@ -95,7 +95,7 @@
         </template>
 
         <vs-spacer></vs-spacer>
-        
+
         <!--<FileReader></FileReader>-->
 
         <!-- SEARCHBAR -->
@@ -176,7 +176,7 @@
                 </li>
               </ul>
             </VuePerfectScrollbar>
-			<!--
+            <!--
             <div
               class="checkout-footer fixed bottom-0 rounded-b-lg text-primary w-full p-2 font-semibold text-center border border-b-0 border-l-0 border-r-0 border-solid d-theme-border-grey-light cursor-pointer"
             >
@@ -184,7 +184,7 @@
             </div>-->
           </vs-dropdown-menu>
         </vs-dropdown>
-       
+
         <!-- USER META -->
         <div class="the-navbar__user-meta flex items-center">
           <div class="text-right leading-tight hidden sm:block">
@@ -253,7 +253,7 @@
 import VxAutoSuggest from "@/components/vx-auto-suggest/VxAutoSuggest.vue";
 import VuePerfectScrollbar from "vue-perfect-scrollbar";
 import draggable from "vuedraggable";
-import FileReader from "../../components/FileReader.vue"
+import FileReader from "../../components/FileReader.vue";
 
 export default {
   name: "the-navbar",
@@ -263,8 +263,8 @@ export default {
       default: "#fff"
     },
     logo: {
-        type: String
-    },
+      type: String
+    }
   },
   data() {
     return {
