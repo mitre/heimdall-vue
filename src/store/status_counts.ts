@@ -9,6 +9,11 @@ import { ControlStatus } from 'inspecjs/dist/types';
 
 // Helper function for counting a status in a list of controls
 function countStatus(filter: Filter, status: ControlStatus): number {
+  // Save time
+  if(filter.status && filter.status !== status) {
+    return 0;    
+  }
+
   // Get the controls
   let data = getModule(DataModule, Store);
   let controls = data.allControls(filter);

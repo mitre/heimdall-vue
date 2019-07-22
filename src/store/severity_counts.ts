@@ -9,6 +9,11 @@ import { Severity } from 'inspecjs/dist/types';
 
 // Helper function for counting a severity in a list of controls
 function countSeverity(filter: Filter, severity: Severity): number {
+  // Save time
+  if(filter.severity && filter.severity !== severity) {
+    return 0;    
+  }
+
   // Get the controls
   let data = getModule(DataModule, Store);
   let controls = data.allControls(filter);
