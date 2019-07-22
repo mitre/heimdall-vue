@@ -126,11 +126,11 @@ export default {
       let finalFilter = {};
 
       // Add file filter
-      Object.apply(finalFilter, this.fileFilter);
+      Object.assign(finalFilter, this.fileFilter);
 
       // Add status and severity filters
-      if(this.status !== null) { finalFilter.status = this.status; }
-      if(this.severity !== null) { finalFilter.severity = this.severity; }
+      if(this.status) { finalFilter.status = this.status; }
+      if(this.severity) { finalFilter.severity = this.severity; }
 
       return finalFilter;
     },

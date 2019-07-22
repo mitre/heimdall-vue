@@ -103,18 +103,14 @@ class InspecDataModule extends VuexModule {
   get allControls(): (filter: Filter) => Control[] {
     const localCache: {[key: string]: Control[]} = {};
     let _depends: (ReportFile[] | ProfileFile[])[] = [this.profileFiles, this.reportFiles];
-    console.log("Cache cleared!");
-    console.log(localCache);
     return (filter: Filter = {}) => {
       // Generate a hash. TODO: Make more efficient
       let id = JSON.stringify(filter);
 
       // Check if we have this cached:
       if(id in localCache) {
-        console.log("Cache hit!");
         return [...localCache[id]];
       }
-      console.log("Cache miss!");
 
       // First get all of the profiles using the same filter
       let controls = this.allProfiles(filter).flatMap(profile => profile.controls);
