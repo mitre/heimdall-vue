@@ -83,7 +83,7 @@
         ></compliance-level-card>
       </div>
     </div>
-    <FindingDetails></FindingDetails>
+    <FindingDetails :filter="filter"></FindingDetails>
   </div>
 </template>
 

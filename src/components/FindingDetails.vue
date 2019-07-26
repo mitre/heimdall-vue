@@ -1,5 +1,5 @@
 <template>
-  <vx-card code-toggler :title="getControl">
+  <vx-card code-toggler :title="getStatus">
     
         <ToggleButton id="changed-font"
           :labels="{checked: 'Findings', unchecked: 'Details'}"
@@ -70,6 +70,9 @@ import ToggleButton from "./ToggleButton.vue"
 //document.getElementById("color").value = color();
 
 export default {
+    props: {
+        filter: Object
+    },
     data() {
         return {
             currentTab: 'btn1',
@@ -93,24 +96,27 @@ export default {
             }
         },
         getControl() {
-            return this.$store.state.data.allControls.filter( c => c.id === 'V-6577')[0].status
+            return this.$store.getters["data/allControls"](this.filter).filter( c => c.id === 'V-6577')[0];
+        },
+        getStatus() {
+            return this.getControl.status;
         },
         getCode() {
-            return this.$store.state.data.allControls.filter( c => c.id === 'V-6577')[0].code
+            return this.getControl.code;
         },
         getFinding() {
             let firstTest;
-            if (this.$store.state.data.allControls.filter( c => c.id === 'V-6577')[0].finding_details.indexOf('PASSED') < this.$store.state.data.allControls.filter( c => c.id === 'V-6577')[0].finding_details.indexOf('FAILED')) {
-                firstTest = this.$store.state.data.allControls.filter( c => c.id === 'V-6577')[0].finding_details.indexOf('PASSED')
+            if (this.getControl.finding_details.indexOf('PASSED') < this.getControl.finding_details.indexOf('FAILED')) {
+                firstTest = this.getControl.finding_details.indexOf('PASSED')
             }
             else {
-                firstTest = this.$store.state.data.allControls.filter( c => c.id === 'V-6577')[0].finding_details.indexOf('FAILED')
+                firstTest = this.getControl.finding_details.indexOf('FAILED')
             }
-            return this.$store.state.data.allControls.filter( c => c.id === 'V-6577')[0].finding_details.substr(0, firstTest - 3)
+            return this.getControl.finding_details.substr(0, firstTest - 3)
         },
         getFindingTable() {
             
-            let findings = this.$store.state.data.allControls.filter( c => c.id === 'V-6577')[0].finding_details.replace('N/A', '')
+            let findings = this.getControl.finding_details.replace('N/A', '')
             let items = []
             let passedDetails = findings.split('PASSED')
             let failedDetails = findings.split('FAILED')
@@ -140,13 +146,13 @@ export default {
             return items
         },
         getDesc() {
-            let code = this.$store.state.data.allControls.filter( c => c.id === 'V-6577')[0].code
+            let code = this.getControl.code
             let desc = code.substr(code.indexOf('desc "') + 6, code.indexOf('"', code.indexOf('desc "') + 6))
             return desc
         },
         getDetails(desc) {
-            return '' + this.$store.state.data.allControls.filter( c => c.id === 'V-6577')[0].id + '\n' + this.$store.state.data.allControls.filter( c => c.id === 'V-6577')[0].impact +
-                   '\n' + this.$store.state.data.allControls.filter( c => c.id === 'V-6577')[0].severity + '\n' + this.$store.state.data.allControls.filter( c => c.id === 'V-6577')[0].profile_name +
+            return '' + this.getControl.id + '\n' + this.getControl.impact +
+                   '\n' + this.getControl.severity + '\n' + this.getControl.profile_name +
                    '\n'
         }
     },
