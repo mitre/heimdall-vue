@@ -32,7 +32,7 @@
                         <feather-icon @click="removeCard" icon="XIcon" class="ml-4" v-if="actionButtons || removeCardAction" />
                     </div>
                     <div class="vx-card__code-toggler sm:block hidden" v-if="codeToggler && !actionButtons">
-                        <feather-icon icon="CodeIcon" :class="{'border border-solid border-primary border-t-0 border-r-0 border-l-0': showCode}" @click="toggleCode"></feather-icon>
+                        <b-button :class="{'border border-solid border-primary border-t-0 border-r-0 border-l-0': showCode}" @click="toggleCode">Inspec Code</b-button>
                     </div>
                 </slot>
             </div>

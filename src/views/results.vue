@@ -83,6 +83,7 @@
         ></compliance-level-card>
       </div>
     </div>
+    <FindingDetails></FindingDetails>
   </div>
 </template>
 
@@ -92,6 +93,7 @@ import CountCard from "../components/CountCard.vue";
 import ControlStatusCard from "../components/ControlStatusCard.vue";
 import ControlSeverityCard from "../components/ControlSeverityCard.vue";
 import ComplianceLevelCard from "../components/ComplianceLevelCard.vue";
+import FindingDetails from "../components/FindingDetails.vue";
 
 export default {
   data() {
@@ -168,7 +170,8 @@ export default {
     CountCard,
     ControlStatusCard,
     ControlSeverityCard,
-    ComplianceLevelCard
+    ComplianceLevelCard,
+    FindingDetails
   }
 };
 </script>

@@ -3,10 +3,21 @@ import App from "./App.vue";
 
 // Vuesax Component Framework
 //@ts-ignore
-import Vuesax from "vuesax";
-import "material-icons/iconfont/material-icons.css"; //Material Icons
-import "vuesax/dist/vuesax.css"; // Vuesax
-Vue.use(Vuesax);
+import Vuesax from 'vuesax'
+import 'material-icons/iconfont/material-icons.css' //Material Icons
+import 'vuesax/dist/vuesax.css'; // Vuesax
+Vue.use(Vuesax)
+
+//Truncate Component
+var filter = function(text, length, clamp){
+  clamp = clamp || '...';
+  var node = document.createElement('div');
+  node.innerHTML = text;
+  var content = node.textContent;
+  return content.length > length ? content.slice(0, length) + clamp : content;
+};
+
+Vue.filter('truncate', filter);
 
 // Theme Configurations
 import "../themeConfig.js";
@@ -39,8 +50,13 @@ import "./filters/filters";
 
 // Vuejs - Vue wrapper for hammerjs
 //@ts-ignore
-import { VueHammer } from "vue2-hammer";
-Vue.use(VueHammer);
+import { VueHammer } from 'vue2-hammer'
+Vue.use(VueHammer)
+
+// Vuetify
+import Vuetify from "vuetify";
+import 'vuetify/dist/vuetify.min.css';
+Vue.use(Vuetify);
 
 // PrismJS
 import "prismjs";
