@@ -68,12 +68,6 @@
           </div>
 
           <div class="bookmark-container">
-            <feather-icon
-              icon="StarIcon"
-              :svgClasses="['stoke-current text-warning', {'text-white': navbarColor != '#fff'}]"
-              class="cursor-pointer p-2"
-              @click.stop="showBookmarkPagesDropdown = !showBookmarkPagesDropdown"
-            />
             <div
               v-click-outside="outside"
               class="absolute bookmark-list w-1/3 xl:w-1/4 mt-4"
@@ -130,68 +124,8 @@
           class="cursor-pointer navbar-fuzzy-search ml-4"
         ></feather-icon>
 
-        <!-- NOTIFICATIONS -->
-        <vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer ml-4">
-          <feather-icon
-            icon="BellIcon"
-            class="cursor-pointer mt-1 sm:mr-6 mr-2"
-            :badge="unreadNotifications.length"
-          ></feather-icon>
-          <vs-dropdown-menu class="notification-dropdown dropdown-custom vx-navbar-dropdown">
-            <!--<div class="notification-top text-center p-5 bg-primary text-white">
-            <h3 class="text-white">{{ unreadNotifications.length }} New</h3>
-            <p class="opacity-75">App Notifications</p>
-            </div>-->
-            <div>
-              <vs-radio class="mr-4" v-model="theme" vs-value="light">Light</vs-radio>
-              <vs-radio class="mr-4" v-model="theme" vs-value="dark">Dark</vs-radio>
-              <vs-radio v-model="theme" vs-value="semi-dark">Semi Dark</vs-radio>
-            </div>
-
-            <VuePerfectScrollbar
-              ref="mainSidebarPs"
-              class="scroll-area--nofications-dropdown p-0 mb-10"
-              :settings="settings"
-            >
-              <ul class="bordered-items">
-                <li
-                  v-for="ntf in unreadNotifications"
-                  :key="ntf.index"
-                  class="flex justify-between px-4 py-4 notification cursor-pointer"
-                >
-                  <div class="flex items-start">
-                    <feather-icon
-                      :icon="ntf.icon"
-                      :svgClasses="[`text-${ntf.category}`, 'stroke-current mr-1 h-6 w-6']"
-                    ></feather-icon>
-                    <div class="mx-2">
-                      <span
-                        class="font-medium block notification-title"
-                        :class="[`text-${ntf.category}`]"
-                      >{{ ntf.title }}</span>
-                      <small>{{ ntf.msg }}</small>
-                    </div>
-                  </div>
-                  <small class="mt-1 whitespace-no-wrap">{{ elapsedTime(ntf.time) }}</small>
-                </li>
-              </ul>
-            </VuePerfectScrollbar>
-            <!--
-            <div
-              class="checkout-footer fixed bottom-0 rounded-b-lg text-primary w-full p-2 font-semibold text-center border border-b-0 border-l-0 border-r-0 border-solid d-theme-border-grey-light cursor-pointer"
-            >
-              <span>View All Notifications</span>
-            </div>-->
-          </vs-dropdown-menu>
-        </vs-dropdown>
 
         <!-- USER META -->
-        <div class="the-navbar__user-meta flex items-center">
-          <div class="text-right leading-tight hidden sm:block">
-            <p class="font-semibold">{{ user_displayName }}</p>
-            <small>Available</small>
-          </div>
-          <vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer">
             <div class="con-img ml-3">
               <img
                 key="onlineImg"
@@ -201,48 +135,6 @@
                 height="40"
                 class="rounded-full shadow-md cursor-pointer block"
               />
-            </div>
-            <vs-dropdown-menu class="vx-navbar-dropdown">
-              <ul style="min-width: 9rem">
-                <li
-                  class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
-                  @click="$router.push('/pages/profile')"
-                >
-                  <feather-icon icon="UserIcon" svgClasses="w-4 h-4"></feather-icon>
-                  <span class="ml-2">Profile</span>
-                </li>
-                <li
-                  class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
-                  @click="$router.push('/apps/email')"
-                >
-                  <feather-icon icon="MailIcon" svgClasses="w-4 h-4"></feather-icon>
-                  <span class="ml-2">Inbox</span>
-                </li>
-                <li
-                  class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
-                  @click="$router.push('/apps/todo')"
-                >
-                  <feather-icon icon="CheckSquareIcon" svgClasses="w-4 h-4"></feather-icon>
-                  <span class="ml-2">Tasks</span>
-                </li>
-                <li
-                  class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
-                  @click="$router.push('/apps/chat')"
-                >
-                  <feather-icon icon="MessageSquareIcon" svgClasses="w-4 h-4"></feather-icon>
-                  <span class="ml-2">Chat</span>
-                </li>
-                <vs-divider class="m-1"></vs-divider>
-                <li
-                  class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
-                  @click="$router.push('/pages/login')"
-                >
-                  <feather-icon icon="LogOutIcon" svgClasses="w-4 h-4"></feather-icon>
-                  <span class="ml-2">Logout</span>
-                </li>
-              </ul>
-            </vs-dropdown-menu>
-          </vs-dropdown>
         </div>
       </vs-navbar>
     </div>
