@@ -6,6 +6,7 @@ import SeverityCounts from "./severity_counts";
 import Sidebar from "./sidebar";
 import StatusCounts from "./status_counts";
 import Intake from "./report_intake";
+import Treemap from "./testable";
 
 Vue.use(Vuex);
 
@@ -29,6 +30,7 @@ const store = new Vuex.Store({
     theme: Theme,
     statusCounts: StatusCounts,
     severityCounts: SeverityCounts,
+    treemap: Treemap,
     intake: Intake,
     sidebar: Sidebar
   },
