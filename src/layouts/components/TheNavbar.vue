@@ -84,7 +84,9 @@
                 background-overlay
               ></vx-auto-suggest>
             </div>
+            <div class="file-button">
             <FileReader></FileReader>
+            </div>
           </div>
         </template>
 
