@@ -132,6 +132,35 @@ export default {
       if(this.status) { finalFilter.status = this.status; }
       if(this.severity) { finalFilter.severity = this.severity; }
 
+      finalFilter.accepts = (control) => {
+        if (this.status && this.status != control.status) {
+          return false;
+        }
+        // Must stringify the impact, but otherwise just check equality
+        else if (this.severity && this.severity != control.severity) {
+          return false;
+        }
+        // Finally, if there's a search term, we return based on that
+        if (this.searchTerm) {
+          let term = this.searchTerm.toLowerCase();
+          // Check if any of the following list contain it, in lower case
+          return [
+            control.id,
+            control.rule_title,
+            control.severity,
+            control.status,
+            control.finding_details,
+            control.code,
+          ]
+            .map(s => s.toLowerCase())
+            .map(s => s.includes(term))
+            .reduce((a, b) => a || b);
+        } else {
+          // No search term; we're fine
+          return true;
+        }
+      };
+
       return finalFilter;
     },
     statusCounts() {
