@@ -4,7 +4,7 @@
     icon="FilePlusIcon"
     class="cursor-pointer mt-1 sm:mr-6 mr-2">
     </feather-icon>
-    <input type="file" @change="loadTextFromFile"/>
+    <input type="file" accept=".json,application/json" @change="loadTextFromFile"/>
     <slot></slot>
   </label>
 </template>
