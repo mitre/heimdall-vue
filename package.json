@@ -36,7 +36,7 @@
     "datatables.net": "^1.10.19",
     "feather-icons": "^4.22.1",
     "file-saver": "^2.0.2",
-    "inspecjs": "^0.0.3",
+    "inspecjs": "0.1.0",
     "js-xlsx": "^0.8.22",
     "json-server": "^0.15.0",
     "material-icons": "^0.3.1",
