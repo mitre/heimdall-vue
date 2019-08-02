@@ -40,7 +40,6 @@
                   -->
                   <rect
                     class="parent"
-                    v-on:click="selectNode"
                     :id="children.id"
                     :key="children.id"
                     :x="x(children.x0)"
@@ -86,7 +85,6 @@
                 :height="margin.top"
                 :width="width"
                 :y="(margin.top * -1)"
-                v-on:click="selectNode"
                 :id="parentId">
               </rect>
 
@@ -111,7 +109,6 @@ import {scaleLinear, scaleOrdinal} from 'd3-scale'
 import {schemeCategory10} from 'd3-scale-chromatic'
 import {json} from 'd3-request'
 import {hierarchy, treemap} from 'd3-hierarchy'
-import { store } from "../store.js";
 
 // To be explicit about which methods are from D3 let's wrap them around an object
 // Is there a better way to do this?
@@ -176,7 +173,7 @@ export default {
       return clr;
     };
     // loads the data and calls the initialization methods
-    that.jsonData = store.getNistHash();
+    that.jsonData = this.$store.getters["treemap/nistHash"];
     that.initialize()
     that.accumulate(that.rootNode, that)
     that.treemap(that.rootNode)
@@ -210,7 +207,7 @@ export default {
       };
 
       // loads the data and calls the initialization methods
-      that.jsonData = store.getNistHash();
+      that.jsonData = this.$store.getters["treemap/nistHash"];
       //this.width = '100%';
       that.initialize()
       that.accumulate(that.rootNode, that)
@@ -220,7 +217,7 @@ export default {
   // The reactive computed variables that fire rerenders
   computed: {
     testBind: function() {
-      return store.getStatusFilter() + store.getImpactFilter() + store.getSearchTerm();
+      return null
     },
     // The grandparent id
     parentId () {
@@ -320,35 +317,36 @@ export default {
     // When a user clicks a square, changes the selected data attribute
     // which fires the computed selectedNode, which in turn finds the Node by the id of the square clicked
     // and the template reflects the changes
+
+    /*
     selectNode (event) {
       this.selected = event.target.id
       var fams = event.target.id.split('.');
       var length = fams.length;
       if (length == 1) {
         console.log("Clicked " + fams[0]);
-        store.setSelectedFamily('');
+        this.$store.getters["treemap"].setSelectedFamily('')
       } else if (length == 2) {
         console.log("Clicked " + fams[1]);
-        store.setSelectedFamily(fams[1]);
-        store.setSelectedSubFamily('');
-        store.setSelectedControl('');
+        this.$store.getters["treemap"].setSelectedFamily(fams[1]);
+        this.$store.getters["treemap"].setSelectedSubFamily('');
+        this.$store.getters["treemap"].setSelectedControl('');
       } else if (length == 3) {
         console.log("Clicked " + fams[2]);
-        store.setSelectedFamily(fams[1]);
-        store.setSelectedSubFamily(fams[2]);
-        store.setSelectedControl('');
+        this.$store.getters["treemap"].setSelectedFamily(fams[1]);
+        this.$store.getters["treemap"].setSelectedSubFamily(fams[2]);
+        this.$store.getters["treemap"].setSelectedControl('');
       } else if (length == 4) {
         console.log("Clicked " + fams[3]);
-        store.setSelectedFamily(fams[1]);
-        store.setSelectedSubFamily(fams[2]);
-        store.setSelectedControl(fams[3]);
+        this.$store.getters["treemap"].setSelectedFamily(fams[1]);
+        this.$store.getters["treemap"].setSelectedSubFamily(fams[2]);
+        this.$store.getters["treemap"].setSelectedControl(fams[3]);
       }
-    },
+    }, */
     clear: function (event) {
       store.setSearchTerm("");
-      store.setStatusFilter("");
-      store.setImpactFilter("");
-    }
+      this.$store.getters["treemap"].setStatusFilter("")
+    } 
   }
 }
 </script>

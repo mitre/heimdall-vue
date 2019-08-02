@@ -11,6 +11,8 @@ import { ControlStatus, ControlResult, Severity } from 'inspecjs/dist/types';
 /** Each FileID corresponds to a unique File in this store */
 export type FileID = number
 
+export type SearchTerm = string
+
 /** Represents the minimum data to represent an uploaded file handle. */
 export type InspecFile = {
   /** 
@@ -42,6 +44,7 @@ export interface Filter {
   /** What severity the controls can have. Undefined => any */
   severity?: Severity;
 
+  searchTerm?: SearchTerm
   // Add more as necessary
 }
 

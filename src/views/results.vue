@@ -83,6 +83,7 @@
         ></compliance-level-card>
       </div>
     </div>
+    <Treemap></Treemap>
   </div>
 </template>
 
@@ -92,6 +93,8 @@ import CountCard from "../components/CountCard.vue";
 import ControlStatusCard from "../components/ControlStatusCard.vue";
 import ControlSeverityCard from "../components/ControlSeverityCard.vue";
 import ComplianceLevelCard from "../components/ComplianceLevelCard.vue";
+import Treemap from "../components/Treemap.vue";
+import FindingDetails from "../components/";
 
 export default {
   data() {
@@ -105,7 +108,11 @@ export default {
   },
   computed: {
     isProfileError() {
+      console.log(this.$store.getters["treemap/nistHash"]);
       return this.$store.getters["statusCounts/profileError"](this.fileFilter) > 0;
+    },
+    test() {
+      return this.$store.getters["treemap/nistControls"];
     },
     clearButtonVisible() {
       if (this.status || this.severity) return true;
@@ -168,7 +175,8 @@ export default {
     CountCard,
     ControlStatusCard,
     ControlSeverityCard,
-    ComplianceLevelCard
+    ComplianceLevelCard,
+    Treemap
   }
 };
 </script>
