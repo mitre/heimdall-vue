@@ -2,7 +2,7 @@
  * Counts the severities of controls.
  */
 
-import { InspecOutput, Profile, Control } from "inspecjs";
+import { convertFile, ConversionResult } from "inspecjs";
 import { Module, VuexModule, getModule, Action } from "vuex-module-decorators";
 import DataModule, { FileID } from "./data_store";
 import Store from "./store";
@@ -30,40 +30,46 @@ class InspecIntakeModule extends VuexModule {
     // Setup the callback
     reader.onload = (event: ProgressEvent) => {
       // Get our text
-      let text = reader.result as string;
-
-      // Parse as json
-      let json = JSON.parse(text);
-
-      // TODO: Verify that no errors occurred
+      const text = reader.result as string;
 
       // Fetch our data store
-      let data = getModule(DataModule, Store);
+      const data = getModule(DataModule, Store);
 
       // Retrieve common elements for either case (profile or report)
-      let filename = options.file.name;
+      const filename = options.file.name;
+
+      // Convert it
+      let result: ConversionResult;
+      try {
+        result = convertFile(text);
+      } catch(e) {
+        console.log(`Failed to convert file ${filename} due to error "${e}". We should display this as an error modal.`);
+        return;
+      }
 
       // Determine what sort of file we (hopefully) have, then add it
-      if("profiles" in json) {
-        // It must be a report
-        let report = Object.freeze(new InspecOutput(json));
+      if(result["1_0_ExecJson"]) {
+        // Handle as exec
+        let execution = result["1_0_ExecJson"];
+        execution = Object.freeze(execution);
         let reportFile = {
           unique_id: options.unique_id,
           filename,
-          report,
+          execution,
         }
-        data.addReport(reportFile);
-      } else {
-        // It must be a profile
-        let profile = Object.freeze(new Profile(null, json));
+        data.addExecution(reportFile);
+      } else if(result["1_0_ProfileJson"]) {
+        // Handle as profile
+        let profile = result["1_0_ProfileJson"];
         let profileFile = {
           unique_id: options.unique_id,
           filename,
           profile
         }
         data.addProfile(profileFile);
+      } else {
+        console.log(`Unhandled file type ${Object.keys(result)}`);
       }
-
     }
 
     // Dispatch the read

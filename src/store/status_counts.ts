@@ -5,7 +5,7 @@
 import { Module, VuexModule, getModule } from "vuex-module-decorators";
 import DataModule, {Filter} from "./data_store";
 import Store from "./store";
-import { ControlStatus } from 'inspecjs/dist/types';
+import { ControlStatus, hdfWrapControl } from 'inspecjs';
 
 // Helper function for counting a status in a list of controls
 function countStatus(filter: Filter, status: ControlStatus): number {
@@ -16,10 +16,10 @@ function countStatus(filter: Filter, status: ControlStatus): number {
 
   // Get the controls
   let data = getModule(DataModule, Store);
-  let controls = data.allControls(filter);
+  let controls = data.filteredControls(filter);
 
   // Refine our filter to the severity, and return length
-  return controls.filter(c => c.status === status).length;
+  return controls.filter(c => hdfWrapControl(c.data).status === status).length;
 }
 
 @Module({
