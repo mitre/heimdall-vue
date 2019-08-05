@@ -55,20 +55,17 @@ interface Contains<Item> {
   contains: Item;
 }
 
-// And its instantiations
-// export interface ContextualizedExecution extends ContextualizedItem<Execution, InspecFile, ContextualizedProfile> { }
-// export interface ContextualizedProfile extends ContextualizedItem<Profile, ContextualizedExecution | InspecFile, ContextualizedControl> { }
-// export interface ContextualizedControl extends ContextualizedItem<Control, ContextualizedProfile, null> { }
+// Create our three primary data types from the above mixins
 export interface ContextualizedExecution extends  WrapsType<Execution>, 
                                                   Sourced<ExecutionFile>, 
                                                   Contains<ContextualizedProfile[]> { }
-export interface ContextualizedProfile extends  WrapsType<Profile>, 
-                                                Sourced<ContextualizedExecution | ProfileFile>, 
-                                                Contains<ContextualizedControl[]>, 
-                                                Extendable<ContextualizedProfile> { }
-export interface ContextualizedControl extends  WrapsType<Control>, 
-                                                Sourced<ContextualizedProfile>, 
-                                                Extendable<ContextualizedControl> { }
+export interface ContextualizedProfile extends    WrapsType<Profile>, 
+                                                  Sourced<ContextualizedExecution | ProfileFile>, 
+                                                  Contains<ContextualizedControl[]>, 
+                                                  Extendable<ContextualizedProfile> { }
+export interface ContextualizedControl extends    WrapsType<Control>, 
+                                                  Sourced<ContextualizedProfile>, 
+                                                  Extendable<ContextualizedControl> { }
 
 @Module({
   namespaced: true,
