@@ -16,7 +16,7 @@ class HashLookupModule extends VuexModule {
    */
   get controls(): {[key:string]: ContextualizedControl[]} {
     // Make the hash
-    const final = {};
+    const final: {[key:string]: ContextualizedControl[]} = {};
 
     // Add every control to it.
     this.dataStore.contextualControls.forEach(c => {

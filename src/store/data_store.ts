@@ -44,7 +44,7 @@ interface ContextualizedItem<D, P, C> {
 // And its instantiations
 export interface ContextualizedExecution extends ContextualizedItem<Execution, InspecFile, ContextualizedProfile> { }
 export interface ContextualizedProfile extends ContextualizedItem<Profile, ContextualizedExecution | InspecFile, ContextualizedControl> { }
-export interface ContextualizedControl extends ContextualizedItem<Control, ContextualizedProfile, void> { }
+export interface ContextualizedControl extends ContextualizedItem<Control, ContextualizedProfile, null> { }
 
 @Module({
   namespaced: true,
@@ -109,9 +109,14 @@ class InspecDataModule extends VuexModule {
         if(as_exec.parent_profile !== undefined) {
           // Look it up
           let parent = exec_file_context.contains.find(p => p.data.name === as_exec.parent_profile);
+
           // Link it up
-          parent.extended_by.push(exec_files_profile);
-          exec_files_profile.extends_from.push(parent);
+          if(parent) {
+            parent.extended_by.push(exec_files_profile);
+            exec_files_profile.extends_from.push(parent);
+          } else {
+            console.warn(`Warning: Unable to find parent profile for profile ${as_exec.name} in spite of its attribute parent_profile: ${as_exec.parent_profile}. Verify data is properly structured`);
+          }
         }
       });
     });
@@ -139,7 +144,7 @@ class InspecDataModule extends VuexModule {
           sourced_from: profile_context,
           extended_by: [],
           extends_from: [],
-          contains: void[]  // Flag as empty
+          contains: [], // Can only hold null; effectively useless, but typescript demands it exists lol.
         };
         profile_context.contains.push(profile_control_context);
         controls.push(profile_control_context);
