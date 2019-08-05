@@ -6,7 +6,7 @@ import { Module, VuexModule, Mutation, Action, getModule } from "vuex-module-dec
 import Store from "./store";
 import DataStore from "./data_store";
 import router from "../../src/router.js";
-import { InspecFile } from "./data_store";
+import { InspecFile } from "./report_intake";
 
 type SidebarItem = {
   /** Router path */

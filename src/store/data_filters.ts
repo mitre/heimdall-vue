@@ -25,7 +25,7 @@ export interface Filter {
 
 @Module({
   namespaced: true,
-  // name: "intake",
+  name: "filteredData",
 })
 class FilteredDataModule extends VuexModule {
   private get dataStore(): DataModule {
