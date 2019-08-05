@@ -8,43 +8,67 @@ import { FileID, ExecutionFile, ProfileFile, InspecFile } from "./report_intake"
 import Store from "./store";
 import { ExecJSONProfile } from 'inspecjs/dist/generated-parsers/exec-json';
 
-/**
- * 
+/** 
+ * Mixin type to express that this type wraps another data type to add additional fields,
+ * without modifying the inner type.
  */
-interface ContextualizedItem<D, P, C> {
-  /** This particular item's data. */
-  data: D;
+interface WrapsType<Data> {
+  data: Data;
+}
+
+/**
+ * Mixin type to express that this type has some sort "parent". 
+ * Sort of an inverse to the Contains mixin.
+ * E.g. A control is sourced from a profile, and an execution is from a file.
+ */
+interface Sourced<From> {
+  sourced_from: From;
+}
+
+/**
+ * Mixin type to express that this type has some sort of directional dependency-graph with members of a (usually the same) type.
+ * For instance, profiles overlay/are overlayed by profiles.
+ * Controls override behavior/are overrideen by other controls
+ */
+interface Extendable<By> {
+  /** 
+   * What is this data extended by? 
+   * E.g. a profile that overlays this profile.
+   * Can be empty.
+   */
+  extended_by: By[];
 
   /** 
    * What data is this node extending? 
    * E.g. is this overlaying a profile? Another control?
    * Can be empty.
   */
-  extends_from: ContextualizedItem<D, P, C>[];
+  extends_from: By[];
+}
 
-
-  /** 
-   * What is this data extended by? 
-   * E.g. a profile that overlays this profile.
-   * Can be empty.
-   */
-  extended_by: ContextualizedItem<D, P, C>[];
-
-  /**
-   * What object/resource did this item come from?
-   */
-  sourced_from: P;
-
-  /**
-   * What objects/resources does this item contain?
-   */
-  contains: C[];
+/**
+ * Mixin type to express that this type is primarily a parent to some other data.
+ * For instance, profiles are most directly a parent of controls .
+ * What objects/resources does this item contain?
+ */
+interface Contains<Item> {
+  contains: Item;
 }
 
 // And its instantiations
-export interface ContextualizedExecution extends ContextualizedItem<Execution, InspecFile, ContextualizedProfile> { }
-export interface ContextualizedProfile extends ContextualizedItem<Profile, ContextualizedExecution | InspecFile, ContextualizedControl> { }
-export interface ContextualizedControl extends ContextualizedItem<Control, ContextualizedProfile, null> { }
+// export interface ContextualizedExecution extends ContextualizedItem<Execution, InspecFile, ContextualizedProfile> { }
+// export interface ContextualizedProfile extends ContextualizedItem<Profile, ContextualizedExecution | InspecFile, ContextualizedControl> { }
+// export interface ContextualizedControl extends ContextualizedItem<Control, ContextualizedProfile, null> { }
+export interface ContextualizedExecution extends  WrapsType<Execution>, 
+                                                  Sourced<ExecutionFile>, 
+                                                  Contains<ContextualizedProfile[]> { }
+export interface ContextualizedProfile extends  WrapsType<Profile>, 
+                                                Sourced<ContextualizedExecution | ProfileFile>, 
+                                                Contains<ContextualizedControl[]>, 
+                                                Extendable<ContextualizedProfile> { }
+export interface ContextualizedControl extends  WrapsType<Control>, 
+                                                Sourced<ContextualizedProfile>, 
+                                                Extendable<ContextualizedControl> { }
 
 @Module({
   namespaced: true,
@@ -80,8 +104,6 @@ class InspecDataModule extends VuexModule {
       let exec_file_context: ContextualizedExecution = {
         data: exec_file.execution,
         sourced_from: exec_file,
-        extended_by: [],
-        extends_from: [],
         contains: [],
       };
       executions.push(exec_file_context);
@@ -144,7 +166,6 @@ class InspecDataModule extends VuexModule {
           sourced_from: profile_context,
           extended_by: [],
           extends_from: [],
-          contains: [], // Can only hold null; effectively useless, but typescript demands it exists lol.
         };
         profile_context.contains.push(profile_control_context);
         controls.push(profile_control_context);
