@@ -3,56 +3,10 @@
  */
 
 import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators";
-import { hdfWrapControl as hdf, AnyExec as Execution, AnyProfile as Profile, AnyFullControl as Control, HDFControl } from "inspecjs";
+import { AnyExec as Execution, AnyProfile as Profile, AnyFullControl as Control, HDFControl } from "inspecjs";
+import { FileID, ExecutionFile, ProfileFile, InspecFile } from "./report_intake";
 import Store from "./store";
-import { ControlStatus, Severity } from 'inspecjs';
 import { ExecJSONProfile } from 'inspecjs/dist/generated-parsers/exec-json';
-
-
-/** Each FileID corresponds to a unique File in this store */
-export type FileID = number;
-
-/** Represents the minimum data to represent an uploaded file handle. */
-export type InspecFile = {
-  /** 
-   * Unique identifier for this file. Used to encode which file is currently selected, etc. 
-   * 
-   * Note that in general one can assume that if a file A is loaded AFTER a file B, then
-   * A.unique_id > B.unique_id.
-   * Using this property, one might order files by order in which they were added.
-   */
-  unique_id: FileID,
-  /** The filename that this file was uploaded under. */
-  filename: string
-}
-export function isInspecFile(f: any): f is InspecFile {
-  const t = f as InspecFile;
-  return t.filename !== undefined && t.unique_id !== undefined;
-}
-
-/** Represents a file containing an Inspec Execution output */
-export type ExecutionFile = InspecFile & { execution: Execution };
-/** Represents a file containing an Inspec Profile (not run) */
-export type ProfileFile = InspecFile & { profile: Profile };
-
-/** Contains common filters on data from the store. */
-export interface Filter {
-  // General
-  /** Which file these objects came from. Undefined => any */
-  fromFile?: FileID;
- 
-  // Control specific
-  /** What status the controls can have. Undefined => any */
-  status?: ControlStatus;
-
-  /** What severity the controls can have. Undefined => any */
-  severity?: Severity;
-
-  /** Whether or not to allow/include overlayed controls */
-  omit_overlayed_controls?: boolean;
-
-  // Add more as necessary
-}
 
 /**
  * 
@@ -114,7 +68,7 @@ class InspecDataModule extends VuexModule {
   /**
    * Recompute all contextual data
    */
-  private get contextStore(): [ContextualizedExecution[], ContextualizedProfile[], ContextualizedControl[]] {
+  get contextStore(): [ContextualizedExecution[], ContextualizedProfile[], ContextualizedControl[]] {
     // Initialize all our arrays
     let executions: ContextualizedExecution[] = [];
     let profiles: ContextualizedProfile[] = [];
@@ -233,85 +187,8 @@ class InspecDataModule extends VuexModule {
     return this.contextStore[2];
   }
 
-  /** 
-   * Parameterized getter.
-   * Get all profiles from the specified file id.
-   */
-  get filteredProfiles(): (filter: Filter) => ContextualizedProfile[] {
-    // const localCache: {[key: string]: Control[]} = {};
-    // Establish to vue that we depend on this.contextStore
-    // let _depends: any = this.contextStore;
-    return (filter: Filter = {}) => {
-      // If there is no filter, just return all
-      if(filter.fromFile === undefined) {
-        return this.contextualProfiles;
-      }
-
-      // Initialize our list to add valid profiles to
-      let profiles: ContextualizedProfile[] = [];
-
-      // Filter to those that match our filter. In this case that just means come from the right file id
-      this.contextualProfiles.forEach(prof => {
-        if(isInspecFile(prof.sourced_from)) {
-          if(prof.sourced_from.unique_id === filter.fromFile) {
-            profiles.push(prof);
-          }
-        } else {
-          // Its a report; go two levels up to get its file
-          if(prof.sourced_from.sourced_from.unique_id === filter.fromFile) {
-            profiles.push(prof);
-          }
-        }
-      });
-
-      return profiles;
-    }
-  }
-
-  /** 
-   * Parameterized getter.
-   * Get all controls from all profiles from the specified file id.
-   */
-  get filteredControls(): (filter: Filter) => ContextualizedControl[] {
-    const localCache: {[key: string]: ContextualizedControl[]} = {};
-    // Establish to vue that we depend on this.contextStore
-    let _depends: any = this.contextStore;
-    return (filter: Filter = {}) => {
-      // Generate a hash. TODO: Make more efficient
-      let id = JSON.stringify(filter);
-
-      // Check if we have this cached:
-      if(id in localCache) {
-        return [...localCache[id]];
-      }
-
-      // First get all of the profiles using the same filter
-      let controls = this.filteredProfiles(filter).flatMap(profile => profile.contains);
-
-      // Filter by status, if necessary
-      if(filter.status !== undefined) {
-        controls = controls.filter(control => hdf(control.data).status === filter.status);
-      }
-
-      // Filter by severity, if necessary
-      if(filter.severity !== undefined) {
-        controls = controls.filter(control => hdf(control.data).severity === filter.severity);
-      }
-
-      // Filter by overlay
-      if(filter.omit_overlayed_controls) {
-        controls = controls.filter(control => control.extended_by.length === 0);
-      }
-
-      // Save to cache
-      localCache[id] = controls;
-      return [...controls]; // Return a shallow copy
-    }
-  }
-
   /**
    * Yields a guaranteed currently free file ID
-   * TODO: Verify stability under async
    */
   get nextFreeFileID(): FileID {
     let currentMax = 0;
@@ -332,7 +209,7 @@ class InspecDataModule extends VuexModule {
   }
 
   /**
-   * Adds a execution file to the store   
+   * Adds an execution file to the store.
    * @param newExecution The execution to add
    */
   @Mutation

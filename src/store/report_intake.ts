@@ -4,8 +4,36 @@
 
 import { convertFile, ConversionResult } from "inspecjs";
 import { Module, VuexModule, getModule, Action } from "vuex-module-decorators";
-import DataModule, { FileID } from "./data_store";
+import { AnyExec, AnyProfile, AnyFullControl } from "inspecjs";
+import DataModule from "./data_store";
 import Store from "./store";
+
+
+/** Each FileID corresponds to a unique File in this store */
+export type FileID = number;
+
+/** Represents the minimum data to represent an uploaded file handle. */
+export type InspecFile = {
+  /** 
+   * Unique identifier for this file. Used to encode which file is currently selected, etc. 
+   * 
+   * Note that in general one can assume that if a file A is loaded AFTER a file B, then
+   * A.unique_id > B.unique_id.
+   * Using this property, one might order files by order in which they were added.
+   */
+  unique_id: FileID,
+  /** The filename that this file was uploaded under. */
+  filename: string
+}
+export function isInspecFile(f: any): f is InspecFile {
+  const t = f as InspecFile;
+  return t.filename !== undefined && t.unique_id !== undefined;
+}
+
+/** Represents a file containing an Inspec Execution output */
+export type ExecutionFile = InspecFile & { execution: AnyExec };
+/** Represents a file containing an Inspec Profile (not run) */
+export type ProfileFile = InspecFile & { profile: AnyProfile };
 
 export type LoadOptions = {
   /** The file to load */
@@ -74,7 +102,7 @@ class InspecIntakeModule extends VuexModule {
 
     // Dispatch the read
     reader.readAsText(options.file);
-  }
+  } 
 }
 
 export default InspecIntakeModule;

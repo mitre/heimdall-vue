@@ -3,7 +3,7 @@
  */
 
 import { Module, VuexModule, getModule } from "vuex-module-decorators";
-import DataModule, {Filter} from "./data_store";
+import FilteredData, {Filter} from "./data_filters";
 import Store from "./store";
 import { Severity, hdfWrapControl } from 'inspecjs';
 
@@ -15,8 +15,8 @@ function countSeverity(filter: Filter, severity: Severity): number {
   }
 
   // Get the controls
-  let data = getModule(DataModule, Store);
-  let controls = data.filteredControls(filter);
+  let data = getModule(FilteredData, Store);
+  let controls = data.controls(filter);
 
   // Refine our filter to the severity, and return length
   return controls.filter(c => hdfWrapControl(c.data).severity === severity).length;
