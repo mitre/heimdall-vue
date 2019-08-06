@@ -1,5 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
+
+// Import heimdall state representation
 import Data from "./data_store";
 import Theme from "./theme";
 import SeverityCounts from "./severity_counts";
