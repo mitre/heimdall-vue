@@ -12,69 +12,67 @@
             <!-- We can use Vue transitions too! -->
             <transition-group name="list" tag="g" class="depth">
               <!-- Generate each of the visible squares at a given zoom level (the current selected node) -->
-			  <g v-if="selectedNode">
-                <g
-                  class="children"
-                  v-for="(children) in selectedNode._children"
-                  :key="'c_' + children.id"
+              <g
+                class="children"
+                v-for="(children) in selectedNode._children"
+                :key="'c_' + children.id"
+                >
+
+                <!-- Generate the children squares (only visible on hover of a square) -->
+                <rect
+                  v-for="child in children._children"
+                  class="child"
+                  :id="child.id"
+                  :key="child.id"
+                  :height="y(child.y1) - y(child.y0)"
+                  :width="x(child.x1) - x(child.x0)"
+                  :x="x(child.x0)"
+                  :y="y(child.y0)"
+                  :style="{ fill: color(child.data) }"
+                  >
+                </rect>
+
+                <!--
+                  The visible square rect element.
+                  You can attribute directly an event, that fires a method that changes the current node,
+                  restructuring the data tree, that reactivly gets reflected in the template.
+                -->
+                <rect
+                  class="parent"
+                  :id="children.id"
+                  :key="children.id"
+                  :x="x(children.x0)"
+                  :y="y(children.y0)"
+                  :width="x(children.x1 - children.x0 + children.parent.x0)"
+                  :height="y(children.y1 - children.y0 + children.parent.y0)"
+                  :style="{ fill: color(children.data) }"
                   >
 
-                  <!-- Generate the children squares (only visible on hover of a square) -->
-                  <rect
-                    v-for="child in children._children"
-                    class="child"
-                    :id="child.id"
-                    :key="child.id"
-                    :height="y(child.y1) - y(child.y0)"
-                    :width="x(child.x1) - x(child.x0)"
-                    :x="x(child.x0)"
-                    :y="y(child.y0)"
-                    :style="{ fill: color(child.data) }"
-                    >
-                  </rect>
+                  <!-- The title attribute -->
+                  <title>{{ children.data.desc ? children.data.desc + ' | ' + children.data.count : children.data.count }}</title>
+                </rect>
 
-                  <!--
-                    The visible square rect element.
-                    You can attribute directly an event, that fires a method that changes the current node,
-                    restructuring the data tree, that reactivly gets reflected in the template.
-                  -->
-                  <rect
-                    class="parent"
-                    :id="children.id"
-                    :key="children.id"
-                    :x="x(children.x0)"
-                    :y="y(children.y0)"
-                    :width="x(children.x1 - children.x0 + children.parent.x0)"
-                    :height="y(children.y1 - children.y0 + children.parent.y0)"
-                    :style="{ fill: color(children.data) }"
-                    >
+                <!-- The visible square text element with the title and value of the child node -->
+                <text
+                  dy="1em"
+                  :key="'t_' + children.id"
+                  :x="x(children.x0) + 6"
+                  :y="y(children.y0) + 6"
+                  style="fill-opacity: 1;"
+                  >
+                  {{ children.data.name}}
+                </text>
 
-                    <!-- The title attribute -->
-                    <title>{{ children.data.desc ? children.data.desc + ' | ' + children.data.count : children.data.count }}</title>
-                  </rect>
+                <text
+                  dy="2.25em"
+                  :key="'tt_' + children.id"
+                  :x="x(children.x0) + 6"
+                  :y="y(children.y0) + 6"
+                  style="fill-opacity: 1;"
+                  >
 
-                  <!-- The visible square text element with the title and value of the child node -->
-                  <text
-                    dy="1em"
-                    :key="'t_' + children.id"
-                    :x="x(children.x0) + 6"
-                    :y="y(children.y0) + 6"
-                    style="fill-opacity: 1;"
-                    >
-                    {{ children.data.name}}
-                  </text>
-
-                  <text
-                    dy="2.25em"
-                    :key="'tt_' + children.id"
-                    :x="x(children.x0) + 6"
-                    :y="y(children.y0) + 6"
-                    style="fill-opacity: 1;"
-                    >
-
-                    {{ children.data.count > 0 ? children.data.count : '' }}
-                  </text>
-                </g>
+                  {{ children.data.count > 0 ? children.data.count : '' }}
+                </text>
               </g>
             </transition-group>
 
