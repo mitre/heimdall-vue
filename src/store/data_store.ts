@@ -44,13 +44,9 @@ export interface Filter {
   /** What severity the controls can have. Undefined => any */
   severity?: Severity;
 
-<<<<<<< HEAD
-  searchTerm?: SearchTerm
-=======
   searchTerm?: String;
 
   accepts?(control: Control): boolean;
->>>>>>> 3ac5a4b1c1b5cd34ef5cb1ee094592446bfe8380
   // Add more as necessary
 }
 

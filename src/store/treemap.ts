@@ -1,3 +1,4 @@
+///**  
 // import { Module, VuexModule, getModule } from "vuex-module-decorators";
 // import DataModule, {Filter} from "./data_store";
 // import State from "./store";
@@ -52,7 +53,7 @@
 //  * Takes a list of nist tags, and reduces them to only the "proper" tags.
 //  * EG:
 //  * ["AC-5", "SP-6 b", "SP-6 c", "Rev-5"] -> ["AC-5", "SP-6"]
-//  */
+//  */ 
 // export function simplifyNistTags(rawNistTags: string[]): string[] {
 //     if (rawNistTags === []) {
 //         return ["UM-1"];
@@ -77,7 +78,7 @@
 //  * Holds the state of the control filters.
 //  * This is partially a misnomer because it does not include the family filters.
 //  * For whatever reason, there are separate functions (NI)
-//  */
+//  */ 
 // class ControlFilter {
 //     status: ControlStatus | null = null;
 //     severity: Severity | null = null;
@@ -85,7 +86,7 @@
 // 
 //     /**
 //      * Returns true if the given control satisfies the status, impact, and search term filters
-//      */
+//      */ 
 //     accepts(control: Control): boolean {
 //         if (this.status && this.status != control.status) {
 //             return false;
@@ -342,7 +343,7 @@
 //         let controlNistHash = this.getControlNistHash();
 // 
 //         // Update the counts/statuses/values on each family, tracking a miniateurized version of each control
-//         // TODO: Determine whether this miniateurization is necessary. Hunch is no, and that it's just some back-compat stuff we could ez fix elsewhere. But we'll see
+//         // TODO: Determine whether this miniateurization is necessary. Hunch is no, and that it's just some back-compat we could ez fix elsewhere. But we'll see
 //         nistHash.children.forEach(family => {
 //             // Track statuses for the family
 //             let familyStatuses: ControlGroupStatus[] = [];
@@ -638,3 +639,4 @@
 //         return fam_status;
 //     }
 // }
+//
