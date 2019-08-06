@@ -83,7 +83,11 @@
         ></compliance-level-card>
       </div>
     </div>
-    <Treemap></Treemap>
+    <div class="vx-row h-48">
+      <div class="vx-col w-full md:w-1/1 lg:w-1/1 xl:w-1/1 mb-base ">
+        <Treemap></Treemap>
+      </div>
+    </div>
   </div>
 </template>
 

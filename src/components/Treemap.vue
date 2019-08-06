@@ -7,8 +7,8 @@
     <b-card-body>
       <div class="treemap">
         <!-- The SVG structure is explicitly defined in the template with attributes derived from component data -->
-        <svg id="chartBody" :height="height" style="margin-left: 15px;" :width="width">
-          <g style="shape-rendering: crispEdges;" transform="translate(0,20)">
+        <svg id="chartBody" :viewBox="viewBoxComp">
+          <g style="shape-rendering: crispEdges;" width="100%" height="100%" transform="translate(0,20)">
             <!-- We can use Vue transitions too! -->
             <transition-group name="list" tag="g" class="depth">
               <!-- Generate each of the visible squares at a given zoom level (the current selected node) -->
@@ -136,7 +136,8 @@ export default {
         left: 0
       },
       //width: window.innerWidth - 300,
-      width: document.getElementById("chart") ? document.getElementById("chart").offsetWidth - 100 : window.innerWidth - window.innerWidth/3,
+      // width: document.getElementById("chart") ? document.getElementById("chart").offsetWidth - 100 : window.innerWidth - window.innerWidth/3,
+      width: 1000,
       height: 530,
       selected: null,
       color: {}
@@ -214,6 +215,9 @@ export default {
   },
   // The reactive computed variables that fire rerenders
   computed: {
+    viewBoxComp() {
+	    return `0 0 ${this.width} ${this.height}`;
+    },
     testBind: function() {
       return null
     },
