@@ -666,6 +666,7 @@ class Treemap extends VuexModule {
     var fam_status: ControlGroupStatus = "Empty";
       if (statuses.includes("Failed")) {
           fam_status = "Failed";
+          console.log("sup")
       } else if (statuses.includes("Profile Error")) {
           fam_status = "Profile Error";
       } else if (statuses.includes("Not Reviewed")) {
