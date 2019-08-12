@@ -18,7 +18,7 @@
                 :key="'c_' + children.id"
                 >
 
-                <!-- Generate the children squares (only visible on hover of a square) -->
+                <!-- Generate the children squares (only visible on hover of a square) FIX THIS-->
                 <rect
                   v-for="child in children._children"
                   class="child"
@@ -39,6 +39,7 @@
                 -->
                 <rect
                   class="parent"
+                  v-on:click="selectNode"
                   :id="children.id"
                   :key="children.id"
                   :x="x(children.x0)"
@@ -60,7 +61,7 @@
                   :y="y(children.y0) + 6"
                   style="fill-opacity: 1;"
                   >
-                  {{ children.data.name}}
+                  {{ children.data.name }}
                 </text>
 
                 <text
@@ -81,6 +82,7 @@
 
               <rect
                 :height="margin.top"
+                v-on:click="selectNode"
                 :width="width"
                 :y="(margin.top * -1)"
                 :id="parentId">
@@ -320,11 +322,12 @@ export default {
     // which fires the computed selectedNode, which in turn finds the Node by the id of the square clicked
     // and the template reflects the changes
 
-    /*
+    
     selectNode (event) {
       this.selected = event.target.id
       var fams = event.target.id.split('.');
       var length = fams.length;
+      /*
       if (length == 1) {
         console.log("Clicked " + fams[0]);
         this.$store.getters["treemap"].setSelectedFamily('')
@@ -344,7 +347,8 @@ export default {
         this.$store.getters["treemap"].setSelectedSubFamily(fams[2]);
         this.$store.getters["treemap"].setSelectedControl(fams[3]);
       }
-    }, */
+      */
+    }, 
     clear: function (event) {
       store.setSearchTerm("");
       this.$store.getters["treemap"].setStatusFilter("")
