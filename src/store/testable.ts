@@ -65,6 +65,11 @@ class ControlFilter {
 }
 
 
+// Treemap requires all nodes to have a children function and a name
+class treemapControl extends Control {
+  name: string;
+  children(): null {return null;}
+}
 
 
 
@@ -146,8 +151,15 @@ class Treemap extends VuexModule {
                   categoryControls.forEach(control => {
                       // Save the status
                       categoryStatuses.push(control.status);
-                      // Save the control
-                      category.children.push(control);
+
+                      // Treemap requires all nodes to have a children function and a name
+                      let copiedControl: treemapControl = {
+                        ...control,
+                        name: control.id,
+                        children: () => null
+                      };
+                      console.log(copiedControl.status);
+                      category.children.push(copiedControl);
                       // Count
                       category.count += 1;
                       family.count += 1;

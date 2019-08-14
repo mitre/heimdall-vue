@@ -302,7 +302,7 @@ export default {
         d.value = d._children.reduce(function (p, v) { return p + context.accumulate(v, context) }, 0)
         return d.value
       } else {
-        return d.value
+        return d.value = d.value || 1
       }
     },
     // Helper method - gets a node by its id attribute
