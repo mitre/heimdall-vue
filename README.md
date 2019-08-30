@@ -1,3 +1,6 @@
+# ATTENTION: THIS REPOSITORY HAS BEEN DEPRECATED IN FAVOR OF https://github.com/mitre/heimdall-vuetify 
+# Check that repository for most up to date edition of this software.
+
 [![Netlify Status](https://api.netlify.com/api/v1/badges/30bdf828-42eb-41ca-9053-8f5c7fd31e90/deploy-status)](https://app.netlify.com/sites/heimdall-vue/deploys)
 
 https://heimdall-vue.netlify.com
