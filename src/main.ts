@@ -53,6 +53,10 @@ require("@/assets/styles/jquery.dataTables.min.css");
 require("@/assets/styles/prism.css");
 require("@/assets/styles/prism-line-numbers.min.css");
 
+// Vue toasted
+import Toasted from "vue-toasted";
+Vue.use(Toasted);
+
 dom.watch();
 
 library.add(fas, far);

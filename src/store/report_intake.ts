@@ -13,6 +13,10 @@ export type LoadOptions = {
 
   /** The unique id to grant it */
   unique_id: FileID;
+
+  /** Callback function in case parsing fails. 
+    * New callbacks could be added for other errors. **/
+  parse_error_callback?(err: Error): void;
 }
 
 @Module({
@@ -31,9 +35,17 @@ class InspecIntakeModule extends VuexModule {
     reader.onload = (event: ProgressEvent) => {
       // Get our text
       let text = reader.result as string;
-
-      // Parse as json
-      let json = JSON.parse(text);
+      
+      // Parse JSON, allowing caller to handle JSON parse errors
+      let json; 
+      try {
+        json = JSON.parse(text);
+      } 
+      catch(err) 
+      {
+        if(options.parse_error_callback) options.parse_error_callback(err);
+        throw err;
+      }
 
       // TODO: Verify that no errors occurred
 

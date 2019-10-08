@@ -43,7 +43,21 @@ export default {
       let file = ev.target.files[0];
       // Submit it to be loaded
       let unique_id = this.$store.getters["data/nextFreeFileID"];
-      this.$store.dispatch("intake/loadFile", {file, unique_id});
+      let self = this;
+      this.$store.dispatch("intake/loadFile", {
+        file, 
+        unique_id, 
+        parse_error_callback: function(err) {
+          if(err instanceof SyntaxError)
+          {
+            let toast = self.$toasted.show("Failed to parse uploaded file, please verify that file is properly formatted json", { 
+              theme: "bubble", 
+              position: "top-center", 
+              duration : 5000
+            });
+          }
+        }
+      });
       // Go to that directory
       this.$router.push("/results/" + unique_id)
     },

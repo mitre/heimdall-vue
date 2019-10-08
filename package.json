@@ -56,6 +56,7 @@
     "vue-responsive-components": "^0.2.3",
     "vue-router": "^3.0.7",
     "vue-select": "^3.1.0",
+    "vue-toasted": "^1.1.27",
     "vue2-hammer": "^2.1.2",
     "vuedraggable": "^2.23.0",
     "vuesax": "^3.9.0",
