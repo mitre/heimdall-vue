@@ -3,11 +3,10 @@
  */
 
 import { Module, VuexModule, Mutation, Action, getModule } from "vuex-module-decorators";
-import { Control, Profile, InspecOutput } from "inspecjs";
 import Store from "./store";
 import DataStore from "./data_store";
 import router from "../../src/router.js";
-import { InspecFile } from "./data_store";
+import { InspecFile } from "./report_intake";
 
 type SidebarItem = {
   /** Router path */
@@ -73,7 +72,7 @@ class SidebarModule extends VuexModule {
 
     // Convert all other open files to sidebar options
     let data = getModule(DataStore, Store);
-    let reportOptions = data.reportFiles.map(makeFileItem);
+    let reportOptions = data.executionFiles.map(makeFileItem);
     let profileOptions = data.profileFiles.map(makeFileItem);
     let submenu: SidebarItem[] = [allResults, ...reportOptions, ...profileOptions];
 

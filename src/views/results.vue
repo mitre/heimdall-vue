@@ -113,12 +113,13 @@ export default {
     },
     /** Construct a filter object that matches the current file(s) */
     fileFilter() {
+      // We don't want overlays! Ever!
+      let base = { omit_overlayed_controls: true };
       if(this.$route.params.id !== undefined) {
         // If theres an id, set it as the filter
-        return { fromFile: parseInt(this.$route.params.id) };
-      } else {
-        return {};
-      }
+        base.fromFile = parseInt(this.$route.params.id);
+      } 
+      return base;
     },
     /** Construct a filter dict based on current status/severity selections (on top of file filters) */
     filter(){

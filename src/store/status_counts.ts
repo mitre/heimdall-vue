@@ -3,9 +3,9 @@
  */
 
 import { Module, VuexModule, getModule } from "vuex-module-decorators";
-import DataModule, {Filter} from "./data_store";
+import FilteredData, {Filter} from "./data_filters";
 import Store from "./store";
-import { ControlStatus } from 'inspecjs/dist/types';
+import { ControlStatus, hdfWrapControl } from 'inspecjs';
 
 // Helper function for counting a status in a list of controls
 function countStatus(filter: Filter, status: ControlStatus): number {
@@ -15,11 +15,11 @@ function countStatus(filter: Filter, status: ControlStatus): number {
   }
 
   // Get the controls
-  let data = getModule(DataModule, Store);
-  let controls = data.allControls(filter);
+  let data = getModule(FilteredData, Store);
+  let controls = data.controls(filter);
 
   // Refine our filter to the severity, and return length
-  return controls.filter(c => c.status === status).length;
+  return controls.filter(c => hdfWrapControl(c.data).status === status).length;
 }
 
 @Module({
@@ -45,6 +45,14 @@ class StatusCountModule extends VuexModule {
 
   get profileError(): (filter: Filter) => number {
     return (filter) => countStatus(filter, "Profile Error");
+  }
+
+  get fromProfile(): (filter: Filter) => number {
+    return (filter) => countStatus(filter, "From Profile")
+  }
+
+  get noData(): (filter: Filter) => number {
+    return (filter) => countStatus(filter, "No Data");
   }
 }
 

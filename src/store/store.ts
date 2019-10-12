@@ -1,6 +1,8 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import Data from "./data_store";
+import Filtered from "./data_filters";
+import Lookup from "./lookup_hashes";
 import Theme from "./theme";
 import SeverityCounts from "./severity_counts";
 import Sidebar from "./sidebar";
@@ -26,12 +28,15 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   modules: {
     data: Data,
+    filteredData: Filtered,
     theme: Theme,
     statusCounts: StatusCounts,
     severityCounts: SeverityCounts,
+    lookup: Lookup,
     intake: Intake,
     sidebar: Sidebar
   },
 });
+console.log(store);
 
 export default store;
